@@ -133,6 +133,7 @@ def founder_list():
 def founder(id):
     founder = models.Founder.query.filter_by(id=id).first_or_404()
     founder_company = founder.company.all()
+    print("hello")
     return render_template("founder.html", founder_company=founder_company, founder=founder)
 
 

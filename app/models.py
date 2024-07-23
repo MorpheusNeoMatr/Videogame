@@ -76,7 +76,7 @@ company_director = db.Table('company_director',
 
 
 founder_company = db.Table('founder_company',
-    db.Column("founder_id", db.Integer, db.ForeignKey('founder.id'), primary_key=True),
+    db.Column("founder_id", db.Integer, db.ForeigncccKey('founder.id'), primary_key=True),
     db.Column("company_id", db.Integer, db.ForeignKey('company.id'), primary_key=True))
 
 
