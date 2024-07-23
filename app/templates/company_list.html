@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% for company_list in company_list %}
+    <li>
+        <a href = "/company/{{company_list.id}}">{{company_list.name}}</a>
+    </li>    
+
+{%endfor%}
+
+{% endblock %}

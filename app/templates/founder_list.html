@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% for founder_list in founder_list %}
+    <li>
+        <a href = "/founder/{{founder_list.id}}">{{founder_list.name}}</a>
+    </li>    
+
+{%endfor%}
+
+{% endblock %}

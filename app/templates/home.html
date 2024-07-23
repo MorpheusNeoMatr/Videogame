@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% for genres in all_genres %}
+<ul>
+    <a href="/game_genres/{{ genres.id }}">
+        <div class="box">
+            <img src="{{ genres.picture }}" alt="{{ genres.name }}">
+            <span>{{ genres.name }}</span>
+        </div>
+    </a>
+</ul>
+{% endfor %}
+
+
+{% endblock %}

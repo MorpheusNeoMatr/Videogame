@@ -1,0 +1,40 @@
+/*/*This class is for the header at the top"Top 10 movies for five genres*/
+header h1{
+    border: 1px solid black;
+    font-size: xx-large;
+    color:black;
+    background-color:honeydew;
+}
+
+/*The name below the navbar that has the name of that specific page(i.e name of the movie or actor)*/
+header h2 {
+    font-family: 'verdana';
+    border: 1px solid black;
+    padding: 20px;
+    font-size: x-large;
+    color:black;
+    background-color:beige;
+}
+
+
+/*this is for styling the layout*/
+body{
+    font-family: 'verdana';/*font type*/
+    text-align: center;/*this will  position the value at the center horizontally*/
+
+}
+
+
+.box {
+    display: flex;
+    flex-direction: column;/* arranging elements in a column*/
+    align-items: center;/* aligns at the center horizontaly*/
+    font-size: 16px;
+    padding: 10px;
+    background-color: black;
+    border-radius: 10px;
+    transition: background-color 0.2s, font-size 0.2s ease;/*Adds transitions for background color and font size with a duration of 0.2s and easing*/
+    width: 100%;
+    color: white;
+    text-decoration: wavy;
+}
