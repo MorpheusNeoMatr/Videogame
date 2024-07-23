@@ -2,6 +2,18 @@
 {% block content %}
 
 <li>{{director.name}}</li>
+<li>
+    {% for game in director_game[:3] %}
+        <a href="/game/{{game.id}}">{{game.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>
+    {% for company in director_company[:3] %}
+        <a href="/company/{{company.id}}">{{company.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
 <li>{{director.date_of_birth}}</li>
 <li>{{director.notable_works}}</li>
 <li>{{director.description}}</li>

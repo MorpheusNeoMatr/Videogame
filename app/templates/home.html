@@ -1,17 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
+<select id="genreDropdown">
+    <option value="all">All genres</option>
+    {% for genre in genres %}
+        <option value="{{ genre.id }}">{{ genre.name }}</option>
+    {% endfor %}
+</select>
 
+<select id="companyDropdown">
+    <option value="all">All companies</option>
+    {% for company in companies %}
+        <option value="{{ company.id }}">{{ company.name }}</option>
+    {% endfor %}
+</select>
 
-{% for genres in all_genres %}
-<ul>
-    <a href="/game_genres/{{ genres.id }}">
-        <div class="box">
-            <img src="{{ genres.picture }}" alt="{{ genres.name }}">
-            <span>{{ genres.name }}</span>
-        </div>
-    </a>
+<select id="directorDropdown">
+    <option value="all">All directors</option>
+    {% for director in directors %}
+        <option value="{{ director.id }}">{{ director.name }}</option>
+    {% endfor %}
+</select>
+
+<select id="seriesDropdown">
+    <option value="all">All series</option>
+    {% for serie in series %}
+        <option value="{{ serie.id }}">{{ serie.name }}</option>
+    {% endfor %}
+</select>
+
+<button onclick="filterGames()">Apply Filters</button>
+
+<ul id="gameList">
+    <!-- This will be populated with games after filtering -->
 </ul>
-{% endfor %}
-
-
 {% endblock %}

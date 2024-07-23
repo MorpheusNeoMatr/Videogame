@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Add Game</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {{ form.csrf_token }}
+  <p>name: {{ form.game_name }} <span style="color:red">{{ form.game_name.errors }}</span></p>
+  <p>dev score: {{ form.game_dev_score }} <span style="color:red">{{ form.game_dev_score.errors }}</span></p>
+  <p>release_date: {{ form.game_date }} <span style="color:red">{{ form.game_date.errors }}</span></p>
+  <p>release_date: {{ form.game_picture_1 }} <span style="color:red">{{ form.game_picture_1.errors }}</span></p>
+  <p>release_date: {{ form.game_picture_2 }} <span style="color:red">{{ form.game_picture_2.errors }}</span></p>
+  <p>release_date: {{ form.game_picture_3 }} <span style="color:red">{{ form.game_picture_3.errors }}</span></p>
+  <p>release_date: {{ form.game_picture_4 }} <span style="color:red">{{ form.game_picture_4.errors }}</span></p>
+  <p>release_date: {{ form.game_picture_5 }} <span style="color:red">{{ form.game_picture_5.errors }}</span></p>
+  <p>Description: {{ form.game_description }} <span style="color:red">{{ form.game_description.errors }}</span></p>
+  <p>gameplay: {{ form.game_gameplay }} <span style="color:red">{{ form.game_gameplay.errors }}</span></p>
+  <p>story: {{ form.game_story }} <span style="color:red">{{ form.game_story.errors }}</span></p>
+  <p>reviews: {{ form.game_reviews }} <span style="color:red">{{ form.game_reviews.errors }}</span></p>
+  <P>Director(s):
+    <button type="button" id="showDirectorsButton">Show Directors</button>
+    <div id="director-list" style="display: none;">
+        {{ form.game_directors.label }}<br>
+        {{ form.game_directors }}
+    </div>
+    <span id="selectedDirectors">No director selected.</span>
+    <input type="submit" value="Add this game">
+</form> 
+
+
+{% endblock %}

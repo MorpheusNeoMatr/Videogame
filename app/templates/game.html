@@ -1,13 +1,59 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<li>{{game.name}}</li>
-<li>{{game.dev_score}}</li>
+<li>
+    {% if game.picture_5 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
+<li >name: {{game.name}}</li>
+<li>Director(s):
+    {% for directors in game_directors[:3] %}
+        <a href="/director/{{directors.id}}">{{directors.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<!-- <li>
+    {{ game.series.name }}
+</li> -->
+<li> My score: {{game.dev_score}}</li>
+<li>genres: 
+    {% for genres in game_genres[:3] %}
+        {{genres.name}}
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>company(ies):
+    {% for companies in game_companies[:3] %}
+       <a href="/company/{{companies.id}}">{{companies.name}}</a>
+    {% endfor %}
+</li>
+<li>Series: {{ game.series.name }}</li>
 <li>{{game.release_date}}</li>
 <li>{{game.description}}</li>
+<li>
+    {% if game.picture_1 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_1) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
 <li>{{game.gameplay}}</li>
+<li>
+    {% if game.picture_2 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_2) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
 <li>{{game.story}}</li>
+<li>
+    {% if game.picture_3 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_3) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
 <li>{{game.soundtrack}}</li>
+<li>
+    {% if game.picture_4 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_4) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
 <li>{{game.reviews}}</li>
 
 {% endblock %}

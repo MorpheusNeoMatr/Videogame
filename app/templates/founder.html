@@ -2,6 +2,12 @@
 {% block content %}
 
 <li>{{founder.name}}</li>
+<li>company(s) founded:
+    {% for company in founder_company[:3] %}
+        <a href="/company/{{company.id}}">{{company.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
 <li>{{founder.date_of_birth}}</li>
 <li>{{founder.description}}</li>
 

@@ -2,6 +2,33 @@
 {% block content %}
 
 <li>{{company.name}}</li>
+<li>Videogame(s):
+    {% for games in company_games[:3] %}
+        <a href="/game/{{games.id}}">{{games.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>Director(s):
+    {% for directors in company_directors[:3] %}
+        <a href="/director/{{directors.id}}">{{directors.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>Founder(s):
+    {% for founders in company_founders[:3] %}
+        <a href="/founder/{{founders.id}}">{{founders.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>Series:
+    {% for series in company_series[:3] %}
+        {{series.name}}
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+</li>
+<li>
+    founded in: {{company.time_founded}}
+</li>
 <li>{{company.description}}</li>
 
 {% endblock %}

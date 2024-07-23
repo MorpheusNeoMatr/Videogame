@@ -38,3 +38,81 @@ body{
     color: white;
     text-decoration: wavy;
 }
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #3498db;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980b9;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* game list page */
+.game-item-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color from parent */
+}
+
+.game-item {
+    display: inline-block; /* Allows items to be on the same line if space permits */
+    text-align: center; /* Centers the text and image */
+    margin: 10px; /* Adds space around each game item */
+    border: 1px solid #ddd; /* Adds a border around the container */
+    border-radius: 8px; /* Rounds the corners of the border */
+    padding: 10px; /* Adds space inside the border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+    width: 150px; /* Adjust the width as needed */
+    transition: transform 0.2s; /* Smooth transition for scaling effect */
+}
+
+.game-item:hover {
+    transform: scale(1.05); /* Slightly enlarge item on hover */
+}
+
+.game-image {
+    width: 100%; /* Makes the image take up the full width of the container */
+    height: auto; /* Maintains aspect ratio */
+    border-bottom: 1px solid #ddd; /* Adds a line between the image and the text */
+    margin-bottom: 5px; /* Adds space between the image and the text */
+}
+
+.game-name {
+    font-size: 16px; /* Sets the font size */
+    color: #333; /* Sets the text color */
+    margin: 0; /* Removes default margin */
+}
