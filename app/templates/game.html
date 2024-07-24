@@ -23,6 +23,7 @@
 <li>company(ies):
     {% for companies in game_companies[:3] %}
        <a href="/company/{{companies.id}}">{{companies.name}}</a>
+       {% if not loop.last %}  ,{% endif %}
     {% endfor %}
 </li>
 <li>Series: {{ game.series.name }}</li>
