@@ -24,10 +24,10 @@ from app.models import Genre, Company, Director, Series, Videogame
 
 @app.route("/")
 def home():
-    genres = Genre.query.all()
-    companies = Company.query.all()
-    directors = Director.query.all()
-    series = Series.query.all()
+    genres = Genre.query.order_by(Genre.name).all()
+    companies = Company.query.order_by(Company.name).all()
+    directors = Director.query.order_by(Director.name).all()
+    series = Series.query.order_by(Series.name).all()
     games = models.Videogame.query.all()  # Fetch all games initially
     return render_template('home.html', genres=genres, companies=companies, directors=directors, series=series, games=games)
 
@@ -59,7 +59,6 @@ def game(game_id):
     game_genres = game.game_genres
     game_directors = game.game_directors
     game_series = game.series
-    # game_series = models.Series.query.all()
     return render_template("game.html", game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
 
 
@@ -84,7 +83,7 @@ def add_game():
             new_game.series_id = form.game_series.data
             filenames = []
             for game_pictures in [form.game_picture_1,
-                                   form.game_picture_2, form.game_picture_3, form.game_picture_4, form.game_picture_5]:
+                                   form.game_picture_2, form.game_picture_3, form.game_picture_4, form.game_picture_5, form.game_picture_6]:
                 if game_pictures.data:
                     filename = secure_filename(game_pictures.data.filename)
                     game_pictures.data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -96,6 +95,7 @@ def add_game():
             new_game.picture_3 = filenames[2]
             new_game.picture_4 = filenames[3]
             new_game.picture_5 = filenames[4]
+            new_game.picture_6 = filenames[5]
             new_game.game_genres = Genre.query.filter(Genre.id.in_(form.game_genres.data)).all()
             new_game.game_directors = Director.query.filter(Director.id.in_(form.game_directors.data)).all()
             new_game.game_companies = Company.query.filter(Company.id.in_(form.game_companies.data)).all()
@@ -133,7 +133,6 @@ def founder_list():
 def founder(id):
     founder = models.Founder.query.filter_by(id=id).first_or_404()
     founder_company = founder.company.all()
-    print("hello")
     return render_template("founder.html", founder_company=founder_company, founder=founder)
 
 

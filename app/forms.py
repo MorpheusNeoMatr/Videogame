@@ -21,14 +21,15 @@ class Add_Game(FlaskForm):
     game_picture_3 = FileField('game_picture_3', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
     game_picture_4 = FileField('game_picture_4', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
     game_picture_5 = FileField('game_picture_5', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_series = SelectField('game_series',coerce=int, validators=[Optional()])
-    game_genres = SelectMultipleField('game_fenres', coerce=int, validators=[Optional()])
+    game_picture_6 = FileField('game_picture_5', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    game_series = SelectField('game_series', coerce=int, validators=[Optional()])
+    game_genres = SelectMultipleField('game_genres', coerce=int, validators=[Optional()])
     game_directors = SelectMultipleField('game_directors', coerce=int, validators=[Optional()])
     game_companies = SelectMultipleField('game_companies', coerce=int, validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(Add_Game, self).__init__(*args, **kwargs)
-        self.game_series.choices = [(series.id, series.name) for series in Series.query.all()]
+        self.game_series.choices = [(0, 'No series')] + [(series.id, series.name) for series in Series.query.all()]
         self.game_genres.choices = [(genre.id, genre.name) for genre in Genre.query.all()]
         self.game_directors.choices = [(director.id, director.name) for director in Director.query.all()]
         self.game_companies.choices = [(company.id, company.name) for company in Company.query.all()]

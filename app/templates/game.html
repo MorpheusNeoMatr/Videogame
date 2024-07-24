@@ -13,9 +13,6 @@
         {% if not loop.last %}  ,{% endif %}
     {% endfor %}
 </li>
-<!-- <li>
-    {{ game.series.name }}
-</li> -->
 <li> My score: {{game.dev_score}}</li>
 <li>genres: 
     {% for genres in game_genres[:3] %}
@@ -30,6 +27,11 @@
 </li>
 <li>Series: {{ game.series.name }}</li>
 <li>{{game.release_date}}</li>
+<li>
+    {% if game.picture_6 %}
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 1">
+    {% endif %}
+</li>
 <li>{{game.description}}</li>
 <li>
     {% if game.picture_1 %}

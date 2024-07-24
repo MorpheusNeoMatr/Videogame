@@ -1,10 +1,18 @@
 // Declare state variables
-let directorListVisible = false;
+let directorListVisible = true;
 
 
 function updateGameList(games) {
     var gameList = document.getElementById("gameList");
     gameList.innerHTML = ""; // Clear previous list
+
+    if (games.length === 0) {
+        var noGameMessage = document.createElement("p");
+        noGameMessage.textContent = "No games match the specified filters.";
+        noGameMessage.className = "no-game-message"; // Add a class for styling if needed
+        gameList.appendChild(noGameMessage);
+        return;
+    }
 
     games.forEach(game => {
         // Create a link element
@@ -71,52 +79,108 @@ window.addEventListener('load', fetchAllGames);
 document.getElementById('filterButton').addEventListener('click', filterGames);
 
 
-// Function to toggle the visibility of the director list
-function toggleDirectors() {
-    const directorList = document.getElementById("director-list");
-    const showDirectorsButton = document.getElementById("showDirectorsButton");
-
-    if (directorListVisible) {
-        directorList.style.display = "none";
-        showDirectorsButton.textContent = "Show Directors";
-        directorListVisible = false;
-    } else {
-        directorList.style.display = "block";
-        showDirectorsButton.textContent = "Hide Directors";
-        directorListVisible = true;
-    }
-}
-
-// Function to update the selected director(s)
-function updateSelectedDirectors() {
-    const selectedDirectorsContainer = document.getElementById("selectedDirectors");
-    const selectedOptions = document.querySelectorAll('input[name="game_directors"]:checked');
-    
-    if (selectedOptions.length === 0) {
-        selectedDirectorsContainer.textContent = "No director selected.";
-    } else {
-        const selectedNames = Array.from(selectedOptions).map(option => {
-            return option.nextSibling.textContent.trim();
-        }).join(', ');
-
-        selectedDirectorsContainer.textContent = `Selected Director(s): ${selectedNames}`;
-        document.getElementById("showDirectorsButton").textContent = selectedNames || "Show Directors";
-    }
-}
-
-// Attach event listeners to the checkboxes and buttons
+//Adding director, genre, company
 document.addEventListener('DOMContentLoaded', function() {
-    const showDirectorsButton = document.getElementById('showDirectorsButton');
+    function setupDropdownToggle(buttonId, listId, arrowId) {
+      const button = document.getElementById(buttonId);
+      const list = document.getElementById(listId);
+      const arrow = document.getElementById(arrowId);
 
-    if (showDirectorsButton) {
-        showDirectorsButton.addEventListener('click', toggleDirectors);
-    } else {
-        console.error('Button with ID "showDirectorsButton" not found.');
+      button.addEventListener('click', function() {
+        const isVisible = list.style.display === 'block';
+        list.style.display = isVisible ? 'none' : 'block';
+        arrow.classList.toggle('up', !isVisible);
+        arrow.classList.toggle('down', isVisible);
+      });
     }
 
-    // Update selected directors on checkbox change
-    document.querySelectorAll('input[name="game_directors"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updateSelectedDirectors);
-    });
-});
+    setupDropdownToggle('toggleDirectors', 'directorsList', 'arrowDirectors');
+    setupDropdownToggle('toggleCompanies', 'companiesList', 'arrowCompanies');
+    setupDropdownToggle('toggleGenres', 'genresList', 'arrowGenres');
+
+    function limitCheckboxSelection(className, limit) {
+      const checkboxes = document.querySelectorAll(className);
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const checkedCheckboxes = document.querySelectorAll(className + ':checked');
+          if (checkedCheckboxes.length > limit) {
+            this.checked = false;
+            alert('You can only select up to ' + limit + ' options.');
+          }
+        });
+      });
+    }
+
+    limitCheckboxSelection('.checkbox-director', 3);
+    limitCheckboxSelection('.checkbox-company', 3);
+    limitCheckboxSelection('.checkbox-genre', 3);
+  });
+
+
+// //add_stuff_to_games
+// document.addEventListener('DOMContentLoaded', function() {
+//     var selects = document.querySelectorAll('select.form-control');
+
+//     selects.forEach(function(select) {
+//         select.addEventListener('change', function() {
+//             if (select.value !== "") {
+//                 select.classList.remove('placeholder');
+//             } else {
+//                 select.classList.add('placeholder');
+//             }
+//         });
+//     });
+// });
+
+
+
+
+// // Function to toggle the visibility of the director list
+// function toggleDirectors() {
+//     const directorList = document.getElementById("director-list");
+//     const showDirectorsButton = document.getElementById("showDirectorsButton");
+
+//     if (directorListVisible) {
+//         directorList.style.display = "none";
+//         showDirectorsButton.textContent = "Show Directors";
+//         directorListVisible = false;
+//     } else {
+//         directorList.style.display = "block";
+//         showDirectorsButton.textContent = "Hide Directors";
+//         directorListVisible = true;
+//     }
+// }
+
+// // Function to update the selected director(s)
+// function updateSelectedDirectors() {
+//     const selectedDirectorsContainer = document.getElementById("selectedDirectors");
+//     const selectedOptions = document.querySelectorAll('input[name="game_directors"]:checked');
+    
+//     if (selectedOptions.length === 0) {
+//         selectedDirectorsContainer.textContent = "No director selected.";
+//     } else {
+//         const selectedNames = Array.from(selectedOptions).map(option => {
+//             return option.nextSibling.textContent.trim();
+//         }).join(', ');
+
+//         selectedDirectorsContainer.textContent = `Selected Director(s): ${selectedNames}`;
+//         document.getElementById("showDirectorsButton").textContent = selectedNames || "Show Directors";
+//     }
+// }
+
+// // Attach event listeners to the checkboxes and buttons
+// document.addEventListener('DOMContentLoaded', function() {
+//     const showDirectorsButton = document.getElementById('showDirectorsButton');
+
+//     if (showDirectorsButton) {
+//         showDirectorsButton.addEventListener('click', toggleDirectors);
+//     } else {
+//         console.error('Button with ID "showDirectorsButton" not found.');
+//     }
+
+//     // Update selected directors on checkbox change
+//     document.querySelectorAll('input[name="game_directors"]').forEach(checkbox => {
+//         checkbox.addEventListener('change', updateSelectedDirectors);
+//     });
+// });
 

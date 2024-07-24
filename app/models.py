@@ -42,6 +42,7 @@ class Videogame(db.Model):
     picture_3 = db.Column(db.String(255), nullable=True)
     picture_4 = db.Column(db.String(255), nullable=True)
     picture_5 = db.Column(db.String(255), nullable=True)
+    picture_6 = db.Column(db.String(255), nullable=True)
     game_genres = db.relationship("Genre", secondary=genre_game, backref=db.backref
                              ('videogame', lazy='dynamic'))
     game_companies = db.relationship("Company", secondary=game_company, backref=db.backref
@@ -76,7 +77,7 @@ company_director = db.Table('company_director',
 
 
 founder_company = db.Table('founder_company',
-    db.Column("founder_id", db.Integer, db.ForeigncccKey('founder.id'), primary_key=True),
+    db.Column("founder_id", db.Integer, db.ForeignKey('founder.id'), primary_key=True),
     db.Column("company_id", db.Integer, db.ForeignKey('company.id'), primary_key=True))
 
 
@@ -110,7 +111,6 @@ class Director(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(50))
     date_of_birth = db.Column(db.Text(15))
-    notable_works = db.Column(db.Text(30))
     description = db.Column(db.Text())
     picture_1 = db.Column(db.Text())
     picture_2 = db.Column(db.Text())
