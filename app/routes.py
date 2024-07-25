@@ -118,6 +118,14 @@ def add_game():
             db.session.add(new_game)
             db.session.commit()
             return redirect(url_for('game', game_id=new_game.id))
+
+        elif series_form.validate_on_submit():
+            new_series = models.Series()
+            new_series.name = series_form.series_name.data
+            db.session.add(new_series)
+            db.session.commit()
+            flash('Series added successfully!', 'success')
+            return redirect(url_for('add_game'))
         else:
             # If none of the forms are valid, re-render the page with the form errors
             return render_template('add_game.html', game_form=game_form, series_form=series_form)

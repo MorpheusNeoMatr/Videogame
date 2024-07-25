@@ -77,9 +77,6 @@ window.addEventListener('load', fetchAllGames);
 // Event listener for Apply Filters button
 document.getElementById('filterButton').addEventListener('click', filterGames);
 
-//add series to game
-
-
 // //add_stuff_to_games
 // document.addEventListener('DOMContentLoaded', function() {
 //     var selects = document.querySelectorAll('select.form-control');

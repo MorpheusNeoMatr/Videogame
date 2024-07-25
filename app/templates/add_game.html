@@ -2,9 +2,18 @@
 {% block content %}
 <h2>Add Game</h2>
 
+<form method="POST" action="{{ url_for('add_game') }}">
+  {{ series_form.hidden_tag() }}
+  <label for="series_name">Series Name:</label>
+  {{ series_form.series_name() }}<br>
+
+  <button type="submit">Add Series</button>
+ </form>
+
 <form method="POST" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <p>Name: {{ game_form.game_name }} <span style="color:red">{{ game_form.game_name.errors }}</span></p>
+  <label for="gameName">Name(Maximum characters:20):</label>
+  <input type="text" id="gameName" name="gameName" maxlength="50" />
   <p>Dev score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
   <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
 
@@ -25,16 +34,6 @@
 
   <!-- Series (unchanged) -->
   <p>Series: {{ game_form.game_series }} <span style="color:red">{{ game_form.game_series.errors }}</span></p>
-
-  
-    <!-- <form method="POST" action="{{ url_for('add_game') }}">
-        {{ series_form.hidden_tag() }}
-        <label for="series_name">Series Name:</label>
-        {{ series_form.series_name() }}<br>
-
-        <button type="submit">Add Series</button>
-    </form> -->
-
 
   <p>Companies: 
     <button type="button" id="toggleCompanies" class="toggle-button">

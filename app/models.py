@@ -64,7 +64,7 @@ genre_series = db.Table('genre_series',
 class Series(db.Model):
     __tablename__ = "series"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text())
+    name = db.Column(db.Text(5))
     series_companies = db.relationship("Company", secondary=company_series, backref=db.backref
                                        ('series', lazy='dynamic'))
     series_genres = db.relationship("Genre", secondary=genre_series, backref=db.backref

@@ -36,7 +36,7 @@ class Add_Game(FlaskForm):
 
 
 class Add_Series(FlaskForm):
-    series_name = StringField('Series Name', validators=[Optional()])
+    series_name = StringField('Series Name', validators=[DataRequired(message='Series name cannot be empty')])
     series_submit = SubmitField('Add Series')
 
 class Add_Directors(FlaskForm):
