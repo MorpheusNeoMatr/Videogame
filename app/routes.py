@@ -18,7 +18,7 @@ db = SQLAlchemy(app)
 
 
 import app.models as models
-from app.forms import Add_Game
+from app.forms import Add_Game, Add_Series
 from app.models import Genre, Company, Director, Series, Videogame
 
 
@@ -62,28 +62,44 @@ def game(game_id):
     return render_template("game.html", game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
 
 
+# @app.route('/add_series', methods=['POST'])
+# def add_series():
+#     form = Add_Series()
+#     if request.method == 'GET':
+#         return render_template('add_game.html', form=form)
+#     else:
+#         if forms.validate_on_submit():
+#             if forms.validate_on_submit():
+#                 new_series = models.Series()
+#                 new_series.name = form.series_name.data
+#             return redirect(url_for('game', game_id=new_game.id))
+#         else:
+#             return render_template('add_game.html', form=form)
+
+
 @app.route('/add_game', methods=['GET', 'POST'])
 def add_game():
-    form = Add_Game()
+    game_form = Add_Game()
+    series_form = Add_Series()
     if request.method == 'GET':
-        return render_template('add_game.html', form=form)
+        return render_template('add_game.html', game_form=game_form, series_form=series_form)
     else:
-        if form.validate_on_submit():
+        if game_form.validate_on_submit():
             print("form is valid")
             new_game = models.Videogame()
-            new_game.name = form.game_name.data
-            new_game.release_date = form.game_date.data
-            new_game.dev_score = form.game_dev_score.data
-            new_game.release_date = form.game_date.data
-            new_game.description = form.game_description.data
-            new_game.gameplay = form.game_gameplay.data
-            new_game.story = form.game_story.data
-            new_game.soundtrack = form.game_soundtrack.data
-            new_game.reviews = form.game_reviews.data
-            new_game.series_id = form.game_series.data
+            new_game.name = game_form.game_name.data
+            new_game.release_date = game_form.game_date.data
+            new_game.dev_score = game_form.game_dev_score.data
+            new_game.description = game_form.game_description.data
+            new_game.gameplay = game_form.game_gameplay.data
+            new_game.story = game_form.game_story.data
+            new_game.soundtrack = game_form.game_soundtrack.data
+            new_game.reviews = game_form.game_reviews.data
+            new_game.series_id = game_form.game_series.data
             filenames = []
-            for game_pictures in [form.game_picture_1,
-                                   form.game_picture_2, form.game_picture_3, form.game_picture_4, form.game_picture_5, form.game_picture_6]:
+            for game_pictures in [game_form.game_picture_1,
+                                game_form.game_picture_2, game_form.game_picture_3,
+                                game_form.game_picture_4, game_form.game_picture_5, game_form.game_picture_6]:
                 if game_pictures.data:
                     filename = secure_filename(game_pictures.data.filename)
                     game_pictures.data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -96,16 +112,17 @@ def add_game():
             new_game.picture_4 = filenames[3]
             new_game.picture_5 = filenames[4]
             new_game.picture_6 = filenames[5]
-            new_game.game_genres = Genre.query.filter(Genre.id.in_(form.game_genres.data)).all()
-            new_game.game_directors = Director.query.filter(Director.id.in_(form.game_directors.data)).all()
-            new_game.game_companies = Company.query.filter(Company.id.in_(form.game_companies.data)).all()
+            new_game.game_genres = Genre.query.filter(Genre.id.in_(game_form.game_genres.data)).all()
+            new_game.game_directors = Director.query.filter(Director.id.in_(game_form.game_directors.data)).all()
+            new_game.game_companies = Company.query.filter(Company.id.in_(game_form.game_companies.data)).all()
             db.session.add(new_game)
             db.session.commit()
             return redirect(url_for('game', game_id=new_game.id))
         else:
-            print("Form is not valid:", form.errors)
-            return render_template('add_game.html', form=form)
+            # If none of the forms are valid, re-render the page with the form errors
+            return render_template('add_game.html', game_form=game_form, series_form=series_form)
 
+ 
 
 @app.route("/company_list")
 def company_list():
@@ -150,6 +167,16 @@ def director(id):
     return render_template("director.html", director_company=director_company, director_game=director_game, director=director)
 
 
+
+ # elif forms.validate_on_submit():
+        #     print("Add_Series form is valid")
+        #     new_series = models.Series(name=forms.series_name.data)
+        #     db.session.add(new_series)
+        #     db.session.commit()
+        #     flash('Series added successfully!', 'success')
+        #     return redirect(url_for('add_game'))
+
+        
 # @app.route("/genre_list")
 # def genre_list():
 #     genre_list = models.Genre.query.all()

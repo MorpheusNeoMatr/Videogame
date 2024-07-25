@@ -3,10 +3,10 @@
 <h2>Add Game</h2>
 
 <form method="POST" enctype="multipart/form-data">
-  {{ form.csrf_token }}
-  <p>Name: {{ form.game_name }} <span style="color:red">{{ form.game_name.errors }}</span></p>
-  <p>Dev score: {{ form.game_dev_score }} <span style="color:red">{{ form.game_dev_score.errors }}</span></p>
-  <p>Release date: {{ form.game_date }} <span style="color:red">{{ form.game_date.errors }}</span></p>
+  {{ game_form.csrf_token }}
+  <p>Name: {{ game_form.game_name }} <span style="color:red">{{ game_form.game_name.errors }}</span></p>
+  <p>Dev score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
+  <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
 
 
   <p>Directors: 
@@ -14,7 +14,7 @@
       Select Directors <span class="arrow down" id="arrowDirectors"></span>
     </button>
     <div id="directorsList" class="dropdown-list">
-      {% for director in form.game_directors.choices %}
+      {% for director in game_form.game_directors.choices %}
         <label>
           <input type="checkbox" class="checkbox-director" name="game_directors" value="{{ director[0] }}">
           {{ director[1] }}
@@ -24,14 +24,24 @@
   </p>
 
   <!-- Series (unchanged) -->
-  <p>Series: {{ form.game_series }} <span style="color:red">{{ form.game_series.errors }}</span></p>
+  <p>Series: {{ game_form.game_series }} <span style="color:red">{{ game_form.game_series.errors }}</span></p>
+
+  
+    <!-- <form method="POST" action="{{ url_for('add_game') }}">
+        {{ series_form.hidden_tag() }}
+        <label for="series_name">Series Name:</label>
+        {{ series_form.series_name() }}<br>
+
+        <button type="submit">Add Series</button>
+    </form> -->
+
 
   <p>Companies: 
     <button type="button" id="toggleCompanies" class="toggle-button">
       Select Companies <span class="arrow down" id="arrowCompanies"></span>
     </button>
     <div id="companiesList" class="dropdown-list">
-      {% for company in form.game_companies.choices %}
+      {% for company in game_form.game_companies.choices %}
         <label>
           <input type="checkbox" class="checkbox-company" name="game_companies" value="{{ company[0] }}">
           {{ company[1] }}
@@ -46,7 +56,7 @@
       Select Genres <span class="arrow down" id="arrowGenres"></span>
     </button>
     <div id="genresList" class="dropdown-list">
-      {% for genre in form.game_genres.choices %}
+      {% for genre in game_form.game_genres.choices %}
         <label>
           <input type="checkbox" class="checkbox-genre" name="game_genres" value="{{ genre[0] }}">
           {{ genre[1] }}
@@ -55,16 +65,17 @@
     </div>
   </p>
 
-  <p>Picture 1: {{ form.game_picture_1 }} <span style="color:red">{{ form.game_picture_1.errors }}</span></p>
-  <p>Picture 2: {{ form.game_picture_2 }} <span style="color:red">{{ form.game_picture_2.errors }}</span></p>
-  <p>Picture 3: {{ form.game_picture_3 }} <span style="color:red">{{ form.game_picture_3.errors }}</span></p>
-  <p>Picture 4: {{ form.game_picture_4 }} <span style="color:red">{{ form.game_picture_4.errors }}</span></p>
-  <p>Picture 5: {{ form.game_picture_5 }} <span style="color:red">{{ form.game_picture_5.errors }}</span></p>
-  <p>Description: {{ form.game_description }} <span style="color:red">{{ form.game_description.errors }}</span></p>
-  <p>Gameplay: {{ form.game_gameplay }} <span style="color:red">{{ form.game_gameplay.errors }}</span></p>
-  <p>Story: {{ form.game_story }} <span style="color:red">{{ form.game_story.errors }}</span></p>
-  <p>Soundtrack: {{ form.game_soundtrack }} <span style="color:red">{{ form.game_soundtrack.errors }}</span></p>
-  <p>Reviews: {{ form.game_reviews }} <span style="color:red">{{ form.game_reviews.errors }}</span></p>
+  <p>Picture 1: {{ game_form.game_picture_1 }} <span style="color:red">{{ game_form.game_picture_1.errors }}</span></p>
+  <p>Picture 2: {{ game_form.game_picture_2 }} <span style="color:red">{{ game_form.game_picture_2.errors }}</span></p>
+  <p>Picture 3: {{ game_form.game_picture_3 }} <span style="color:red">{{ game_form.game_picture_3.errors }}</span></p>
+  <p>Picture 4: {{ game_form.game_picture_4 }} <span style="color:red">{{ game_form.game_picture_4.errors }}</span></p>
+  <p>Picture 5: {{ game_form.game_picture_5 }} <span style="color:red">{{ game_form.game_picture_5.errors }}</span></p>
+  <p>Picture 6: {{ game_form.game_picture_6 }} <span style="color:red">{{ game_form.game_picture_6.errors }}</span></p>
+  <p>Description: {{ game_form.game_description }} <span style="color:red">{{ game_form.game_description.errors }}</span></p>
+  <p>Gameplay: {{ game_form.game_gameplay }} <span style="color:red">{{ game_form.game_gameplay.errors }}</span></p>
+  <p>Story: {{ game_form.game_story }} <span style="color:red">{{ game_form.game_story.errors }}</span></p>
+  <p>Soundtrack: {{ game_form.game_soundtrack }} <span style="color:red">{{ game_form.game_soundtrack.errors }}</span></p>
+  <p>Reviews: {{ game_form.game_reviews }} <span style="color:red">{{ game_form.game_reviews.errors }}</span></p>
 
   <input type="submit" value="Add this game">
 </form>
