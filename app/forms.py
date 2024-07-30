@@ -3,7 +3,7 @@ from wtforms import IntegerField, StringField, TextAreaField,SelectField, Select
 from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Optional, ValidationError
 import app.models
-from app.models import Series,Director,Genre,Company
+from app.models import Series,Director,Genre,Company, Videogame, Founder
 from datetime import datetime
 
 
@@ -36,13 +36,45 @@ class Add_Game(FlaskForm):
 
 
 class Add_Series(FlaskForm):
-    series_name = StringField('Series Name', validators=[DataRequired(message='Series name cannot be empty')])
+    series_name = StringField('series_name', validators=[DataRequired(message='Series name cannot be empty')])
     series_submit = SubmitField('Add Series')
+
+
+class Add_Genre(FlaskForm):
+    genre_name = StringField('genre_name', validators=[DataRequired(message='Genre name cannot be empty')])
+    genre_submit = SubmitField('Add Genre')
+
+
+class Add_Company(FlaskForm):
+    company_name = StringField('company_name', validators=[DataRequired()])
+    company_games = SelectMultipleField('company_games', coerce=int, validators=[Optional()])
+    company_directors = SelectMultipleField('company_directors', coerce=int, validators=[Optional()])
+    company_founders = SelectMultipleField('company_founders', coerce=int, validators=[Optional()])
+    company_series = SelectMultipleField('company_series', coerce=int, validators=[DataRequired()])
+    company_time_founded = StringField('company_founded_time', validators=[DataRequired()])
+    company_headquarters = StringField('company_headquarters', validators=[DataRequired()])
+    company_description = TextAreaField('company_description', validators=[DataRequired()])
+    company_picture_1 = FileField('company_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    company_picture_2 = FileField('company_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+
+    def __init__(self, *args, **kwargs):
+        super(Add_Company, self).__init__(*args, **kwargs)
+        self.company_games.choices = [(game.id, game.name) for game in Videogame.query.all()]
+        self.company_directors.choices = [(director.id, director.name)for director in Director.query.all()]
+        self.company_founders.choices = [(founder.id, founder.name)for founder in Founder.query.all()]
+        self.company_series.choices = [(series.id, series.name)for series in Series.query.all()]
+
 
 class Add_Directors(FlaskForm):
     director_name = StringField('director_name', validators=[DataRequired()])
     director_age = StringField('director_age', validators=[DataRequired()])
-    director_resume = TextAreaField('director_resume', validators=[DataRequired()])
     director_description = TextAreaField('director_description', validators=[DataRequired()])
     director_picture_1 = FileField('director_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    director_picture_2 = FileField('director_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])  
+    director_picture_2 = FileField('director_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    director_games = SelectMultipleField('director_games', coerce=int, validators=[Optional()])
+    director_companies = SelectMultipleField('director_companies', coerce=int, validators=[Optional()])
+
+    def __init__(self, *args, **kwargs):
+        super(Add_Directors, self).__init__(*args, **kwargs)
+        self.director_games.choices = [(game.id, game.name) for game in Videogame.query.all()]
+        self.director_companies.choices = [(company.id, company.name)for company in Company.query.all()]

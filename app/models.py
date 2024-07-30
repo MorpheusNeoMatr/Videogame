@@ -56,19 +56,10 @@ company_series = db.Table('company_series',
     db.Column("company_id", db.Integer, db.ForeignKey('company.id'), primary_key=True))
 
 
-genre_series = db.Table('genre_series',
-    db.Column("series_id", db.Integer, db.ForeignKey('series.id'), primary_key=True),
-    db.Column("genre_id", db.Integer, db.ForeignKey('genre.id'), primary_key=True))
-
-
 class Series(db.Model):
     __tablename__ = "series"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(5))
-    series_companies = db.relationship("Company", secondary=company_series, backref=db.backref
-                                       ('series', lazy='dynamic'))
-    series_genres = db.relationship("Genre", secondary=genre_series, backref=db.backref
-                                    ('series', lazy='dynamic'))
 
 
 company_director = db.Table('company_director',
@@ -94,6 +85,10 @@ class Company(db.Model):
                                         ('company', lazy='dynamic'))
     company_founders = db.relationship("Founder", secondary=founder_company, backref=db.backref
                                        ('company', lazy='dynamic'))
+    company_games = db.relationship("Videogame", secondary=game_company, backref=db.backref
+                                    ('company', lazy='dynamic'))
+    company_series = db.relationship("Series", secondary=company_series, backref=db.backref
+                                       ('company', lazy='dynamic'))
 
 
 class Founder(db.Model):
@@ -114,3 +109,6 @@ class Director(db.Model):
     description = db.Column(db.Text())
     picture_1 = db.Column(db.Text())
     picture_2 = db.Column(db.Text())
+    videogames = db.relationship("Videogame", secondary=game_director, backref=db.backref('director', lazy='dynamic'))
+    companies = db.relationship("Company", secondary=company_director, backref=db.backref('director', lazy='dynamic'))
+

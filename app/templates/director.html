@@ -1,20 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<li>{{director.name}}</li>
 <li>
-    {% for game in director_game[:3] %}
-        <a href="/game/{{game.id}}">{{game.name}}</a>
-        {% if not loop.last %}  ,{% endif %}
-    {% endfor %}
+    {% if director.picture_1 %}
+    <img src="{{ url_for('static', filename='directors_images/' ~ director.picture_1) }}" alt="Director Picture 1">
+    {% endif %}
 </li>
+<li>Name :{{director.name}}</li>
+<li>Games:
+    {% if director_game %}
+        {% for game in director_game[:3] %}
+            <a href="/game/{{game.id}}">{{game.name}}</a>
+            {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+        {% if director_game|length < 3 %}
+            <a href="/add_game">, add game</a>
+            {% endif %}
+    {% else %}
+        No games yet, <a href="/add_game">add game</a>
+    {% endif %}
+</li>
+<li>Companies:
+    {% if director_company %}
+        {% for company in director_company[:3] %}
+            <a href="/company/{{company.id}}">{{company.name}}</a>
+            {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+        {% if director_company|length < 3 %}
+            <a href="/add_company">, add company</a>
+        {% endif %}
+    {% else %}
+        No companies yet, <a href="/add_company">add company</a>
+    {% endif %}
+</li>
+<li>Age: {{director.date_of_birth}}</li>
 <li>
-    {% for company in director_company[:3] %}
-        <a href="/company/{{company.id}}">{{company.name}}</a>
-        {% if not loop.last %}  ,{% endif %}
-    {% endfor %}
+    {% if director.picture_2 %}
+    <img src="{{ url_for('static', filename='directors_images/' ~ director.picture_2) }}" alt="Director Picture 2">
+    {% endif %}
 </li>
-<li>{{director.date_of_birth}}</li>
 <li>{{director.description}}</li>
 
 {% endblock %}

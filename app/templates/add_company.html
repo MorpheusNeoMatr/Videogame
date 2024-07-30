@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form method="POST" action="{{ url_for('add_company') }}">
+    {{ series_in_company_form.hidden_tag() }}
+    <label for="series_name">Series Name:</label>
+    {{ series_in_company_form.series_name() }}<br>
+  
+    <button type="submit">Add Series</button>
+</form>
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('add_company') }}">
+    {{ company_form.hidden_tag() }}
+    <p>Picture 1: {{ company_form.company_picture_1 }} <span style="color:red">{{ company_form.company_picture_1.errors }}</span></p>
+    <p>Name: {{ company_form.company_name }} <span style="color:red">{{ company_form.company_name.errors }}</span></p>
+    <p>Videogames made: {{ company_form.company_games }} <span style="color:red">{{ company_form.company_games.errors }}</span></p>
+    <p>Directors: {{ company_form.company_directors }} <span style="color:red">{{ company_form.company_directors.errors }}</span></p>
+    <p>Founders: {{ company_form.company_founders }} <span style="color:red">{{ company_form.company_founders.errors }}</span></p>
+    <p>series made: {{ company_form.company_series }} <span style="color:red">{{ company_form.company_series.errors }}</span></p>
+    <p>Founded in: {{ company_form.company_time_founded }} <span style="color:red">{{ company_form.company_time_founded.errors }}</span></p>
+    <p>headquarters in: {{ company_form.company_headquarters }} <span style="color:red">{{ company_form.company_headquarters.errors }}</span></p>
+    <p>Picture 2: {{ company_form.company_picture_2 }} <span style="color:red">{{ company_form.company_picture_2.errors }}</span></p>
+    <p>Description: {{ company_form.company_description }} <span style="color:red">{{ company_form.company_description.errors }}</span></p>
+    <input type="submit" value="Add this company">
+</form>
+
+
+{% endblock %}

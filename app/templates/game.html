@@ -3,15 +3,22 @@
 
 <li>
     {% if game.picture_5 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 1">
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 5">
     {% endif %}
 </li>
 <li >name: {{game.name}}</li>
 <li>Director(s):
-    {% for directors in game_directors[:3] %}
-        <a href="/director/{{directors.id}}">{{directors.name}}</a>
-        {% if not loop.last %}  ,{% endif %}
-    {% endfor %}
+    {% if game_directors %}
+        {% for director in game_directors[:3] %}
+            <a href="/director/{{ director.id }}">{{ director.name }}</a>
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
+        {% if game_directors|length < 3 %}
+            <a href="/add_directors">, add director</a>
+        {% endif %}
+    {% else %}
+        No directors yet, <a href="/add_game">add director</a>
+    {% endif %}
 </li>
 <li> My score: {{game.dev_score}}</li>
 <li>genres: 
@@ -21,16 +28,23 @@
     {% endfor %}
 </li>
 <li>company(ies):
-    {% for companies in game_companies[:3] %}
-       <a href="/company/{{companies.id}}">{{companies.name}}</a>
-       {% if not loop.last %}  ,{% endif %}
-    {% endfor %}
+    {% if game_companies %}
+        {% for companies in game_companies[:3] %}
+        <a href="/company/{{companies.id}}">{{companies.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+        {% if game_companies|length < 3 %}
+            <a href="/add_company">, Add company</a>
+        {% endif %}
+    {% else %}
+        No companies yet, <a href="/add_company">Add company</a>
+    {% endif %}
 </li>
 <li>Series: {{ game.series.name }}</li>
 <li>{{game.release_date}}</li>
 <li>
     {% if game.picture_6 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 1">
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_6) }}" alt="Game Picture 6">
     {% endif %}
 </li>
 <li>{{game.description}}</li>
@@ -42,19 +56,19 @@
 <li>{{game.gameplay}}</li>
 <li>
     {% if game.picture_2 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_2) }}" alt="Game Picture 1">
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_2) }}" alt="Game Picture 2">
     {% endif %}
 </li>
 <li>{{game.story}}</li>
 <li>
     {% if game.picture_3 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_3) }}" alt="Game Picture 1">
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_3) }}" alt="Game Picture 3">
     {% endif %}
 </li>
 <li>{{game.soundtrack}}</li>
 <li>
     {% if game.picture_4 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_4) }}" alt="Game Picture 1">
+    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_4) }}" alt="Game Picture 4">
     {% endif %}
 </li>
 <li>{{game.reviews}}</li>

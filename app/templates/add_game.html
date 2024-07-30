@@ -8,12 +8,22 @@
   {{ series_form.series_name() }}<br>
 
   <button type="submit">Add Series</button>
- </form>
+</form>
 
-<form method="POST" enctype="multipart/form-data">
+<br>
+
+<form method="POST" action="{{ url_for('add_game') }}">
+  {{ genre_form.hidden_tag() }}
+  <label for="genre_name">Genre name:</label>
+  {{ genre_form.genre_name() }}<br>
+
+  <button type="submit">Add genre</button>
+</form>
+
+
+<form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <label for="gameName">Name(Maximum characters:20):</label>
-  <input type="text" id="gameName" name="gameName" maxlength="50" />
+  <p>Game: {{ game_form.game_name(maxlength=50) }} <span>{{ game_form.game_name.errors }}</span></p>
   <p>Dev score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
   <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
 
@@ -23,7 +33,7 @@
       Select Directors <span class="arrow down" id="arrowDirectors"></span>
     </button>
     <div id="directorsList" class="dropdown-list">
-      {% for director in game_form.game_directors.choices %}
+      {% for director in game_form.game_directors.choices|sort(attribute=1) %}
         <label>
           <input type="checkbox" class="checkbox-director" name="game_directors" value="{{ director[0] }}">
           {{ director[1] }}
@@ -32,15 +42,23 @@
     </div>
   </p>
 
-  <!-- Series (unchanged) -->
-  <p>Series: {{ game_form.game_series }} <span style="color:red">{{ game_form.game_series.errors }}</span></p>
+  <p>Series:
+    <select name="game_series">
+      <option>No series</option>
+      {% for series in game_form.game_series.choices|sort(attribute=1) %}
+        <option value="{{ series[0] }}">{{ series[1] }}</option>
+      {% endfor %}
+    </select>
+    <span style="color:red">{{ game_form.game_series.errors }}</span>
+  </p>
+  
 
   <p>Companies: 
     <button type="button" id="toggleCompanies" class="toggle-button">
       Select Companies <span class="arrow down" id="arrowCompanies"></span>
     </button>
     <div id="companiesList" class="dropdown-list">
-      {% for company in game_form.game_companies.choices %}
+      {% for company in game_form.game_companies.choices|sort(attribute=1) %}
         <label>
           <input type="checkbox" class="checkbox-company" name="game_companies" value="{{ company[0] }}">
           {{ company[1] }}
@@ -55,7 +73,7 @@
       Select Genres <span class="arrow down" id="arrowGenres"></span>
     </button>
     <div id="genresList" class="dropdown-list">
-      {% for genre in game_form.game_genres.choices %}
+      {% for genre in game_form.game_genres.choices|sort(attribute=1) %}
         <label>
           <input type="checkbox" class="checkbox-genre" name="game_genres" value="{{ genre[0] }}">
           {{ genre[1] }}

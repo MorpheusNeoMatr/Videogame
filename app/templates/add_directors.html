@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_directors') }}">
+    {{ director_form.hidden_tag() }}
+    <p>Picture 1: {{ director_form.director_picture_1 }} <span style="color:red">{{ director_form.director_picture_1.errors }}</span></p>
+    <p>Name: {{ director_form.director_name }} <span style="color:red">{{ director_form.director_name.errors }}</span></p>
+    <p>Resume: {{ director_form.director_games }} <span style="color:red">{{ director_form.director_games.errors }}</span></p>
+    <p>Companies: {{ director_form.director_companies }} <span style="color:red">{{ director_form.director_companies.errors }}</span></p>
+    <p>Age: {{ director_form.director_age }} <span style="color:red">{{ director_form.director_age.errors }}</span></p>
+    <p>Picture 2: {{ director_form.director_picture_2 }} <span style="color:red">{{ director_form.director_picture_2.errors }}</span></p>
+    <p>Description: {{ director_form.director_description }} <span style="color:red">{{ director_form.director_description.errors }}</span></p>
+    <input type="submit" value="Add this director">
+  </form>
+{% endblock %}
