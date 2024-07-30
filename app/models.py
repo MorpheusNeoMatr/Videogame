@@ -5,7 +5,6 @@ class Genre(db.Model):
     __tablename__ = "genre"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(50))
-    picture = db.Column(db.Text())
 
 
 genre_game = db.Table('genre_game',
