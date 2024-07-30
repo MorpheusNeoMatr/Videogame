@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_founder') }}">
+    {{ founder_form.hidden_tag() }}
+    <p>Picture 1: {{ founder_form.founder_picture_1 }} <span style="color:red">{{ founder_form.founder_picture_1.errors }}</span></p>
+    <p>Name: {{ founder_form.founder_name }} <span style="color:red">{{ founder_form.founder_name.errors }}</span></p>
+    <p>Companies founded: {{ founder_form.founder_companies }} <span style="color:red">{{ founder_form.founder_companies.errors }}</span></p>
+    <p>Age: {{ founder_form.founder_date_of_birth }} <span style="color:red">{{ founder_form.founder_date_of_birth.errors }}</span></p>
+    <p>Picture 2: {{ founder_form.founder_picture_2 }} <span style="color:red">{{ founder_form.founder_picture_2.errors }}</span></p>
+    <p>Description: {{ founder_form.founder_description }} <span style="color:red">{{ founder_form.founder_description.errors }}</span></p>
+    <input type="submit" value="Add this founder">
+  </form>
+{% endblock %}

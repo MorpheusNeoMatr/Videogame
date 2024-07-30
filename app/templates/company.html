@@ -39,7 +39,7 @@
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if company_founders|length < 3 %}
-            <a href="/add_founder">Add founders</a>
+            <a href="/add_founder">, Add founders</a>
         {% endif %}
     {% else %}
         No founders yet, <a href="/add_founder">Add founders</a>

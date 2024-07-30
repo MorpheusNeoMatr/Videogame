@@ -99,7 +99,8 @@ class Founder(db.Model):
     description = db.Column(db.Text())
     picture_1 = db.Column(db.Text())
     picture_2 = db.Column(db.Text())
-
+    founder_companies = db.relationship("Company", secondary=founder_company, backref=db.backref
+                                       ('founder', lazy='dynamic'))
 
 class Director(db.Model):
     __tablename__ = "director"

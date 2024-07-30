@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(basedir, "vi
 app.config['GAME_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'games_images')
 app.config['DIRECTOR_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'directors_images')
 app.config['COMPANY_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'companies_images')
+app.config['FOUNDER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'founders_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
@@ -20,7 +21,7 @@ db = SQLAlchemy(app)
 
 
 import app.models as models
-from app.forms import Add_Game, Add_Series, Add_Genre, Add_Directors, Add_Company
+from app.forms import Add_Game, Add_Series, Add_Genre, Add_Directors, Add_Company, Add_Founders
 from app.models import Genre, Company, Director, Series, Videogame, Founder
 
 
@@ -182,6 +183,35 @@ def company(id):
     return render_template("company.html",company_series=company_series, company_games=company_games, company_founders=company_founders, company=company, company_directors=company_directors)
 
 
+@app.route('/add_founder', methods=['GET', 'POST'])
+def add_founder():
+    founder_form = Add_Founders()
+    if request.method == 'GET':
+        return render_template('add_founder.html', founder_form=founder_form)
+    else:
+        if founder_form.validate_on_submit():
+            new_founder = models.Founder()
+            new_founder.name = founder_form.founder_name.data
+            new_founder.founder_companies = Company.query.filter(Company.id.in_(founder_form.founder_companies.data)).all()
+            new_founder.date_of_birth = founder_form.founder_date_of_birth.data
+            filenames = []
+            for founder_pictures in [founder_form.founder_picture_1,
+                                    founder_form.founder_picture_2,]:
+                if founder_pictures.data:
+                    filename = secure_filename(founder_pictures.data.filename)
+                    founder_pictures.data.save(os.path.join(app.config['FOUNDER_UPLOAD_FOLDER'], filename))
+                    filenames.append(filename)
+                else:
+                    filenames.append(None)
+            new_founder.picture_1 = filenames[0]
+            new_founder.picture_2 = filenames[1]
+            new_founder.description = founder_form.founder_description.data
+            db.session.add(new_founder)
+            db.session.commit()
+            return redirect(url_for('founder', id=new_founder.id))
+        else:
+            return render_template('add_founder.html', founder_form=founder_form)
+
 @app.route("/founder_list")
 def founder_list():
     founder_list = models.Founder.query.all()
@@ -191,7 +221,7 @@ def founder_list():
 @app.route("/founder/<int:id>")
 def founder(id):
     founder = models.Founder.query.filter_by(id=id).first_or_404()
-    founder_company = founder.company.all()
+    founder_company = founder.founder_companies
     return render_template("founder.html", founder_company=founder_company, founder=founder)
 
 

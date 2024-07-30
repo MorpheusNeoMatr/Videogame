@@ -78,3 +78,16 @@ class Add_Directors(FlaskForm):
         super(Add_Directors, self).__init__(*args, **kwargs)
         self.director_games.choices = [(game.id, game.name) for game in Videogame.query.all()]
         self.director_companies.choices = [(company.id, company.name)for company in Company.query.all()]
+
+
+class Add_Founders(FlaskForm):
+    founder_name = StringField('founder_name', validators=[DataRequired()])
+    founder_companies = SelectMultipleField('founder_companies', coerce=int, validators=[Optional()])
+    founder_date_of_birth = StringField('founder_date_of_birth', validators=[DataRequired()])
+    founder_description = TextAreaField('founder_description', validators=[DataRequired()])
+    founder_picture_1 = FileField('founder_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    founder_picture_2 = FileField('founder_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+
+    def __init__(self, *args, **kwargs):
+        super(Add_Founders, self).__init__(*args, **kwargs)
+        self.founder_companies.choices = [(company.id, company.name) for company in Company.query.all()]
