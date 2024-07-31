@@ -26,7 +26,7 @@ function updateGameList(games) {
 
         // Create an image element
         var img = document.createElement("img");
-        img.src = `/static/games_images/${game.picture_5}`; // Adjust to your image path
+        img.src = `/static/games_images/${game.picture_4}`; // Adjust to your image path
         img.className = "game-image"; // Add a class for styling
 
         // Create a paragraph element for the game name

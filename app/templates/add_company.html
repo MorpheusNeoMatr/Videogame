@@ -5,7 +5,6 @@
     {{ series_in_company_form.hidden_tag() }}
     <label for="series_name">Series Name:</label>
     {{ series_in_company_form.series_name() }}<br>
-  
     <button type="submit">Add Series</button>
 </form>
 <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_company') }}">

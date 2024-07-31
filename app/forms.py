@@ -23,7 +23,7 @@ class Add_Game(FlaskForm):
     game_picture_5 = FileField('game_picture_5', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
     game_picture_6 = FileField('game_picture_6', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
     game_series = SelectField('game_series', coerce=int, validators=[DataRequired()])
-    game_genres = SelectMultipleField('game_genres', coerce=int, validators=[Optional()])
+    game_genres = SelectMultipleField('game_genres', coerce=int, validators=[DataRequired()])
     game_directors = SelectMultipleField('game_directors', coerce=int, validators=[Optional()])
     game_companies = SelectMultipleField('game_companies', coerce=int, validators=[Optional()])
 

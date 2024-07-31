@@ -4,7 +4,7 @@ from app.routes import db
 class Genre(db.Model):
     __tablename__ = "genre"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text(50))
+    name = db.Column(db.Text())
 
 
 genre_game = db.Table('genre_game',
@@ -28,20 +28,20 @@ class Videogame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     series_id = db.Column(db.Integer, db.ForeignKey("series.id"))
     series = db.relationship("Series", backref="videogames")
-    name = db.Column(db.Text(50))
+    name = db.Column(db.Text())
     description = db.Column(db.Text())
     dev_score = db.Column(db.Text())
-    release_date = db.Column(db.Text(15))
+    release_date = db.Column(db.Text())
     gameplay = db.Column(db.Text())
     story = db.Column(db.Text())
     soundtrack = db.Column(db.Text())
     reviews = db.Column(db.Text())
-    picture_1 = db.Column(db.String(255), nullable=True)
-    picture_2 = db.Column(db.String(255), nullable=True)
-    picture_3 = db.Column(db.String(255), nullable=True)
-    picture_4 = db.Column(db.String(255), nullable=True)
-    picture_5 = db.Column(db.String(255), nullable=True)
-    picture_6 = db.Column(db.String(255), nullable=True)
+    picture_1 = db.Column(db.String(), nullable=True)
+    picture_2 = db.Column(db.String(), nullable=True)
+    picture_3 = db.Column(db.String(), nullable=True)
+    picture_4 = db.Column(db.String(), nullable=True)
+    picture_5 = db.Column(db.String(), nullable=True)
+    picture_6 = db.Column(db.String(), nullable=True)
     game_genres = db.relationship("Genre", secondary=genre_game, backref=db.backref
                              ('videogame', lazy='dynamic'))
     game_companies = db.relationship("Company", secondary=game_company, backref=db.backref
@@ -74,9 +74,9 @@ founder_company = db.Table('founder_company',
 class Company(db.Model):
     __tablename__ = "company"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text(50))
-    time_founded = db.Column(db.Text(20))
-    headquarters = db.Column(db.Text(30))
+    name = db.Column(db.Text())
+    time_founded = db.Column(db.Text())
+    headquarters = db.Column(db.Text())
     description = db.Column(db.Text())
     picture_1 = db.Column(db.Text())
     picture_2 = db.Column(db.Text())
@@ -111,4 +111,3 @@ class Director(db.Model):
     picture_2 = db.Column(db.Text())
     videogames = db.relationship("Videogame", secondary=game_director, backref=db.backref('director', lazy='dynamic'))
     companies = db.relationship("Company", secondary=company_director, backref=db.backref('director', lazy='dynamic'))
-

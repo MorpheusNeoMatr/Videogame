@@ -23,7 +23,7 @@
 
 <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <p>Game: {{ game_form.game_name(maxlength=50) }} <span>{{ game_form.game_name.errors }}</span></p>
+  <p>Game: {{ game_form.game_name(maxlength=30) }} <span>{{ game_form.game_name.errors }}</span></p>
   <p>Dev score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
   <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
 
@@ -71,7 +71,7 @@
   <p>Genres: 
     <button type="button" id="toggleGenres" class="toggle-button">
       Select Genres <span class="arrow down" id="arrowGenres"></span>
-    </button>
+    </button>{{ game_form.game_genres.errors }}
     <div id="genresList" class="dropdown-list">
       {% for genre in game_form.game_genres.choices|sort(attribute=1) %}
         <label>

@@ -95,6 +95,7 @@ def add_game():
             new_game.game_companies = Company.query.filter(Company.id.in_(game_form.game_companies.data)).all()
             db.session.add(new_game)
             db.session.commit()
+            flash('Game added successfully', 'success')
             return redirect(url_for('game', game_id=new_game.id))
 
         elif series_form.validate_on_submit():
@@ -102,6 +103,7 @@ def add_game():
             new_series.name = series_form.series_name.data
             db.session.add(new_series)
             db.session.commit()
+            flash('Series added successfully', 'success')
             return redirect(url_for('add_game'))
         
         elif genre_form.validate_on_submit():
@@ -109,6 +111,7 @@ def add_game():
             new_genre.name = genre_form.genre_name.data
             db.session.add(new_genre)
             db.session.commit()
+            flash('Genre added successfully', 'success')
             return redirect(url_for('add_game'))
         else:
             # If none of the forms are valid, re-render the page with the form errors
@@ -155,6 +158,7 @@ def add_company():
             new_company.picture_2 = filenames[1]
             db.session.add(new_company)
             db.session.commit()
+            flash('Company added successfully', 'success')
             return redirect(url_for('company', id=new_company.id))
         
         elif series_in_company_form.validate_on_submit():
@@ -162,6 +166,7 @@ def add_company():
             new_series_in_company.name = series_in_company_form.series_name.data
             db.session.add(new_series_in_company)
             db.session.commit()
+            flash('Series added successfully', 'success')
             return redirect(url_for('add_company'))
         else:
             return render_template('add_company.html', company_form=company_form, series_in_company_form=series_in_company_form)
@@ -208,6 +213,7 @@ def add_founder():
             new_founder.description = founder_form.founder_description.data
             db.session.add(new_founder)
             db.session.commit()
+            flash('Founder added successfully', 'success')
             return redirect(url_for('founder', id=new_founder.id))
         else:
             return render_template('add_founder.html', founder_form=founder_form)
@@ -251,6 +257,7 @@ def add_directors():
             new_director.picture_2 = filenames[1]
             db.session.add(new_director)
             db.session.commit()
+            flash('Director added successfully', 'success')
             return redirect(url_for('director', id=new_director.id))
         else:
             return render_template('add_directors.html', director_form=director_form)
