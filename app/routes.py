@@ -3,6 +3,8 @@ from flask import render_template, abort, redirect, url_for, flash
 import os
 from flask import request
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 
@@ -14,15 +16,18 @@ app.config['DIRECTOR_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'director
 app.config['COMPANY_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'companies_images')
 app.config['FOUNDER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'founders_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SESSION_COOKIE_EXPIRE'] = False  # Cookie will expire when the browser is closed
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 
 import app.models as models
-from app.forms import Add_Game, Add_Series, Add_Genre, Add_Directors, Add_Company, Add_Founders
-from app.models import Genre, Company, Director, Series, Videogame, Founder
+from app.forms import Add_Game, Add_Series, Add_Genre, Add_Directors, Add_Company, Add_Founders, Register, Login
+from app.models import Genre, Company, Director, Series, Videogame, Founder, Username_Pending, Username
 
 
 @app.route("/")
@@ -37,10 +42,10 @@ def home():
 
 @app.route("/api/games", methods=["GET"])
 def filter_games():
-    genre_id = request.args.get('genre')
-    company_id = request.args.get('company')
-    director_id = request.args.get('director')
-    series_id = request.args.get('series')
+    genre_id = request.args.get('Genre')
+    company_id = request.args.get('Company')
+    director_id = request.args.get('Director')
+    series_id = request.args.get('Series')
     query = models.Videogame.query
     if genre_id and genre_id != 'all':
         query = query.filter(models.Videogame.game_genres.any(id=genre_id))  
@@ -55,7 +60,98 @@ def filter_games():
     return jsonify({"games": games_list})
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        flash('You are logged in. Cannot access register page while logged in')
+        return redirect(url_for('home'))
+    else:
+        username_form = Register()
+        if request.method == 'GET':
+            return render_template('register.html', username_form=username_form)
+        else:
+            if username_form.validate_on_submit():
+                new_username = models.Username_Pending()
+                new_username.email = username_form.user_email.data
+                new_username.name = username_form.user_name.data
+                new_username.password_hash = generate_password_hash(username_form.user_password.data)
+                db.session.add(new_username)
+                db.session.commit()
+                flash('Username pending, wait for approval')
+                return redirect(url_for('register'))
+            else:
+                return render_template('register.html', username_form=username_form)
+        
+
+# User loader for Flask-Login
+@login_manager.user_loader
+def load_user(user_id):
+    return Username.query.get(int(user_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        flash('You are logged in. Cannot access the login page while logged in')
+        return redirect(url_for('home'))
+    else:
+        login_form = Login()
+        if request.method == 'GET':
+                return render_template('login.html', login_form=login_form)
+        else:
+            if login_form.validate_on_submit():
+                email = login_form.login_user_email.data
+                password = login_form.login_user_password.data
+                user = Username.query.filter_by(email=email).first()
+                if user and check_password_hash(user.password_hash, password):
+                    login_user(user)
+                    flash('Logged in')
+                    return redirect(url_for('home'))
+                else:
+                    flash('Login failed. Check your email and/or password.')
+                    return redirect(url_for('login'))
+            else:
+                return render_template('login.html', login_form=login_form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
+@app.route("/admin")
+def admin():
+    pending_users = Username_Pending.query.all()
+    return render_template('admin.html', pending_users=pending_users)
+
+
+@app.route("/admin/approve_user/<int:id>")
+def approve_user(id):
+    pending_user = Username_Pending.query.get_or_404(id)
+    new_user = Username()
+    new_user.name = pending_user.name
+    new_user.email = pending_user.email
+    new_user.password_hash = pending_user.password_hash
+    db.session.add(new_user)
+    db.session.delete(pending_user)
+    db.session.commit()
+    flash('User has been approved.')
+    return redirect(url_for('admin'))
+
+
+@app.route("/admin/reject_user/<int:id>")
+def reject_user(id):
+    pending_user = Username_Pending.query.get_or_404(id)
+    db.session.delete(pending_user)
+    db.session.commit()
+    flash('User has been rejected.')
+    return redirect(url_for('admin'))
+
+
 @app.route('/add_game', methods=['GET', 'POST'])
+@login_required
 def add_game():
     game_form = Add_Game()
     series_form = Add_Series()
@@ -124,11 +220,12 @@ def game(game_id):
     game_companies = game.game_companies
     game_genres = game.game_genres
     game_directors = game.game_directors
-    game_series = game.series
+    game_series = game.Series
     return render_template("game.html", game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
 
 
 @app.route("/add_company", methods=['GET', 'POST'])
+@login_required
 def add_company():
     company_form = Add_Company()
     series_in_company_form = Add_Series()
@@ -189,6 +286,7 @@ def company(id):
 
 
 @app.route('/add_founder', methods=['GET', 'POST'])
+@login_required
 def add_founder():
     founder_form = Add_Founders()
     if request.method == 'GET':
@@ -232,6 +330,7 @@ def founder(id):
 
 
 @app.route("/add_directors", methods=['GET', 'POST'])
+@login_required
 def add_directors():
     director_form = Add_Directors()
     if request.method == 'GET':
@@ -272,6 +371,6 @@ def director_list():
 @app.route("/director/<int:id>")
 def director(id):
     director = models.Director.query.filter_by(id=id).first_or_404()
-    director_game = director.videogame.all()
-    director_company = director.company.all()
+    director_game = director.Videogame.all()
+    director_company = director.Company.all()
     return render_template("director.html", director_company=director_company, director_game=director_game, director=director)

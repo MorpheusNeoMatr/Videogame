@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('register') }}">
+    {{ username_form.hidden_tag() }}
+    <p>Email: {{ username_form.user_email }} <span style="color:red">{{ username_form.user_email.errors }}</span></p>
+    <p>Name: {{ username_form.user_name }} <span style="color:red">{{ username_form.user_name.errors }}</span></p>
+    <p>Password: {{ username_form.user_password }} <span style="color:red">{{ username_form.user_password.errors }}</span></p>
+    <p>Confirm Password: {{ username_form.confirm }} <span style="color:red">{{ username_form.confirm.errors }}</span></p>
+    <input type="submit" value="Register">
+</form>
+
+{% endblock %}

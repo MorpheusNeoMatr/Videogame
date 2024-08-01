@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Pending Users</h1>
+
+{% if pending_users %}
+    {% for user in pending_users %}
+        <ul>
+            <li>Username: {{ user.name }}</li>
+            <li>Email: {{ user.email }}</li>
+            <a href="{{ url_for('approve_user', user_id=user.id) }}">Approve</a> or <a href="{{ url_for('reject_user', user_id=user.id) }}">Reject</a>
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No users pending approval yet.</p>
+{% endif %}
+
+{% endblock %}

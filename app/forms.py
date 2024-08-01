@@ -1,10 +1,24 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, TextAreaField,SelectField, SelectMultipleField, FileField, SubmitField
+from wtforms import IntegerField, StringField, TextAreaField, SelectField, SelectMultipleField, FileField, SubmitField, PasswordField
 from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, Optional, ValidationError
+from wtforms.validators import DataRequired, Optional, ValidationError, Email, EqualTo
 import app.models
 from app.models import Series,Director,Genre,Company, Videogame, Founder
 from datetime import datetime
+
+
+class Register(FlaskForm):
+    user_email = StringField('user_email', validators=[DataRequired(), Email()])
+    user_name = StringField('user_name', validators=[DataRequired()])
+    user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match')])
+    confirm = PasswordField('confirm', validators=[DataRequired()])
+    user_submit = SubmitField('Register')
+
+
+class Login(FlaskForm):
+    login_user_email = StringField('login_user_email', validators=[DataRequired(), Email()])
+    login_user_password = PasswordField('login_user_password', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
 
 class Add_Game(FlaskForm):

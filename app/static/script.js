@@ -63,7 +63,7 @@ function filterGames() {
     var seriesId = document.getElementById("seriesDropdown").value;
 
     // Perform AJAX request to fetch filtered games based on selected filters
-    fetch(`/api/games?genre=${genreId}&company=${companyId}&director=${directorId}&series=${seriesId}`)
+    fetch(`/api/games?Genre=${genreId}&Company=${companyId}&Director=${directorId}&Series=${seriesId}`)
         .then(response => response.json())
         .then(data => {
             updateGameList(data.games);  // Update the game list in the UI with names only
