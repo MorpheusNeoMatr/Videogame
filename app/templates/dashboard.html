@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<a href="/logout">logout</a>
+<br>
+<h3>Games added:</h3>
+<li>
+    {%if user_games %}
+    {% for games in user_games %}
+        <a href="/game/{{games.id}}">{{games.name}}</a>
+        {% if not loop.last %}  ,{% endif %}
+    {% endfor %}
+{% else %}
+    You added no games <a href="/add_game">add game?</a>
+{% endif %}
+</li>
+<h3>Founders added:</h3>
+<li>
+    {% if user_founders %}
+        {% for founder in user_founders %}
+            <a href="/founder/{{founder.id}}">{{founder.name}}</a>
+            {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+    {% else %}
+        No founders added yet, <a href="/add_founder">add founder?</a>
+    {% endif %}
+</li>
+<h3>Companies added:</h3>
+<li>
+    {% if user_companies %}
+        {% for company in user_companies %}
+            <a href="/company/{{company.id}}">{{company.name}}</a>
+            {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+    {% else %}
+        No companies added yet, <a href="/add_company">add company?</a>
+    {% endif %}
+</li>
+<h3>Added directors:</h3>
+<li>
+    {% if user_directors %}
+        {% for director in user_directors %}
+            <a href="/director/{{director.id}}">{{director.name}}</a>
+            {% if not loop.last %}  ,{% endif %}
+        {% endfor %}
+    {% else %}
+        No directors added yet, <a href="/add_directors">add director?</a>
+    {% endif %}
+</li>
+{% endblock %}

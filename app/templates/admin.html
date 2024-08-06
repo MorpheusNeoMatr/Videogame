@@ -7,7 +7,7 @@
         <ul>
             <li>Username: {{ user.name }}</li>
             <li>Email: {{ user.email }}</li>
-            <a href="{{ url_for('approve_user', user_id=user.id) }}">Approve</a> or <a href="{{ url_for('reject_user', user_id=user.id) }}">Reject</a>
+            <a href="{{ url_for('approve_user', id=user.id) }}">Approve</a> or <a href="{{ url_for('reject_user', id=user.id) }}">Reject</a>
         </ul>
     {% endfor %}
 {% else %}

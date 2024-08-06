@@ -6,6 +6,13 @@
     <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 5">
     {% endif %}
 </li>
+<li>
+    {% if game.Username.name %}
+    Added by: <a href='/dashboard/{{game.Username.id}}'>{{ game.Username.name }}</a> 
+    {% else %}
+        Added by dev
+    {% endif %}
+</li>
 <li >name: {{game.name}}</li>
 <li>Director(s):
     {% if game_directors %}
@@ -14,7 +21,7 @@
             {% if not loop.last %}, {% endif %}
         {% endfor %}
         {% if game_directors|length < 3 %}
-            <a href="/add_directors">, add director</a>
+            , <a href="/add_directors">add director</a>
         {% endif %}
     {% else %}
         No directors yet, <a href="/add_directors">add director</a>
@@ -34,14 +41,14 @@
         {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if game_companies|length < 3 %}
-            <a href="/add_company">, Add company</a>
+            , <a href="/add_company">Add company</a>
         {% endif %}
     {% else %}
         No companies yet, <a href="/add_company">Add company</a>
     {% endif %}
 </li>
 <li>Series: {{ game.Series.name }}</li>
-<li>{{game.release_date}}</li>
+<li>Release date: {{game.release_date}}</li>
 <li>
     {% if game.picture_6 %}
     <img src="{{ url_for('static', filename='games_images/' ~ game.picture_6) }}" alt="Game Picture 6">

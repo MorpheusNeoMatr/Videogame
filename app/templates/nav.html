@@ -9,7 +9,7 @@
     <a href="/add_company">Add company</a>
     <a href="/add_founder">Add founder</a>
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href='/dashboard/{{current_user.id}}'>{{current_user.name}}</a>
     {% else %}
         <a href="/login">Login</a>
     {% endif %}

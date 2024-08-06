@@ -4,7 +4,6 @@ from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Optional, ValidationError, Email, EqualTo
 import app.models
 from app.models import Series,Director,Genre,Company, Videogame, Founder
-from datetime import datetime
 
 
 class Register(FlaskForm):

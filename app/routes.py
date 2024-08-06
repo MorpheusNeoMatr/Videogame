@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, abort, redirect, url_for, flash
+from flask import render_template, abort, redirect, url_for, flash, session
 import os
 from flask import request
 from werkzeug.utils import secure_filename
@@ -20,6 +20,7 @@ app.config['SESSION_COOKIE_EXPIRE'] = False  # Cookie will expire when the brows
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
+ADMIN_PASSWORD = 'MatrM0rpheusNeo'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -56,8 +57,14 @@ def filter_games():
     if series_id and series_id != 'all':
         query = query.filter(models.Videogame.series_id == series_id)
     games = query.all()
-    games_list = [{"id": game.id, "name": game.name} for game in games]   # Return only names
+    # Return only names
+    games_list = [{"id": game.id, "name": game.name} for game in games]
     return jsonify({"games": games_list})
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -81,7 +88,7 @@ def register():
                 return redirect(url_for('register'))
             else:
                 return render_template('register.html', username_form=username_form)
-        
+
 
 # User loader for Flask-Login
 @login_manager.user_loader
@@ -97,7 +104,7 @@ def login():
     else:
         login_form = Login()
         if request.method == 'GET':
-                return render_template('login.html', login_form=login_form)
+            return render_template('login.html', login_form=login_form)
         else:
             if login_form.validate_on_submit():
                 email = login_form.login_user_email.data
@@ -108,10 +115,21 @@ def login():
                     flash('Logged in')
                     return redirect(url_for('home'))
                 else:
-                    flash('Login failed. Check your email and/or password.')
+                    flash('Login failed. Wrong email and/or password.')
                     return redirect(url_for('login'))
             else:
                 return render_template('login.html', login_form=login_form)
+
+
+@app.route('/dashboard/<int:id>')
+@login_required
+def dashboard(id):
+    user = Username.query.get_or_404(id)
+    user_games = models.Videogame.query.filter_by(username_id=id).all()
+    user_founders = models.Founder.query.filter_by(username_id=id).all()
+    user_companies = models.Company.query.filter_by(username_id=id).all()
+    user_directors = models.Director.query.filter_by(username_id=id).all()
+    return render_template('dashboard.html', user_directors=user_directors, user_companies=user_companies, user=user, user_games=user_games, user_founders=user_founders)
 
 
 @app.route('/logout')
@@ -121,10 +139,27 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'GET':
+        return render_template('admin_login.html')
+    else:
+        password = request.form['password']
+        if password == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            return redirect(url_for('admin'))
+        else:
+            flash("wrong password")
+            return render_template("admin_login.html")
+
+
 @app.route("/admin")
 def admin():
-    pending_users = Username_Pending.query.all()
-    return render_template('admin.html', pending_users=pending_users)
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    else:
+        pending_users = Username_Pending.query.all()
+        return render_template('admin.html', pending_users=pending_users)
 
 
 @app.route("/admin/approve_user/<int:id>")
@@ -170,6 +205,7 @@ def add_game():
             new_game.soundtrack = game_form.game_soundtrack.data
             new_game.reviews = game_form.game_reviews.data
             new_game.series_id = game_form.game_series.data
+            new_game.username_id = current_user.id
             filenames = []
             for game_pictures in [game_form.game_picture_1,
                                 game_form.game_picture_2, game_form.game_picture_3,
@@ -221,7 +257,8 @@ def game(game_id):
     game_genres = game.game_genres
     game_directors = game.game_directors
     game_series = game.Series
-    return render_template("game.html", game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
+    game_user = game.Username
+    return render_template("game.html", game_user=game_user, game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
 
 
 @app.route("/add_company", methods=['GET', 'POST'])
@@ -242,6 +279,7 @@ def add_company():
             new_company.time_founded = company_form.company_time_founded.data
             new_company.headquarters = company_form.company_headquarters.data
             new_company.description = company_form.company_description.data
+            new_company.username_id = current_user.id
             filenames = []
             for company_pictures in [company_form.company_picture_1,
                                 company_form.company_picture_2,]:
@@ -257,7 +295,7 @@ def add_company():
             db.session.commit()
             flash('Company added successfully', 'success')
             return redirect(url_for('company', id=new_company.id))
-        
+     
         elif series_in_company_form.validate_on_submit():
             new_series_in_company = models.Series()
             new_series_in_company.name = series_in_company_form.series_name.data
@@ -282,7 +320,8 @@ def company(id):
     company_founders = company.company_founders
     company_games = company.company_games
     company_series = company.company_series
-    return render_template("company.html",company_series=company_series, company_games=company_games, company_founders=company_founders, company=company, company_directors=company_directors)
+    company_username = company.Username
+    return render_template("company.html", company_username=company_username, company_series=company_series, company_games=company_games, company_founders=company_founders, company=company, company_directors=company_directors)
 
 
 @app.route('/add_founder', methods=['GET', 'POST'])
@@ -309,12 +348,14 @@ def add_founder():
             new_founder.picture_1 = filenames[0]
             new_founder.picture_2 = filenames[1]
             new_founder.description = founder_form.founder_description.data
+            new_founder.username_id = current_user.id
             db.session.add(new_founder)
             db.session.commit()
             flash('Founder added successfully', 'success')
             return redirect(url_for('founder', id=new_founder.id))
         else:
             return render_template('add_founder.html', founder_form=founder_form)
+
 
 @app.route("/founder_list")
 def founder_list():
@@ -326,7 +367,8 @@ def founder_list():
 def founder(id):
     founder = models.Founder.query.filter_by(id=id).first_or_404()
     founder_company = founder.founder_companies
-    return render_template("founder.html", founder_company=founder_company, founder=founder)
+    founder_username = founder.Username
+    return render_template("founder.html", founder_username=founder_username, founder_company=founder_company, founder=founder)
 
 
 @app.route("/add_directors", methods=['GET', 'POST'])
@@ -343,6 +385,7 @@ def add_directors():
             new_director.description = director_form.director_description.data
             new_director.videogames = Videogame.query.filter(Videogame.id.in_(director_form.director_games.data)).all()
             new_director.companies = Company.query.filter(Company.id.in_(director_form.director_companies.data)).all()
+            new_director.username_id = current_user.id
             filenames = []
             for director_pictures in [director_form.director_picture_1,
                                 director_form.director_picture_2,]:
@@ -373,4 +416,5 @@ def director(id):
     director = models.Director.query.filter_by(id=id).first_or_404()
     director_game = director.Videogame.all()
     director_company = director.Company.all()
-    return render_template("director.html", director_company=director_company, director_game=director_game, director=director)
+    director_username = director.Username
+    return render_template("director.html", director_username=director_username, director_company=director_company, director_game=director_game, director=director)

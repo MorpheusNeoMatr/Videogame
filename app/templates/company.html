@@ -5,6 +5,13 @@
     <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_1) }}" alt="Company Picture 1">
     {% endif %}
 </li>
+<li>
+    {% if company.Username %}
+        Added by: <a href="/dashboard/{{company.Username.id}}">{{company.Username.name}}</a>
+    {% else %}
+        Added by dev
+    {% endif %}
+</li>
 <li>Name: {{company.name}}</li>
 <li>Videogame(s):
     {% if company_games %}
@@ -13,7 +20,7 @@
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if company_games|length < 3 %}
-            <a href="/add_game">Add games</a>
+            , <a href="/add_game">Add games</a>
         {% endif %}
     {% else %}
         No games yet, <a href="/add_game">Add games</a>
@@ -26,10 +33,10 @@
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if company_directors|length < 3 %}
-            <a href="/add_directors">, Add directors</a>
+            , <a href="/add_directors">Add directors</a>
         {% endif %}
     {% else %}
-        No director yet, <a href="/add_directors">, Add director</a>
+        No director yet, <a href="/add_directors"> Add director</a>
     {% endif %}
 </li>
 <li>Founder(s):
@@ -39,24 +46,17 @@
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if company_founders|length < 3 %}
-            <a href="/add_founder">, Add founders</a>
+            , <a href="/add_founder">Add founders</a>
         {% endif %}
     {% else %}
         No founders yet, <a href="/add_founder">Add founders</a>
     {% endif %}
 </li>
 <li>Series:
-    {% if company_series %}
         {% for series in company_series[:3] %}
             {{series.name}}
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
-        {% if company_series|length < 3 %}
-            <a href="/add_company">, Add series</a>
-        {% endif %}
-    {% else %}
-        No series yet, <a href="/add_company">Add series</a>
-    {% endif %}
 </li>
 <li>
     Founded in: {{company.time_founded}}

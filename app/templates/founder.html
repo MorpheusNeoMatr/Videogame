@@ -5,6 +5,13 @@
     <img src="{{ url_for('static', filename='founders_images/' ~ founder.picture_1) }}" alt="Director Picture 1">
     {% endif %}
 </li>
+<li>
+    {% if founder.Username %}
+        Added by: <a href="/dashboard/{{founder.Username.id}}">{{founder.Username.name}}</a>
+    {% else %}
+        Added by dev
+    {% endif %}
+</li>
 <li>{{founder.name}}</li>
 <li>company(s) founded:
     {% if founder_company %}
@@ -13,13 +20,13 @@
             {% if not loop.last %}  ,{% endif %}
         {% endfor %}
         {% if founder_company|length < 3 %}
-            <a href="/add_company">, Add company</a>
+            , <a href="/add_company">Add company</a>
         {% endif %}
     {% else %}
     No companies yet, <a href="/add_company">Add company</a>
     {% endif %}
 </li>
-<li>{{founder.date_of_birth}}</li>
+<li>Age: {{founder.date_of_birth}}</li>
 <li>
     {% if founder.picture_2 %}
     <img src="{{ url_for('static', filename='founders_images/' ~ founder.picture_2) }}" alt="Director Picture 2">

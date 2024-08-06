@@ -4,11 +4,11 @@
 <form method="POST" action="{{ url_for('login') }}">
     {{ login_form.hidden_tag() }}
     <div>
-        <label for="login_user_email">Email:</label>
+        <label>Email:</label>
         {{ login_form.login_user_email() }} {{ login_form.login_user_email.errors }}
     </div>
     <div>
-        <label for="login_user_password">Password:</label>
+        <label>Password:</label>
         {{ login_form.login_user_password() }} {{ login_form.login_user_password.errors }}
     </div>
     {{ login_form.submit() }}
