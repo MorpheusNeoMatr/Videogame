@@ -12,6 +12,7 @@ class Register(FlaskForm):
     user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match')])
     confirm = PasswordField('confirm', validators=[DataRequired()])
     user_submit = SubmitField('Register')
+    admin_permission = SubmitField('admin_permission')
 
 
 class Login(FlaskForm):

@@ -1,20 +1,12 @@
 from app.routes import db
-from flask_login import UserMixin
 
 
-class Username_Pending(db.Model):
-    __tablename__ = "Username_pending"
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.Text(), unique=True)
-    name = db.Column(db.Text())
-    password_hash = db.Column(db.Text())
-
-
-class Username(db.Model, UserMixin):
+class Username(db.Model):
     __tablename__ = "Username"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Text(), unique=True)
     name = db.Column(db.Text())
+    permission = db.Column(db.Integer, default=0)
     password_hash = db.Column(db.Text())
 
 
