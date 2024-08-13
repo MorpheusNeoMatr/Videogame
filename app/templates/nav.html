@@ -8,6 +8,7 @@
     <a href="/add_directors">Add director</a>
     <a href="/add_company">Add company</a>
     <a href="/add_founder">Add founder</a>
+    <a href="/user_list">Users</a>
     {% if session.get('user_id') %}
         <a href='/dashboard/{{session["user_id"]}}'>{{session["user_name"]}}</a>
     {% else %}

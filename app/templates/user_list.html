@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for user in users %}
+<a href='/dashboard/{{user.id}}'>{{user.name}}</a>
+{% endfor %}
+{% endblock %}

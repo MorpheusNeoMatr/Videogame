@@ -21,7 +21,8 @@ app.config['COMPANY_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
 app.config['FOUNDER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
                                                    'founders_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SESSION_COOKIE_EXPIRE'] = False  # Cookie will expire when the browser is closed
+app.config['SESSION_COOKIE_EXPIRE'] = None  # Expire when browser is closed
+app.config['SESSION_PERMANENT'] = False 
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
@@ -40,8 +41,9 @@ def home():
     companies = Company.query.order_by(Company.name).all()
     directors = Director.query.order_by(Director.name).all()
     series = Series.query.order_by(Series.name).all()
+    users = Username.query.order_by(Username.name).all()
     games = models.Videogame.query.all()  # Fetch all games initially
-    return render_template('home.html', genres=genres, companies=companies, directors=directors, series=series, games=games)
+    return render_template('home.html', users=users, genres=genres, companies=companies, directors=directors, series=series, games=games)
 
 
 @app.route("/api/games", methods=["GET"])
@@ -50,6 +52,7 @@ def filter_games():
     company_id = request.args.get('Company')
     director_id = request.args.get('Director')
     series_id = request.args.get('Series')
+    user_id = request.args.get('User')
     query = models.Videogame.query
     if genre_id and genre_id != 'all':
         query = query.filter(models.Videogame.game_genres.any(id=genre_id))  
@@ -57,12 +60,15 @@ def filter_games():
         query = query.filter(models.Videogame.game_companies.any(id=company_id)) 
     if director_id and director_id != 'all':
         query = query.filter(models.Videogame.game_directors.any(id=director_id))
+    if user_id and user_id != 'all':
+        query = query.filter(models.Videogame.username_id == user_id)
     if series_id and series_id != 'all':
         query = query.filter(models.Videogame.series_id == series_id)
     games = query.all()
     # Return only names
     games_list = [{"id": game.id, "name": game.name} for game in games]
     return jsonify({"games": games_list})
+    
 
 
 @app.errorhandler(404)
@@ -334,8 +340,39 @@ def add_company():
 
 @app.route("/company_list")
 def company_list():
+    games = Videogame.query.order_by(Videogame.name).all()
+    series = Series.query.order_by(Series.name).all()
+    founders = Founder.query.order_by(Founder.name).all()
+    directors = Director.query.order_by(Director.name).all()
+    users = Username.query.order_by(Username.name).all()
     company_list = models.Company.query.all()
-    return render_template("company_list.html", company_list=company_list)
+    return render_template("company_list.html",
+    directors=directors, founders=founders, series=series, games=games,
+    users=users, company_list=company_list)
+
+
+@app.route("/api/companies", methods=["GET"])
+def filter_companies():
+    game_id = request.args.get('Game')
+    founder_id = request.args.get('Founder')
+    director_id = request.args.get('Director')
+    series_id = request.args.get('Series')
+    user_id = request.args.get('User')
+    query = models.Company.query
+    if game_id and game_id != 'all':
+        query = query.filter(models.Company.company_games.any(id=game_id))
+    if founder_id and founder_id != 'all':
+        query = query.filter(models.Company.company_founders.any(id=founder_id))
+    if director_id and director_id != 'all':
+        query = query.filter(models.Company.company_directors.any(id=director_id))
+    if user_id and user_id != 'all':
+        query = query.filter(models.Company.username_id == user_id)
+    if series_id and series_id != 'all':
+        query = query.filter(models.Company.company_series.any(id=series_id))
+    companies = query.all()
+    # Return only names
+    companies_list = [{"id": company.id, "name": company.name} for company in companies]
+    return jsonify({"companies": companies_list})
 
 
 @app.route("/company/<int:id>")
@@ -387,8 +424,25 @@ def add_founder():
 
 @app.route("/founder_list")
 def founder_list():
+    companies = Company.query.order_by(Company.name).all()
+    users = Username.query.order_by(Username.name).all()
     founder_list = models.Founder.query.all()
-    return render_template("founder_list.html", founder_list=founder_list)
+    return render_template("founder_list.html", companies=companies, users=users, founder_list=founder_list)
+
+
+@app.route("/api/founders", methods=['GET'])
+def filter_founders():
+    company_id = request.args.get('Company')
+    user_id = request.args.get('User')
+    query = models.Founder.query
+    if user_id and user_id != 'all':
+        query = query.filter(models.Founder.username_id == user_id)
+    if company_id and company_id != 'all':
+        query = query.filter(models.Founder.founder_companies.any(id=company_id))
+    founders = query.all()
+    # Return only names
+    founders_list = [{"id": founder.id, "name": founder.name} for founder in founders]
+    return jsonify({"founders": founders_list})
 
 
 @app.route("/founder/<int:id>")
@@ -438,8 +492,30 @@ def add_directors():
 
 @app.route("/director_list")
 def director_list():
+    games = Videogame.query.order_by(Videogame.name).all()
+    companies = Company.query.order_by(Company.name).all()
+    users = Username.query.order_by(Username.name).all()
     director_list = models.Director.query.all()
-    return render_template("director_list.html", director_list=director_list)
+    return render_template("director_list.html",
+    companies=companies, users=users, games=games, director_list=director_list)
+
+
+@app.route("/api/directors", methods=["GET"])
+def filter_directors():
+    game_id = request.args.get('Game')
+    company_id = request.args.get('Company')
+    user_id = request.args.get('User')
+    query = models.Director.query
+    if game_id and game_id != 'all':
+        query = query.filter(models.Director.videogames.any(id=game_id))
+    if user_id and user_id != 'all':
+        query = query.filter(models.Director.username_id == user_id)
+    if company_id and company_id != 'all':
+        query = query.filter(models.Director.companies.any(id=company_id))
+    directors = query.all()
+    # Return only names
+    director_list = [{"id": director.id, "name": director.name} for director in directors]
+    return jsonify({"directors": director_list})
 
 
 @app.route("/director/<int:id>")
@@ -449,3 +525,13 @@ def director(id):
     director_company = director.Company.all()
     director_username = director.Username
     return render_template("director.html", director_username=director_username, director_company=director_company, director_game=director_game, director=director)
+
+
+@app.route("/user_list")
+def user_list():
+    if 'user_id' not in session:
+        flash("Please log in to access this page")
+        return redirect(url_for('home'))
+    else:
+        users = models.Username.query.all()
+        return render_template("user_list.html", users=users)

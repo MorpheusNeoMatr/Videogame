@@ -1,12 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
+<select id="companyDropdown">
+    <option value="all">All companies</option>
+    {% for company in companies %}
+        <option value="{{ company.id }}">{{ company.name }}</option>
+    {% endfor %}
+</select>
 
 
-{% for founder_list in founder_list %}
-    <li>
-        <a href = "/founder/{{founder_list.id}}">{{founder_list.name}}</a>
-    </li>    
+<select id="usersDropdown">
+    <option value="all">All users</option>
+    {% for user in users %}
+        <option value="{{ user.id }}">{{ user.name }}</option>
+    {% endfor %}
+</select>
 
-{%endfor%}
 
+<button onclick="filterFounders()">Apply Filters</button>
+
+<ul id="founderList">
+    <!-- This will be populated with company after filtering -->
+</ul>
 {% endblock %}

@@ -1,12 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
+<select id="gameDropdown">
+    <option value="all">All games</option>
+    {% for game in games %}
+        <option value="{{ game.id }}">{{ game.name }}</option>
+    {% endfor %}
+</select>
 
 
-{% for director_list in director_list %}
-    <li>
-        <a href = "/director/{{director_list.id}}">{{director_list.name}}</a>
-    </li>    
+<select id="companyDropdown">
+    <option value="all">All companies</option>
+    {% for company in companies %}
+        <option value="{{ company.id }}">{{ company.name }}</option>
+    {% endfor %}
+</select>
 
-{%endfor%}
 
+<select id="usersDropdown">
+    <option value="all">All users</option>
+    {% for user in users %}
+        <option value="{{ user.id }}">{{ user.name }}</option>
+    {% endfor %}
+</select>
+
+
+<button onclick="filterDirectors()">Apply Filters</button>
+
+<ul id="directorList">
+    <!-- This will be populated with company after filtering -->
+</ul>
 {% endblock %}

@@ -23,10 +23,19 @@
 
 <select id="seriesDropdown">
     <option value="all">All series</option>
-    {% for serie in series %}
-        <option value="{{ serie.id }}">{{ serie.name }}</option>
+    {% for series in series %}
+        <option value="{{ series.id }}">{{ series.name }}</option>
     {% endfor %}
 </select>
+
+
+<select id="usersDropdown">
+    <option value="all">All users</option>
+    {% for user in users %}
+        <option value="{{ user.id }}">{{ user.name }}</option>
+    {% endfor %}
+</select>
+
 
 <button onclick="filterGames()">Apply Filters</button>
 
