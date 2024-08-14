@@ -61,3 +61,57 @@ body{
     margin: 0; /* Removes default margin */
 }
 
+/* Container for the grid */
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the minmax value as needed */
+    text-align: center;
+    gap: 20px; /* Space between grid items */
+    padding: 20px; /* Padding around the grid */
+    max-width: 1200px; /* Set a maximum width for the grid */
+    margin: 0 auto; /* Center the grid horizontally */
+}
+
+/* Individual user card */
+.user-card {
+    border: 1px solid #333; /* Dark border for the card */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow to keep the rounded corners clean */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
+    background-color: #2c2c2c; /* Light black color for the card background */
+    padding: 15px; /* Padding inside the card */
+    text-align: center; /* Center text inside the card */
+    color: #fff; /* White text color for contrast */
+}
+
+/* Style for images */
+.user-card img {
+    width: 100%; /* Make the image fill the card width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make image circular (optional) */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+/* Style for user information */
+.user-info p {
+    margin: 10px 0; /* Space around the paragraphs */
+}
+
+/* Style for buttons */
+.approve-btn, .reject-btn {
+    display: inline-block; /* Make buttons inline with each other */
+    padding: 10px 15px; /* Padding inside the buttons */
+    margin: 5px; /* Space around the buttons */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+}
+
+.approve-btn {
+    background-color: #28a745; /* Green color for approve button */
+}
+
+.reject-btn {
+    background-color: #dc3545; /* Red color for reject button */
+}

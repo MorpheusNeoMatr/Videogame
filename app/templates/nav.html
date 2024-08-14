@@ -1,5 +1,8 @@
 <nav>
-    <a href="/admin">Admin</a>
+    {% if session.get('user_id') == 17 %}
+        <a href="/admin">Admin</a>
+    {% else %}
+    {% endif %}
     <a href="/">Games</a>
     <a href="/company_list">Companies</a>
     <a href="/director_list">Directors</a>

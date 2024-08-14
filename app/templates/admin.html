@@ -2,16 +2,23 @@
 {% block content %}
 <h1>Pending Users</h1>
 
-{% if pending_users %}
-    {% for user in pending_users %}
-        <ul>
-            <li>Username: {{ user.name }}</li>
-            <li>Email: {{ user.email }}</li>
-            <a href="{{ url_for('approve_user', id=user.id) }}">Approve</a> or <a href="{{ url_for('reject_user', id=user.id) }}">Reject</a>
-        </ul>
-    {% endfor %}
-{% else %}
-    <p>No users pending approval yet.</p>
-{% endif %}
+<div class="user-grid">
+    {% if pending_users %}
+        {% for user in pending_users %}
+            <div class="user-card">
+                <img src="{{ url_for('static', filename='user_images/' ~ user.picture) }}" alt="Picture">
+                <div class="user-info">
+                    <p><strong>Username:</strong> {{ user.name }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <a href="{{ url_for('approve_user', id=user.id) }}" class="approve-btn">Approve</a>
+                    <a href="{{ url_for('reject_user', id=user.id) }}" class="reject-btn">Reject</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No users pending approval yet.</p>
+    {% endif %}
+</div>
+
 
 {% endblock %}

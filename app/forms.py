@@ -13,6 +13,8 @@ class Register(FlaskForm):
     confirm = PasswordField('confirm', validators=[DataRequired()])
     user_submit = SubmitField('Register')
     admin_permission = SubmitField('admin_permission')
+    user_picture = FileField('picture', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+
 
 
 class Login(FlaskForm):

@@ -5,9 +5,10 @@ class Username(db.Model):
     __tablename__ = "Username"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Text(), unique=True)
-    name = db.Column(db.Text())
+    name = db.Column(db.Text(), unique=True)
     permission = db.Column(db.Integer, default=0)
     password_hash = db.Column(db.Text())
+    picture = db.Column(db.Text())
 
 
 class Genre(db.Model):

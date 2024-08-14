@@ -20,6 +20,8 @@ app.config['COMPANY_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
                                                    'companies_images')
 app.config['FOUNDER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
                                                    'founders_images')
+app.config['USER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
+                                                   'user_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_EXPIRE'] = None  # Expire when browser is closed
 app.config['SESSION_PERMANENT'] = False 
@@ -92,6 +94,15 @@ def register():
                     new_username = models.Username()
                     new_username.email = username_form.user_email.data
                     new_username.name = username_form.user_name.data
+                    filenames = []
+                    for user_picture in [username_form.user_picture]:
+                        if user_picture.data:
+                            filename = secure_filename(user_picture.data.filename)
+                            user_picture.data.save(os.path.join(app.config['USER_UPLOAD_FOLDER'], filename))
+                            filenames.append(filename)
+                        else:
+                            filenames.append(None)
+                    new_username.picture = filenames[0]
                     new_username.password_hash = generate_password_hash(
                     username_form.user_password.data)
                     db.session.add(new_username)
@@ -102,7 +113,13 @@ def register():
                     return render_template(
                     'register.html', username_form=username_form)
             except IntegrityError:
-                flash('Email already existed')
+                db.session.rollback()  # Rollback the session to avoid partial commits
+                if models.Username.query.filter_by(email=username_form.user_email.data).first():
+                    flash('Email already exists.')
+                elif models.Username.query.filter_by(name=username_form.user_name.data).first():
+                    flash('Username already exists.')
+                else:
+                    flash('An unexpected error occurred.')
                 return render_template('register.html',
                                      username_form=username_form)
 
@@ -167,24 +184,11 @@ def logout():
         return redirect(url_for('home'))
 
 
-@app.route('/admin_login', methods=['GET', 'POST'])
-def admin_login():
-    if request.method == 'GET':
-        return render_template('admin_login.html')
-    else:
-        password = request.form['password']
-        if password == ADMIN_PASSWORD:
-            session['admin_logged_in'] = True
-            return redirect(url_for('admin'))
-        else:
-            flash("wrong password")
-            return render_template("admin_login.html")
-
-
 @app.route("/admin")
 def admin():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
+    if 'user_id' not in session or session.get('user_id') != 17:
+        flash("Admin access only")
+        return redirect(url_for('home'))
     else:
         pending_users = Username.query.filter_by(permission=0).all()
         return render_template('admin.html', pending_users=pending_users)
