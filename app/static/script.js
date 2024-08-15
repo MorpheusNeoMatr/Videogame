@@ -20,8 +20,9 @@ function updateGameList(games) {
         div.className = "item";
 
         var img = document.createElement("img");
-        img.src = `/static/games_images/${game.picture_4}`;
+        img.src = game.picture_1 ? `/static/games_images/${game.picture_1}` : '/static/games_images/default_image.jpg';
         img.className = "image";
+
 
         var p = document.createElement("p");
         p.textContent = game.name;
@@ -53,7 +54,7 @@ function updateCompanyList(companies) {
         link.className = "item-link";
 
         var img = document.createElement("img");
-        img.src = `/static/companies_images/${company.picture_1}`;
+        img.src = company.picture_1 ? `/static/companies_images/${company.picture_1}` : '/static/games_images/default_image.jpg';
         img.className = "image";
 
         var div = document.createElement("div");
@@ -96,7 +97,7 @@ function updateDirectorList(directors) {
         p.className = "name";
 
         var img = document.createElement("img");
-        img.src = `/static/directors_images/${director.picture_1}`;
+        img.src = director.picture_1 ? `/static/directors_images/${director.picture_1}` : '/static/games_images/default_image.jpg';
         img.className = "image";
 
         div.appendChild(img);
@@ -125,8 +126,8 @@ function updateFounderList(founders) {
         link.className = "item-link";
 
         var img = document.createElement("img");
-        img.src = `/static/founders_images/${founder.picture_1}`;
-        img.className = "image"; 
+        img.src = founder.picture_1 ? `/static/founders_images/${founder.picture_1}` : '/static/games_images/default_image.jpg';
+        img.className = "image";
 
         var div = document.createElement("div");
         div.className = "item";
@@ -215,3 +216,4 @@ function showSection(sectionId) {
     // Show the selected section
     document.getElementById(sectionId).style.display = 'block';
 }
+

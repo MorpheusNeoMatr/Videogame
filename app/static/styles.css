@@ -1,3 +1,13 @@
+/*this is for styling the layout*/
+body{
+    font-family: 'verdana';/*font type*/
+    background-color: #333;
+    color: white;
+    text-align: center;/*this will  position the value at the center horizontally*/
+
+}
+
+
 /*/*This class is for the header at the top"Top 10 movies for five genres*/
 header h1{
     border: 1px solid black;
@@ -17,12 +27,82 @@ header h2 {
 }
 
 
-/*this is for styling the layout*/
-body{
-    font-family: 'verdana';/*font type*/
-    text-align: center;/*this will  position the value at the center horizontally*/
-
+/* Navbar */
+nav {
+    background-color: #333; /* Light black background */
+    border-bottom: 2px solid red; /* Red line at the bottom */
+    padding: 10px;
+    font-size: 16px; /* Set a base font size for the navbar */
+    display: flex; /* Use flexbox to align items */
+    justify-content: center; /* Center the buttons */
+    align-items: center;
+    margin-bottom: 20px;
 }
+
+nav a, .dropbtn {
+    color: white; /* White text */
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    font-size: inherit; /* Inherit font size from nav */
+}
+
+nav a:hover, .dropbtn:hover {
+    background-color: red; /* Change to red on hover */
+}
+
+.dropbtn {
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: inherit; /* Inherit font size from nav */
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: inherit; /* Inherit font size from nav */
+}
+
+.dropdown-content a:hover {
+    background-color: #444; /* Slightly lighter black on hover */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .arrow-down {
+    transform: rotate(180deg);
+}
+
+.arrow-down {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+/* Light-colored separator line between buttons */
+nav a:not(:last-child), .dropbtn:not(:last-child) {
+    border-right: 1px solid #555; /* Light color line */
+}
+
 
 
 /* game list page */
@@ -32,33 +112,44 @@ body{
 }
 
 .item {
-    display: inline-block; /* Allows items to be on the same line if space permits */
-    text-align: center; /* Centers the text and image */
-    margin: 10px; /* Adds space around each game item */
-    border: 1px solid #ddd; /* Adds a border around the container */
-    border-radius: 8px; /* Rounds the corners of the border */
-    padding: 10px; /* Adds space inside the border */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
-    width: 150px; /* Adjust the width as needed */
-    transition: transform 0.2s; /* Smooth transition for scaling effect */
+    display: inline-block;
+    text-align: center;
+    background-color: #333;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 200px; /* Fixed height to ensure boxes are the same size */
+    transition: transform 0.2s;
+    overflow: hidden; /* Ensures content does not overflow */
+    position: relative; /* Allows positioning of children */
 }
 
 .item:hover {
-    transform: scale(1.05); /* Slightly enlarge item on hover */
-    background-color : red;
+    transform: scale(1.05);
+    background-color: red;
 }
 
 .image {
-    width: 100%; /* Makes the image take up the full width of the container */
-    height: auto; /* Maintains aspect ratio */
-    border-bottom: 1px solid #ddd; /* Adds a line between the image and the text */
-    margin-bottom: 5px; /* Adds space between the image and the text */
+    width: 100%;
+    height: 70%; /* Adjust height percentage to fit within item */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    border-bottom: 1px solid #ddd;
 }
+
+.item-content {
+    height: 30%; /* Adjust based on remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers text content vertically */
+}
+
 
 .name {
     font-size: 16px; /* Sets the font size */
-    color: #333; /* Sets the text color */
-    margin: 0; /* Removes default margin */
+    color: white; /* Sets the text color */
 }
 
 /* Container for the grid */
@@ -70,18 +161,19 @@ body{
     padding: 20px; /* Padding around the grid */
     max-width: 1200px; /* Set a maximum width for the grid */
     margin: 0 auto; /* Center the grid horizontally */
+    
 }
 
 /* Individual user card */
 .user-card {
-    border: 1px solid #333; /* Dark border for the card */
+    border: 1px solid white; /* Dark border for the card */
     border-radius: 8px; /* Rounded corners */
     overflow: hidden; /* Hide overflow to keep the rounded corners clean */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
     background-color: #2c2c2c; /* Light black color for the card background */
     padding: 15px; /* Padding inside the card */
     text-align: center; /* Center text inside the card */
-    color: #fff; /* White text color for contrast */
+    background-color: #333; /* White text color for contrast */
 }
 
 /* Style for images */
@@ -114,4 +206,110 @@ body{
 
 .reject-btn {
     background-color: #dc3545; /* Red color for reject button */
+}
+
+
+.images-size{
+    width: 200px; /* or any desired width */
+    border-radius: 10px;
+    height: auto; /* keeps aspect ratio */
+}
+
+/* games */
+.image-text-row {
+    display: flex; /* Align items in a row */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 20px; /* Space between rows */
+}
+
+.images-size {
+    height: 200px; /* Adjust height to match the text height */
+    width: 200px; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between image and line */
+    object-fit: cover; /* Ensure the image covers the assigned height */
+}
+
+.red-line {
+    width: 2px; /* Thickness of the line */
+    background-color: red; /* Color of the line */
+    height: 200px; /* Match the height of the image */
+    margin: 0 10px; /* Space around the line */
+}
+
+.text-content {
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically */
+}
+
+
+/* Reset margin and padding for list items */
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Reset margin and padding for paragraphs */
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.title{
+    flex-direction: column;
+    justify-content: center; /* Center text vertically */
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+.white-line {
+    border: 0;
+    height: 1px;
+    background-color: red;
+    margin: 20px 0; /* Adjust margin as needed */
+}
+
+
+#test{
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+         -o-animation: fadein 2s; /* Opera < 12.1 */
+            animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }

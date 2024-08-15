@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, TextAreaField, SelectField, SelectMultipleField, FileField, SubmitField, PasswordField
 from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, Optional, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, Optional, ValidationError, Email, EqualTo, Length
 import app.models
 from app.models import Series,Director,Genre,Company, Videogame, Founder
 
@@ -9,12 +9,11 @@ from app.models import Series,Director,Genre,Company, Videogame, Founder
 class Register(FlaskForm):
     user_email = StringField('user_email', validators=[DataRequired(), Email()])
     user_name = StringField('user_name', validators=[DataRequired()])
-    user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match')])
+    user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match'), Length(min=6, max=100)])
     confirm = PasswordField('confirm', validators=[DataRequired()])
     user_submit = SubmitField('Register')
     admin_permission = SubmitField('admin_permission')
-    user_picture = FileField('picture', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-
+    user_picture = FileField('picture', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
 
 
 class Login(FlaskForm):
@@ -32,12 +31,12 @@ class Add_Game(FlaskForm):
     game_story = TextAreaField('game_story', validators=[DataRequired()])
     game_soundtrack = TextAreaField('game_soundtrack', validators=[DataRequired()])
     game_reviews = TextAreaField('game_reviews', validators=[DataRequired()])
-    game_picture_1 = FileField('game_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_picture_2 = FileField('game_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_picture_3 = FileField('game_picture_3', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_picture_4 = FileField('game_picture_4', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_picture_5 = FileField('game_picture_5', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    game_picture_6 = FileField('game_picture_6', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    game_picture_1 = FileField('game_picture_1', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    game_picture_2 = FileField('game_picture_2', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    game_picture_3 = FileField('game_picture_3', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    game_picture_4 = FileField('game_picture_4', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    game_picture_5 = FileField('game_picture_5', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    game_picture_6 = FileField('game_picture_6', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
     game_series = SelectField('game_series', coerce=int, validators=[DataRequired()])
     game_genres = SelectMultipleField('game_genres', coerce=int, validators=[DataRequired()])
     game_directors = SelectMultipleField('game_directors', coerce=int, validators=[Optional()])
@@ -70,8 +69,8 @@ class Add_Company(FlaskForm):
     company_time_founded = StringField('company_founded_time', validators=[DataRequired()])
     company_headquarters = StringField('company_headquarters', validators=[DataRequired()])
     company_description = TextAreaField('company_description', validators=[DataRequired()])
-    company_picture_1 = FileField('company_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    company_picture_2 = FileField('company_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    company_picture_1 = FileField('company_picture_1', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    company_picture_2 = FileField('company_picture_2', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
 
     def __init__(self, *args, **kwargs):
         super(Add_Company, self).__init__(*args, **kwargs)
@@ -85,8 +84,8 @@ class Add_Directors(FlaskForm):
     director_name = StringField('director_name', validators=[DataRequired()])
     director_age = StringField('director_age', validators=[DataRequired()])
     director_description = TextAreaField('director_description', validators=[DataRequired()])
-    director_picture_1 = FileField('director_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    director_picture_2 = FileField('director_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    director_picture_1 = FileField('director_picture_1', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    director_picture_2 = FileField('director_picture_2', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
     director_games = SelectMultipleField('director_games', coerce=int, validators=[Optional()])
     director_companies = SelectMultipleField('director_companies', coerce=int, validators=[Optional()])
 
@@ -101,8 +100,8 @@ class Add_Founders(FlaskForm):
     founder_companies = SelectMultipleField('founder_companies', coerce=int, validators=[Optional()])
     founder_date_of_birth = StringField('founder_date_of_birth', validators=[DataRequired()])
     founder_description = TextAreaField('founder_description', validators=[DataRequired()])
-    founder_picture_1 = FileField('founder_picture_1', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
-    founder_picture_2 = FileField('founder_picture_2', validators=[FileAllowed(['jpg', 'png'], 'Images Only!')])
+    founder_picture_1 = FileField('founder_picture_1', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
+    founder_picture_2 = FileField('founder_picture_2', validators=[DataRequired(), FileAllowed(['jpg'], 'JPG Only!')])
 
     def __init__(self, *args, **kwargs):
         super(Add_Founders, self).__init__(*args, **kwargs)

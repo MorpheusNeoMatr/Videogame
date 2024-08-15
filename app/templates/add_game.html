@@ -23,7 +23,7 @@
 
 <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <p>Game: {{ game_form.game_name(maxlength=30) }} <span>{{ game_form.game_name.errors }}</span></p>
+  <p>Game: {{ game_form.game_name(maxlength=1500) }} <span>{{ game_form.game_name.errors }}</span></p>
   <p>My score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
   <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
 

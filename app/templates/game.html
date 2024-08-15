@@ -1,83 +1,125 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<li>
-    {% if game.picture_5 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 5">
-    {% endif %}
-</li>
-<li>
-    {% if game.Username.name %}
-    Added by: <a href='/dashboard/{{game.Username.id}}'>{{ game.Username.name }}</a> 
-    {% else %}
-        Added by dev
-    {% endif %}
-</li>
-<li >name: {{game.name}}</li>
-<li>Director(s):
-    {% if game_directors %}
-        {% for director in game_directors[:3] %}
-            <a href="/director/{{ director.id }}">{{ director.name }}</a>
-            {% if not loop.last %}, {% endif %}
-        {% endfor %}
-        {% if game_directors|length < 3 %}
-            , <a href="/add_directors">add director</a>
-        {% endif %}
-    {% else %}
-        No directors yet, <a href="/add_directors">add director</a>
-    {% endif %}
-</li>
-<li> My score: {{game.dev_score}}</li>
-<li>genres: 
-    {% for genres in game_genres[:3] %}
-        {{genres.name}}
-        {% if not loop.last %}  ,{% endif %}
-    {% endfor %}
-</li>
-<li>company(ies):
-    {% if game_companies %}
-        {% for companies in game_companies[:3] %}
-        <a href="/company/{{companies.id}}">{{companies.name}}</a>
-        {% if not loop.last %}  ,{% endif %}
-        {% endfor %}
-        {% if game_companies|length < 3 %}
-            , <a href="/add_company">Add company</a>
-        {% endif %}
-    {% else %}
-        No companies yet, <a href="/add_company">Add company</a>
-    {% endif %}
-</li>
-<li>Series: {{ game.Series.name }}</li>
-<li>Release date: {{game.release_date}}</li>
-<li>
-    {% if game.picture_6 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_6) }}" alt="Game Picture 6">
-    {% endif %}
-</li>
-<li>{{game.description}}</li>
-<li>
-    {% if game.picture_1 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_1) }}" alt="Game Picture 1">
-    {% endif %}
-</li>
-<li>{{game.gameplay}}</li>
-<li>
-    {% if game.picture_2 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_2) }}" alt="Game Picture 2">
-    {% endif %}
-</li>
-<li>{{game.story}}</li>
-<li>
-    {% if game.picture_3 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_3) }}" alt="Game Picture 3">
-    {% endif %}
-</li>
-<li>{{game.soundtrack}}</li>
-<li>
-    {% if game.picture_4 %}
-    <img src="{{ url_for('static', filename='games_images/' ~ game.picture_4) }}" alt="Game Picture 4">
-    {% endif %}
-</li>
-<li>{{game.reviews}}</li>
+<ul>
+    <!-- Picture 1, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_1 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_1) }}" alt="Game Picture 1" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{% if game.Username.name %}Added by: <a href='/dashboard/{{game.Username.id}}'>{{ game.Username.name }}</a>{% else %}Added by dev{% endif %}</p>
+                <p>Name: {{game.name}}</p>
+                <p>Director(s):
+                    {% if game_directors %}
+                        {% for director in game_directors[:3] %}
+                            <a href="/director/{{ director.id }}">{{ director.name }}</a>
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if game_directors|length < 3 %}
+                            , <a href="/add_directors">add director</a>
+                        {% endif %}
+                    {% else %}
+                        No directors yet, <a href="/add_directors">add director</a>
+                    {% endif %}
+                </p>
+                <p>My score: {{game.dev_score}}</p>
+                <p>Genres:
+                    {% for genres in game_genres[:3] %}
+                        {{genres.name}}
+                        {% if not loop.last %}  ,{% endif %}
+                    {% endfor %}
+                </p>
+                <p>Company(ies):
+                    {% if game_companies %}
+                        {% for companies in game_companies[:3] %}
+                        <a href="/company/{{companies.id}}">{{companies.name}}</a>
+                        {% if not loop.last %}  ,{% endif %}
+                        {% endfor %}
+                        {% if game_companies|length < 3 %}
+                            , <a href="/add_company">Add company</a>
+                        {% endif %}
+                    {% else %}
+                        No companies yet, <a href="/add_company">Add company</a>
+                    {% endif %}
+                </p>
+                <p>Series: {{ game.Series.name }}</p>
+                <p>Release date: {{game.release_date}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="white-line">
+    </li>
+    <li class="title">Description</li>
+    <!-- Picture 2, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_2 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_2) }}" alt="Game Picture 2" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{{game.description}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="white-line">
+    </li>
+    <li class="title">Gameplay</li>
+    <!-- Picture 3, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_3 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_3) }}" alt="Game Picture 3" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{{game.gameplay}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="white-line">
+    </li>
+    <li class="title">Story</li>
+    <!-- Picture 4, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_4 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_4) }}" alt="Game Picture 4" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{{game.story}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="white-line">
+    </li>
+    <li class="title">Soundtrack</li>
+    <!-- Picture 5, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_5 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_5) }}" alt="Game Picture 5" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{{game.soundtrack}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="white-line">
+    </li>
+    <li class="title">Reviews</li>
+    <!-- Picture 6, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if game.picture_6 %}
+            <img src="{{ url_for('static', filename='games_images/' ~ game.picture_6) }}" alt="Game Picture 6" class="images-size">
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{{game.reviews}}</p>
+            </div>
+            {% endif %}
+        </div>
+    </li>
+</ul>
 
 {% endblock %}

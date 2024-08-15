@@ -24,11 +24,10 @@ app.config['USER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
                                                    'user_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_EXPIRE'] = None  # Expire when browser is closed
-app.config['SESSION_PERMANENT'] = False 
+app.config['SESSION_PERMANENT'] = False
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
-ADMIN_PASSWORD = 'MatrM0rpheusNeo'
 db = SQLAlchemy(app)
 
 
@@ -68,9 +67,8 @@ def filter_games():
         query = query.filter(models.Videogame.series_id == series_id)
     games = query.all()
     # Return only names
-    games_list = [{"id": game.id, "name": game.name} for game in games]
-    return jsonify({"games": games_list})
-    
+    games_list = [{"id": game.id, "name": game.name, "picture_1": game.picture_1} for game in games]
+    return jsonify({"games": games_list}) 
 
 
 @app.errorhandler(404)
@@ -142,13 +140,13 @@ def login():
                     if user.permission != 1:
                         flash('Your account has not been approved yet.')
                         return redirect(url_for('login'))
-               
+  
                     if user and check_password_hash(user.password_hash, password):
                         session['user_id'] = user.id
                         session['user_name'] = user.name
                         flash('Logged in successfully.')
                         return redirect(url_for('home'))
-                    
+       
                     else:
                         flash('Login failed. Wrong email and/or password.')
                         return redirect(url_for('login'))
