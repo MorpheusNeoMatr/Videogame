@@ -1,40 +1,52 @@
 {% extends "layout.html" %}
 {% block content %}
-<select id="genreDropdown">
-    <option value="all">All genres</option>
-    {% for genre in genres %}
-        <option value="{{ genre.id }}">{{ genre.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="genreDropdown" class="styled-dropdown">
+        <option value="all">All genres</option>
+        {% for genre in genres %}
+            <option value="{{ genre.id }}">{{ genre.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
-<select id="companyDropdown">
-    <option value="all">All companies</option>
-    {% for company in companies %}
-        <option value="{{ company.id }}">{{ company.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="companyDropdown" class="styled-dropdown">
+        <option value="all">All companies</option>
+        {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+        {% endfor %}
+    </select> 
+</div>
 
-<select id="directorDropdown">
-    <option value="all">All directors</option>
-    {% for director in directors %}
-        <option value="{{ director.id }}">{{ director.name }}</option>
-    {% endfor %}
-</select>
-
-<select id="seriesDropdown">
-    <option value="all">All series</option>
-    {% for series in series %}
-        <option value="{{ series.id }}">{{ series.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="directorDropdown" class="styled-dropdown">
+        <option value="all">All directors</option>
+        {% for director in directors %}
+            <option value="{{ director.id }}">{{ director.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
 
-<select id="usersDropdown">
-    <option value="all">All users</option>
-    {% for user in users %}
-        <option value="{{ user.id }}">{{ user.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="seriesDropdown" class="styled-dropdown">
+        <option value="all">All series</option>
+        {% for series in series %}
+            <option value="{{ series.id }}">{{ series.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
+
+
+<div class="styled-dropdown-container">
+    <select id="usersDropdown" class="styled-dropdown">
+        <option value="all">All users</option>
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
 
 
 <button onclick="filterGames()">Apply Filters</button>

@@ -1,12 +1,14 @@
-<nav>
+<nav class="sticky-navbar">
     {% if session.get('user_id') == 17 %}
-        <a href="/admin">Admin</a>
+        <div class="login-admin">
+            <a href="/admin">Admin</a>
+        </div>
     {% else %}
     {% endif %}
     
     <!-- Lists Dropdown -->
     <div class="dropdown">
-        <button class="dropbtn">Lists <span class="arrow-down">&#9662;</span></button>
+        <button class="dropbtn">Lists<span class="arrow-down">&#9662;</span></button>
         <div class="dropdown-content">
             <a href="/">Games</a>
             <a href="/company_list">Companies</a>
@@ -18,7 +20,7 @@
     
     <!-- Add Stuff Dropdown -->
     <div class="dropdown">
-        <button class="dropbtn">Add Stuff <span class="arrow-down">&#9662;</span></button>
+        <button class="dropbtn">Add Stuff<span class="arrow-down">&#9662;</span></button>
         <div class="dropdown-content">
             <a href="/add_game">Add Game</a>
             <a href="/add_company">Add Company</a>
@@ -37,6 +39,8 @@
         </div>
         
     {% else %}
-        <a href="/login">Login</a>
+        <div class="login-admin">
+            <a href="/login">Login</a>
+        </div>
     {% endif %}
 </nav>

@@ -68,7 +68,7 @@ def filter_games():
     games = query.all()
     # Return only names
     games_list = [{"id": game.id, "name": game.name, "picture_1": game.picture_1} for game in games]
-    return jsonify({"games": games_list}) 
+    return jsonify({"games": games_list})
 
 
 @app.errorhandler(404)

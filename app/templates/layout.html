@@ -2,14 +2,15 @@
 <html>
     <head>
         <title>videogames boah</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/styles.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/static/script.js"></script>
     </head>
-    <body  id="test">
-        <header>
-            {% include 'nav.html' %}
-        </header>
+    <body  class="fade">
+
+        {% include 'nav.html' %}
+
         <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
