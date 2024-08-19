@@ -1,46 +1,56 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Add Game</h2>
+<div class="page-name">
+  <h1>ADD GAME</h1>
+</div>
 
-<form method="POST" action="{{ url_for('add_game') }}">
-  {{ series_form.hidden_tag() }}
-  <label for="series_name">Series Name:</label>
-  {{ series_form.series_name() }}<br>
 
-  <button type="submit">Add Series</button>
-</form>
+<div id="popup-series" class="popup">
+  <div class="popup-content">
+      <span id="closePopupSeriesBtn" class="close">&times;</span>
+      <form method="POST" action="{{ url_for('add_game') }}">
+        {{ series_form.hidden_tag() }}
+        <input type="text" class="add_stuff_bar" name="series_name" placeholder="Add Series"><br><br>
+        <button type="submit">Add Series</button>
+      </form>
+  </div>
+</div>
 
 <br>
 
-<form method="POST" action="{{ url_for('add_game') }}">
-  {{ genre_form.hidden_tag() }}
-  <label for="genre_name">Genre name:</label>
-  {{ genre_form.genre_name() }}<br>
+<div id="popup-genre" class="popup">
+  <div class="popup-content">
+      <span id="closePopupGenreBtn" class="close">&times;</span>
+      <form method="POST" action="{{ url_for('add_game') }}">
+        {{ genre_form.hidden_tag() }}
+        <input type="text" class="add_stuff_bar" name="genre_name" placeholder="Add Genre"><br><br>
+        <button type="submit">Add genre</button>
+      </form>
+  </div>
+</div>
 
-  <button type="submit">Add genre</button>
-</form>
 
 
 <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <p>Game: {{ game_form.game_name(maxlength=1500) }} <span>{{ game_form.game_name.errors }}</span></p>
-  <p>My score: {{ game_form.game_dev_score }} <span style="color:red">{{ game_form.game_dev_score.errors }}</span></p>
-  <p>Release date: {{ game_form.game_date }} <span style="color:red">{{ game_form.game_date.errors }}</span></p>
+  <input type="text" class="add_stuff_bar" name="game_name" placeholder="Game name"><br><br>
+  <input type="text" class="add_stuff_bar" name="game_dev_score" placeholder="Your score">
+  <br><br>
+  <input type="date" class="add_stuff_bar" name="game_date" placeholder="Realease date">
+  <br><br>
 
+  <button type="button" id="toggleDirectors" class="toggle-button">
+    Select Directors <span class="arrow down" id="arrowDirectors"></span>
+  </button>
+  <div id="directorsList" class="dropdown-list">
+    {% for director in game_form.game_directors.choices|sort(attribute=1) %}
+      <label>
+        <input type="checkbox" class="checkbox-director" name="game_directors" value="{{ director[0] }}">
+        {{ director[1] }}
+      </label><br>
+    {% endfor %}
+  </div>
 
-  <p>Directors: 
-    <button type="button" id="toggleDirectors" class="toggle-button">
-      Select Directors <span class="arrow down" id="arrowDirectors"></span>
-    </button>
-    <div id="directorsList" class="dropdown-list">
-      {% for director in game_form.game_directors.choices|sort(attribute=1) %}
-        <label>
-          <input type="checkbox" class="checkbox-director" name="game_directors" value="{{ director[0] }}">
-          {{ director[1] }}
-        </label><br>
-      {% endfor %}
-    </div>
-  </p>
 
   <p>Series:
     <select name="game_series">
@@ -50,6 +60,7 @@
       {% endfor %}
     </select>
     <span style="color:red">{{ game_form.game_series.errors }}</span>
+    <button type="button" id="openPopupSeriesBtn">Add Series</button>
   </p>
   
 
@@ -80,6 +91,18 @@
         </label><br>
       {% endfor %}
     </div>
+    <div id="popup-genre" class="popup">
+      <div class="popup-content">
+          <span id="closePopupBtn" class="close">&times;</span>
+          <form method="POST" action="{{ url_for('add_game') }}">
+            {{ genre_form.hidden_tag() }}
+            <label for="genre_name">Genre name:</label>
+            <input type="text" class="add_stuff_bar" name="genre_name" placeholder="Add Genre"><br><br>
+            <button type="submit">Add genre</button>
+          </form>
+      </div>
+    </div>
+    <button type="button" id="openPopupGenreBtn">Add Genre</button>
   </p>
 
   <p>Picture 1: {{ game_form.game_picture_1 }} <span style="color:red">{{ game_form.game_picture_1.errors }}</span></p>
@@ -87,14 +110,19 @@
   <p>Picture 3: {{ game_form.game_picture_3 }} <span style="color:red">{{ game_form.game_picture_3.errors }}</span></p>
   <p>Picture 4: {{ game_form.game_picture_4 }} <span style="color:red">{{ game_form.game_picture_4.errors }}</span></p>
   <p>Picture 5: {{ game_form.game_picture_5 }} <span style="color:red">{{ game_form.game_picture_5.errors }}</span></p>
-  <p>Picture 6: {{ game_form.game_picture_6 }} <span style="color:red">{{ game_form.game_picture_6.errors }}</span></p>
-  <p>Description: {{ game_form.game_description }} <span style="color:red">{{ game_form.game_description.errors }}</span></p>
-  <p>Gameplay: {{ game_form.game_gameplay }} <span style="color:red">{{ game_form.game_gameplay.errors }}</span></p>
-  <p>Story: {{ game_form.game_story }} <span style="color:red">{{ game_form.game_story.errors }}</span></p>
-  <p>Soundtrack: {{ game_form.game_soundtrack }} <span style="color:red">{{ game_form.game_soundtrack.errors }}</span></p>
-  <p>Reviews: {{ game_form.game_reviews }} <span style="color:red">{{ game_form.game_reviews.errors }}</span></p>
-
-  <input type="submit" value="Add this game">
+  <input type="file" class="add_stuff_bar" name="game_description" placeholder="Add picture 6">
+  <br><br>
+  <textarea class="add_stuff_bar" name="game_description" placeholder="Add description" rows="6" cols="50"></textarea>
+  <br><br>
+  <textarea class="add_stuff_bar" name="game_story" placeholder="Add story" rows="6" cols="50"></textarea>
+  <br><br>
+  <textarea class="add_stuff_bar" name="game_gameplay" placeholder="Add gameplay" rows="6" cols="50"></textarea>
+  <br><br>
+  <textarea class="add_stuff_bar" name="game_soundtrack" placeholder="Add soundtrack" rows="6" cols="50"></textarea>
+  <br><br>
+  <textarea class="add_stuff_bar" name="game_reviews" placeholder="Add reviews" rows="6" cols="50"></textarea>
+  <br><br>
+  <input  type="submit" value="Add this game">
 </form>
 
 
@@ -133,8 +161,47 @@
     limitCheckboxSelection('.checkbox-director', 3);
     limitCheckboxSelection('.checkbox-company', 3);
     limitCheckboxSelection('.checkbox-genre', 3);
+
+    // Popup functionality
+    var popupSeries = document.getElementById("popup-series");
+    var openPopupSeriesBtn = document.getElementById("openPopupSeriesBtn");
+    var closePopupSeriesBtn = document.getElementById("closePopupSeriesBtn");
+
+    openPopupSeriesBtn.onclick = function() {
+        popupSeries.style.display = "block";
+    };
+
+    closePopupSeriesBtn.onclick = function() {
+        popupSeries.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target == popupSeries) {
+            popupSeries.style.display = "none";
+        }
+    };
+
+    // Popup functionality for Genre
+    var popupGenre = document.getElementById("popup-genre");
+    var openPopupGenreBtn = document.getElementById("openPopupGenreBtn");
+    var closePopupGenreBtn = document.getElementById("closePopupGenreBtn");
+
+    openPopupGenreBtn.onclick = function() {
+        popupGenre.style.display = "block";
+    };
+
+    closePopupGenreBtn.onclick = function() {
+        popupGenre.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target == popupGenre) {
+            popupGenre.style.display = "none";
+        }
+    };
   });
 </script>
+
 
 
 

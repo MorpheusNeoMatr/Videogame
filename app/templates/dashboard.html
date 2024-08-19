@@ -2,24 +2,35 @@
 {% block content %}
 <!-- Buttons to toggle the content -->
 <div>
-    <button onclick="showSection('games')">Games</button>
-    <button onclick="showSection('founders')">Founders</button>
-    <button onclick="showSection('companies')">Companies</button>
-    <button onclick="showSection('directors')">Directors</button>
+    <button onclick="showSection('games')">Games added</button>
+    <button onclick="showSection('founders')">Founders added</button>
+    <button onclick="showSection('companies')">Companies added</button>
+    <button onclick="showSection('directors')">Directors added</button>
 </div>
 
 <!-- Sections that will be shown/hidden -->
-<div id="games" class="section">
+<div id="games" class="section dashboard-container">
     <h3>Games added:</h3>
     <ul>
         {% if user_games %}
-            {% for games in user_games %}
-                <li><a href="/game/{{games.id}}">{{games.name}}</a></li>
-            {% endfor %}
-        {% else %}
-            <li>You added no games <a href="/add_game">Add game?</a></li>
-        {% endif %}
-    </ul>
+        {% for game in user_games %}
+        <div class="item">
+            <a href="/game/{{ game.id }}" class="item-link">
+                {% if game.picture_1 %}
+                <img src="{{ url_for('static', filename='games_images/' ~ game.picture_1) }}" alt="Games" class="image">
+                {% else %}
+                <img src="{{ url_for('static', filename='games_images/default_image.jpg') }}" alt="Default Game Picture" class="image">
+                {% endif %}
+                <div class="item-content">
+                    <p>{{ game.name }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>You added no games <a href="/add_game">Add game?</a></p>
+    {% endif %}
+    </ul> 
 </div>
 
 <div id="founders" class="section" style="display:none;">
@@ -27,7 +38,7 @@
     <ul>
         {% if user_founders %}
             {% for founder in user_founders %}
-                <li><a href="/founder/{{founder.id}}">{{founder.name}}</a></li>
+                <li><a href="/founder/{{ founder.id }}">{{ founder.name }}</a></li>
             {% endfor %}
         {% else %}
             <li>No founders added yet, <a href="/add_founder">Add founder?</a></li>
@@ -40,7 +51,7 @@
     <ul>
         {% if user_companies %}
             {% for company in user_companies %}
-                <li><a href="/company/{{company.id}}">{{company.name}}</a></li>
+                <li><a href="/company/{{ company.id }}">{{ company.name }}</a></li>
             {% endfor %}
         {% else %}
             <li>No companies added yet, <a href="/add_company">Add company?</a></li>
@@ -53,12 +64,11 @@
     <ul>
         {% if user_directors %}
             {% for director in user_directors %}
-                <li><a href="/director/{{director.id}}">{{director.name}}</a></li>
+                <li><a href="/director/{{ director.id }}">{{ director.name }}</a></li>
             {% endfor %}
         {% else %}
             <li>No directors added yet, <a href="/add_directors">Add director?</a></li>
         {% endif %}
     </ul>
 </div>
-
 {% endblock %}

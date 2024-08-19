@@ -1,28 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
-<select id="gameDropdown">
-    <option value="all">All games</option>
-    {% for game in games %}
-        <option value="{{ game.id }}">{{ game.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="gameDropdown" class="styled-dropdown">
+        <option value="all">All games</option>
+        {% for game in games %}
+            <option value="{{ game.id }}">{{ game.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
 
-<select id="companyDropdown">
-    <option value="all">All companies</option>
-    {% for company in companies %}
-        <option value="{{ company.id }}">{{ company.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="companyDropdown" class="styled-dropdown">
+        <option value="all">All companies</option>
+        {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
 
-<select id="usersDropdown">
-    <option value="all">All users</option>
-    {% for user in users %}
-        <option value="{{ user.id }}">{{ user.name }}</option>
-    {% endfor %}
-</select>
-
+<div class="styled-dropdown-container">
+    <select id="usersDropdown" class="styled-dropdown">
+        <option value="all">All users</option>
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
 
 <button onclick="filterDirectors()">Apply Filters</button>
 

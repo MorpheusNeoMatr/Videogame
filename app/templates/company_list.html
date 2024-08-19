@@ -1,40 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-<select id="gameDropdown">
+<div class="styled-dropdown-container">
+    <select id="gameDropdown" class="styled-dropdown">
     <option value="all">All games</option>
     {% for game in games %}
         <option value="{{ game.id }}">{{ game.name }}</option>
     {% endfor %}
 </select>
+</div>
 
-<select id="founderDropdown">
-    <option value="all">All founders</option>
-    {% for founder in founders %}
-        <option value="{{ founder.id }}">{{ founder.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="founderDropdown" class="styled-dropdown">
+        <option value="all">All founders</option>
+        {% for founder in founders %}
+            <option value="{{ founder.id }}">{{ founder.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
-<select id="directorDropdown">
-    <option value="all">All directors</option>
-    {% for director in directors %}
-        <option value="{{ director.id }}">{{ director.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="directorDropdown" class="styled-dropdown">
+        <option value="all">All directors</option>
+        {% for director in directors %}
+            <option value="{{ director.id }}">{{ director.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
-<select id="seriesDropdown">
-    <option value="all">All series</option>
-    {% for series in series %}
-        <option value="{{ series.id }}">{{ series.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="seriesDropdown" class="styled-dropdown">
+        <option value="all">All series</option>
+        {% for series in series %}
+            <option value="{{ series.id }}">{{ series.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
 
-
-<select id="usersDropdown">
-    <option value="all">All users</option>
-    {% for user in users %}
-        <option value="{{ user.id }}">{{ user.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="usersDropdown" class="styled-dropdown">
+        <option value="all">All users</option>
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
 
 
 <button onclick="filterCompanies()">Apply Filters</button>

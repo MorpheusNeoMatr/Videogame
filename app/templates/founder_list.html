@@ -1,19 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
-<select id="companyDropdown">
-    <option value="all">All companies</option>
-    {% for company in companies %}
-        <option value="{{ company.id }}">{{ company.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="companyDropdown" class="styled-dropdown">
+        <option value="all">All companies</option>
+        {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+        {% endfor %}
+    </select>
+</div>
 
 
-<select id="usersDropdown">
-    <option value="all">All users</option>
-    {% for user in users %}
-        <option value="{{ user.id }}">{{ user.name }}</option>
-    {% endfor %}
-</select>
+<div class="styled-dropdown-container">
+    <select id="usersDropdown" class="styled-dropdown">
+        <option value="all">All users</option>
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
 
 
 <button onclick="filterFounders()">Apply Filters</button>

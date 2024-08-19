@@ -71,6 +71,19 @@ nav a:hover, .dropbtn:hover {
     width: 100%; /* Set the width */
 }
 
+/* Sticker Image */
+.sticker {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001; /* Ensure it is on top of other elements */
+}
+
+.sticker img {
+  width: 60px; /* Adjust size as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -274,7 +287,7 @@ button:hover {
     background-color: #dc3545; /* Red color for reject button */
 }
 
-/* games */
+/* detailed page */
 .image-text-row {
     display: flex; /* Align items in a row */
     align-items: center; /* Center items vertically */
@@ -282,11 +295,11 @@ button:hover {
 }
 
 .images-size {
-    height: 40%; 
-    width: 40%; /* Maintain aspect ratio */
+    height: 22vw; 
+    width: 40vw; /* Maintain aspect ratio */
     border-radius: 5%;
     margin-right: 1%; /* Space between image and line */
-    object-fit: cover; /* Ensure the image covers the assigned height */
+    object-fit:fill; /* Ensure the image covers the assigned height */
 }
 
 .red-line {
@@ -348,6 +361,30 @@ a:hover{
     margin: 1% 0; /* Adjust margin as needed */
 }
 
+.page-name {
+    background-color: #333;
+    font-size: 1.5vw;
+    margin: 1vw;
+    border: 0.5vw solid #dc3545;
+    padding: 1vw; /* Adjust the padding as needed */
+    display: inline-block; /* Shrink-wrap the content */
+}
+
+.page-name h1 {
+    margin: 0; /* Remove the default margin */
+    padding: 0; /* Remove any padding */
+    color: #fff; /* Optional: set text color to white for better contrast */
+}
+
+/* dashboard */
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 2% auto; /* Center the container and add space around */
+    padding: 1%; /* Optional padding */
+    gap: 2%; /* Space between items */
+}
 
 .fade{
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -357,18 +394,6 @@ a:hover{
             animation: fadein 2s;
 }
 
-.page-name {
-    background-color: #333;
-    border: 4px solid #dc3545;
-    padding: 5px; /* Adjust the padding as needed */
-    display: inline-block; /* Shrink-wrap the content */
-}
-
-.page-name h1 {
-    margin: 0; /* Remove the default margin */
-    padding: 0; /* Remove any padding */
-    color: #fff; /* Optional: set text color to white for better contrast */
-}
 
 @keyframes fadein {
     from { opacity: 0; }
@@ -398,3 +423,96 @@ a:hover{
     from { opacity: 0; }
     to   { opacity: 1; }
 }
+
+/* Popup container */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+  }
+  
+  /* Popup content */
+  .popup-content {
+    background-color: #333;
+    margin: 15% auto; /* Centered horizontally and 15% from the top */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 40%; /* Could be more or less, depending on screen size */
+    position: relative; /* Relative positioning to contain absolute children */
+  }
+  
+  /* Close button */
+  .close {
+    color: white;
+    font-size: 2vw; /* Adjust as needed */
+    font-weight: bold;
+    position: absolute; /* Absolute positioning */
+    top: 10px; /* Distance from the top of the popup-content */
+    right: 10px; /* Distance from the right of the popup-content */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #ccc;
+    text-decoration: none;
+  }
+
+  /* Style for the series name input */
+.add_stuff_bar {
+    width: 30%; /* Full width of the container */
+    padding: 10px;
+    border: 2px solid #ccc; /* Default border color */
+    background-color: #333;
+    color: #f0f0f0;
+    border-radius: 5px;
+    outline: none; /* Remove default focus outline */
+    font-size: 16px; /* Font size */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border color and shadow */
+  }
+  
+  /* Placeholder styling */
+  .add_stuff_bar::placeholder {
+    color: #ccc; /* Placeholder text color */
+  }
+  
+  /* Glow effect on focus */
+  .add_stuff_bar:focus {
+    border-color: red; /* Border color when focused */
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
+  }
+  
+/* Style for the popup button for Series */
+#openPopupSeriesBtn {
+    background-color: #dc3545; /* Red */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #openPopupSeriesBtn:hover {
+    background-color: darkred; /* Darker red */
+  }
+  
+  /* Style for the popup button for Genre */
+  #openPopupGenreBtn {
+    background-color: #dc3545; /* Blue */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #openPopupGenreBtn:hover {
+    background-color: darkred; /* Darker blue */
+  }
+  
