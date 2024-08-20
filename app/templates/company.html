@@ -1,74 +1,95 @@
 {% extends "layout.html" %}
 {% block content %}
-<li>
-    {% if company.picture_1 %}
-    <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_1) }}" alt="Company Picture 1">
-    {% endif %}
-</li>
-<li>
-    {% if company.Username %}
-        Added by: <a href="/dashboard/{{company.Username.id}}">{{company.Username.name}}</a>
-    {% else %}
-        Added by dev
-    {% endif %}
-</li>
-<li>Name: {{company.name}}</li>
-<li>Videogame(s):
-    {% if company_games %}
-        {% for games in company_games[:3] %}
-            <a href="/game/{{games.id}}">{{games.name}}</a>
-            {% if not loop.last %}  ,{% endif %}
-        {% endfor %}
-        {% if company_games|length < 3 %}
-            , <a href="/add_game">Add games</a>
-        {% endif %}
-    {% else %}
-        No games yet, <a href="/add_game">Add games</a>
-    {% endif %}
-</li>
-<li>Director(s):
-    {% if company_directors %}
-        {% for directors in company_directors[:3] %}
-            <a href="/director/{{directors.id}}">{{directors.name}}</a>
-            {% if not loop.last %}  ,{% endif %}
-        {% endfor %}
-        {% if company_directors|length < 3 %}
-            , <a href="/add_directors">Add directors</a>
-        {% endif %}
-    {% else %}
-        No director yet, <a href="/add_directors"> Add director</a>
-    {% endif %}
-</li>
-<li>Founder(s):
-    {% if company_founders %}
-        {% for founders in company_founders[:3] %}
-            <a href="/founder/{{founders.id}}">{{founders.name}}</a>
-            {% if not loop.last %}  ,{% endif %}
-        {% endfor %}
-        {% if company_founders|length < 3 %}
-            , <a href="/add_founder">Add founders</a>
-        {% endif %}
-    {% else %}
-        No founders yet, <a href="/add_founder">Add founders</a>
-    {% endif %}
-</li>
-<li>Series:
-        {% for series in company_series[:3] %}
-            {{series.name}}
-            {% if not loop.last %}  ,{% endif %}
-        {% endfor %}
-</li>
-<li>
-    Founded in: {{company.time_founded}}
-</li>
-<li>
-    Headquarters in: {{company.headquarters}}
-</li>
-<li>
-    {% if company.picture_2 %}
-    <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_2) }}" alt="Company Picture 2">
-    {% endif %}
-</li>
-<li>{{company.description}}</li>
 
+<div class="page-name">
+    <h1>{{company.name}}</h1>
+</div>
+
+
+<br>
+<ul>
+    <!-- Picture 1, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            {% if company.picture_1 %}
+            <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_1) }}" alt="Company Picture 1" class="images-size">
+            {% else %}
+            <img src="{{ url_for('static', filename='games_images/default_image.jpg') }}" alt="Default Game Picture" class="images-size">
+            {% endif %}
+            <hr class="red-line">
+            <div class="text-content">
+                <p>{% if company.Username.name %}
+                    Added by: <a href='/dashboard/{{company.Username.id}}'>{{ company.Username.name }}</a>
+                    {% else %}
+                    Added by dev
+                    {% endif %}
+                </p>
+                <p>Game(s):
+                    {% if company_games %}
+                        {% for game in company_games[:3] %}
+                            <a href="/game/{{ game.id }}">{{ game.name }}</a>
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if company_games|length < 3 %}
+                            , <a href="/add_game">add game</a>
+                        {% endif %}
+                    {% else %}
+                        No games yet, <a href="/add_game">add game</a>
+                    {% endif %}
+                </p>
+                <p>Director(s):
+                    {% if company_directors %}
+                        {% for director in company_directors[:3] %}
+                            <a href="/director/{{ director.id }}">{{ director.name }}</a>
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if company_directors|length < 3 %}
+                            , <a href="/add_director">add director</a>
+                        {% endif %}
+                    {% else %}
+                        No directors yet, <a href="/add_director">add director</a>
+                    {% endif %}
+                </p>
+                <p>Founder(s):
+                    {% if company_founders %}
+                        {% for founder in company_founders[:3] %}
+                            <a href="/founder/{{ founder.id }}">{{ founder.name }}</a>
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if company_founders|length < 3 %}
+                            , <a href="/add_founder">add founder</a>
+                        {% endif %}
+                    {% else %}
+                        No founders yet, <a href="/add_founder">add founder</a>
+                    {% endif %}
+                </p>
+                <p>Series:
+                    {% for founder in company_founders[:3] %}
+                        <a href="/founder/{{ founder.id }}">{{ founder.name }}</a>
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p>Founded in: {{company.time_founded}}</p>
+                <p>Founded in: {{company.headquarters}}</p>
+            </div>
+        </div>
+        <hr class="red-h-line">
+    </li>
+    <li class="title">Description</li>
+    <!-- Picture 2, Red Line, and Text Row -->
+    <li>
+        <div class="image-text-row">
+            <div class="text-content">
+                <p>{{company.description}}</p>
+            </div>
+            <hr class="red-line">
+            {% if company.picture_2 %}
+            <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_2) }}" alt="Company Picture 2" class="images-size">
+            {% else %}
+            <img src="{{ url_for('static', filename='games_images/default_image.jpg') }}" alt="Default Game Picture" class="images-size">
+            {% endif %}
+        </div>
+        <hr class="red-h-line">
+    </li>
+</ul>
 {% endblock %}

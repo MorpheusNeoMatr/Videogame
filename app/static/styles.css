@@ -303,7 +303,7 @@ button:hover {
 }
 
 .red-line {
-    width: 2px; /* Thickness of the line */
+    width: 0.3%; /* Thickness of the line */
     background-color: #dc3545; /* Color of the line */
     height: 20vw; /* Match the height of the image */
     margin: 1%; /* Space around the line */
@@ -314,6 +314,10 @@ button:hover {
     display: flex;
     font-size: 1.5vw; /* Font size scales with viewport width */
     flex-direction: column;
+    max-width: 100%; /* Adjust as needed */
+    overflow-wrap: break-word; /* Ensures long words break and wrap */
+    word-wrap: break-word; /* Older property for backward compatibility */
+    word-break: break-word; /* Optional: breaks words at arbitrary points if needed */
     justify-content: center; /* Center text vertically */
     text-align: left;
     padding: 1%;
@@ -468,13 +472,13 @@ a:hover{
   /* Style for the series name input */
 .add_stuff_bar {
     width: 30%; /* Full width of the container */
-    padding: 10px;
+    padding: 1%;
     border: 2px solid #ccc; /* Default border color */
     background-color: #333;
     color: #f0f0f0;
     border-radius: 5px;
     outline: none; /* Remove default focus outline */
-    font-size: 16px; /* Font size */
+    font-size: 100%; /* Font size */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
     transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border color and shadow */
   }
@@ -516,3 +520,67 @@ a:hover{
     background-color: darkred; /* Darker blue */
   }
   
+
+/* Button styling */
+.toggle-button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: 0.2vw solid red;
+    cursor: pointer;
+    width: 20%;
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.toggle-button:hover {
+    background-color: #555;
+}
+
+/* Label styling */
+.dropdown-list label {
+    display: block; /* Ensure each label is on its own line */
+    padding: 5px;
+    text-align: left;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Checkbox styling */
+.checkbox-genre,
+.checkbox-company,
+.checkbox-director {
+    margin-right: 10px; /* Space between checkbox and label */
+}
+
+/* dropdown list in add stuff pages */
+.dropdown-list {
+    display: none; /* Initially hidden */
+    background-color: #dc3545;
+    border: 1px solid #ccc;
+    padding: 1%;
+    width: 20%; /* Match the width of the button */
+    max-height: 200px;
+    overflow-y: auto; /* Scroll if content exceeds max height */
+    position: absolute; /* Position absolutely relative to the button */
+    left: 50%; /* Center the dropdown horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    z-index: 1; /* Ensure it appears above other elements */
+}
+
+.dropdown-list label:hover {
+    background-color: darkred;
+    color: white; /* Optionally, change the text color for better contrast */
+    padding: 5%;
+}
+
+/* Show dropdown list when active */
+.toggle-button.active + .dropdown-list {
+    display: block;
+}
+
+.error-message{
+    color: red;
+}

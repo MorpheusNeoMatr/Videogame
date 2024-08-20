@@ -10,7 +10,7 @@
       <span id="closePopupSeriesBtn" class="close">&times;</span>
       <form method="POST" action="{{ url_for('add_game') }}">
         {{ series_form.hidden_tag() }}
-        <input type="text" class="add_stuff_bar" name="series_name" placeholder="Add Series"><br><br>
+        <input type="text" maxlength="20" class="add_stuff_bar" name="series_name" placeholder="maxlength = 20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
         <button type="submit">Add Series</button>
       </form>
   </div>
@@ -23,7 +23,7 @@
       <span id="closePopupGenreBtn" class="close">&times;</span>
       <form method="POST" action="{{ url_for('add_game') }}">
         {{ genre_form.hidden_tag() }}
-        <input type="text" class="add_stuff_bar" name="genre_name" placeholder="Add Genre"><br><br>
+        <input type="text" maxlength="20" class="add_stuff_bar" name="genre_name" placeholder="maxlength = 20" required pattern="\S.+" title="Add Series(maxlength = 40)" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
         <button type="submit">Add genre</button>
       </form>
   </div>
@@ -33,14 +33,27 @@
 
 <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
   {{ game_form.csrf_token }}
-  <input type="text" class="add_stuff_bar" name="game_name" placeholder="Game name"><br><br>
-  <input type="text" class="add_stuff_bar" name="game_dev_score" placeholder="Your score">
+
+  <input type="text" class="add_stuff_bar" maxlength="20" name="game_name" placeholder="Game name(maxlength = 20)">
+  {% if game_form.game_name.errors %}
+    <span class="error-message">{{ game_form.game_name.errors[0] }}</span>
+  {% endif %}
   <br><br>
-  <input type="date" class="add_stuff_bar" name="game_date" placeholder="Realease date">
+
+  <input type="text" class="add_stuff_bar" maxlength="10" name="game_dev_score" placeholder="Your score(?/10) maxlegth=10">
+  {% if game_form.game_dev_score.errors %}
+    <span class="error-message">{{ game_form.game_dev_score.errors[0] }}</span>
+  {% endif %}
+  <br><br>
+
+  <input type="text" class="add_stuff_bar" maxlength="20" name="game_date" placeholder="Realease date(maxlength = 20)">
+  {% if game_form.game_date.errors %}
+    <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
+  {% endif %}
   <br><br>
 
   <button type="button" id="toggleDirectors" class="toggle-button">
-    Select Directors <span class="arrow down" id="arrowDirectors"></span>
+    Select Directors <span class="arrow-down" id="arrowDirectors">&#9662;</span>
   </button>
   <div id="directorsList" class="dropdown-list">
     {% for director in game_form.game_directors.choices|sort(attribute=1) %}
@@ -59,14 +72,16 @@
         <option value="{{ series[0] }}">{{ series[1] }}</option>
       {% endfor %}
     </select>
-    <span style="color:red">{{ game_form.game_series.errors }}</span>
+    {% if game_form.game_series.errors %}
+    <span class="error-message">{{ game_form.game_series.errors[0] }}</span>
+    {% endif %}
     <button type="button" id="openPopupSeriesBtn">Add Series</button>
   </p>
   
 
-  <p>Companies: 
+  <p>
     <button type="button" id="toggleCompanies" class="toggle-button">
-      Select Companies <span class="arrow down" id="arrowCompanies"></span>
+      Select Companies <span class="arrow-down" id="arrowCompanies">&#9662;</span>
     </button>
     <div id="companiesList" class="dropdown-list">
       {% for company in game_form.game_companies.choices|sort(attribute=1) %}
@@ -79,10 +94,13 @@
   </p>
 
 
-  <p>Genres: 
+  <p>
     <button type="button" id="toggleGenres" class="toggle-button">
-      Select Genres <span class="arrow down" id="arrowGenres"></span>
-    </button>{{ game_form.game_genres.errors }}
+      Select Genres <span class="arrow-down" id="arrowGenres">&#9662;</span>
+    </button>
+    {% if game_form.game_genres.errors %}
+    <span class="error-message">{{ game_form.game_genres.errors[0] }}</span>
+    {% endif %}
     <div id="genresList" class="dropdown-list">
       {% for genre in game_form.game_genres.choices|sort(attribute=1) %}
         <label>
@@ -91,37 +109,46 @@
         </label><br>
       {% endfor %}
     </div>
-    <div id="popup-genre" class="popup">
-      <div class="popup-content">
-          <span id="closePopupBtn" class="close">&times;</span>
-          <form method="POST" action="{{ url_for('add_game') }}">
-            {{ genre_form.hidden_tag() }}
-            <label for="genre_name">Genre name:</label>
-            <input type="text" class="add_stuff_bar" name="genre_name" placeholder="Add Genre"><br><br>
-            <button type="submit">Add genre</button>
-          </form>
-      </div>
-    </div>
-    <button type="button" id="openPopupGenreBtn">Add Genre</button>
-  </p>
+  </p><button type="button" id="openPopupGenreBtn">Add Genre</button>
 
-  <p>Picture 1: {{ game_form.game_picture_1 }} <span style="color:red">{{ game_form.game_picture_1.errors }}</span></p>
-  <p>Picture 2: {{ game_form.game_picture_2 }} <span style="color:red">{{ game_form.game_picture_2.errors }}</span></p>
-  <p>Picture 3: {{ game_form.game_picture_3 }} <span style="color:red">{{ game_form.game_picture_3.errors }}</span></p>
-  <p>Picture 4: {{ game_form.game_picture_4 }} <span style="color:red">{{ game_form.game_picture_4.errors }}</span></p>
-  <p>Picture 5: {{ game_form.game_picture_5 }} <span style="color:red">{{ game_form.game_picture_5.errors }}</span></p>
-  <input type="file" class="add_stuff_bar" name="game_description" placeholder="Add picture 6">
+  <p>Picture 1: {{ game_form.game_picture_1 }}</p>
+  <p>Picture 2: {{ game_form.game_picture_2 }}</p>
+  <p>Picture 3: {{ game_form.game_picture_3 }}</p>
+  <p>Picture 4: {{ game_form.game_picture_4 }}</p>
+  <p>Picture 5: {{ game_form.game_picture_5 }}</p>
+  <input type="file" class="add_stuff_bar" name="game_picture_6" placeholder="Add picture 6">
   <br><br>
-  <textarea class="add_stuff_bar" name="game_description" placeholder="Add description" rows="6" cols="50"></textarea>
+
+  <textarea class="add_stuff_bar" maxlength="630" name="game_description" placeholder="Add description(maxlength = 630)" rows="6" cols="50"></textarea>
+  {% if game_form.game_description.errors %}
+    <span class="error-message">{{ game_form.game_description.errors[0] }}</span>
+  {% endif %}
   <br><br>
-  <textarea class="add_stuff_bar" name="game_story" placeholder="Add story" rows="6" cols="50"></textarea>
+
+  <textarea class="add_stuff_bar" maxlength="630" name="game_story" placeholder="Add story(maxlength = 630)" rows="6" cols="50"></textarea>
+  {% if game_form.game_story.errors %}
+    <span class="error-message">{{ game_form.game_story.errors[0] }}</span>
+  {% endif %}
   <br><br>
-  <textarea class="add_stuff_bar" name="game_gameplay" placeholder="Add gameplay" rows="6" cols="50"></textarea>
+
+  <textarea class="add_stuff_bar" maxlength="630" name="game_gameplay" placeholder="Add gameplay(maxlength = 630)" rows="6" cols="50"></textarea>
+  {% if game_form.game_gameplay.errors %}
+    <span class="error-message">{{ game_form.game_gameplay.errors[0] }}</span>
+  {% endif %}
   <br><br>
-  <textarea class="add_stuff_bar" name="game_soundtrack" placeholder="Add soundtrack" rows="6" cols="50"></textarea>
+
+  <textarea class="add_stuff_bar" maxlength="630" name="game_soundtrack" placeholder="Add soundtrack(maxlength = 630)" rows="6" cols="50"></textarea>
+  {% if game_form.game_soundtrack.errors %}
+    <span class="error-message">{{ game_form.game_soundtrack.errors[0] }}</span>
+  {% endif %}
   <br><br>
-  <textarea class="add_stuff_bar" name="game_reviews" placeholder="Add reviews" rows="6" cols="50"></textarea>
+
+  <textarea class="add_stuff_bar" maxlength="630" name="game_reviews" placeholder="Add reviews(maxlength = 630)" rows="6" cols="50"></textarea>
+  {% if game_form.game_reviews.errors %}
+    <span class="error-message">{{ game_form.game_reviews.errors[0] }}</span>
+  {% endif %}
   <br><br>
+
   <input  type="submit" value="Add this game">
 </form>
 
@@ -200,6 +227,7 @@
         }
     };
   });
+  
 </script>
 
 

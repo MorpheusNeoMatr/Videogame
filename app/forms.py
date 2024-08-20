@@ -23,13 +23,13 @@ class Login(FlaskForm):
 
 
 class Add_Game(FlaskForm):
-    game_name = StringField('game_name', validators=[DataRequired()])
-    game_dev_score = StringField('game_dev_score', validators=[DataRequired()])
+    game_name = StringField('game_name', validators=[DataRequired(), Length(max=20)])
+    game_dev_score = StringField('game_dev_score', validators=[DataRequired(), Length(max=10)])
     game_date = StringField('game_date', validators=[DataRequired()])
-    game_description = TextAreaField('game_description', validators=[DataRequired()])
-    game_gameplay = TextAreaField('game_gameplay', validators=[DataRequired()])
-    game_story = TextAreaField('game_story', validators=[DataRequired()])
-    game_soundtrack = TextAreaField('game_soundtrack', validators=[DataRequired()])
+    game_description = TextAreaField('game_description', validators=[DataRequired(), Length(max=630)])
+    game_gameplay = TextAreaField('game_gameplay', validators=[DataRequired(), Length(max=630)])
+    game_story = TextAreaField('game_story', validators=[DataRequired(), Length(max=630)])
+    game_soundtrack = TextAreaField('game_soundtrack', validators=[DataRequired(), Length(max=630)])
     game_reviews = TextAreaField('game_reviews', validators=[DataRequired()])
     game_picture_1 = FileField('game_picture_1', validators=[FileAllowed(['jpg'], 'JPG Only!')])
     game_picture_2 = FileField('game_picture_2', validators=[FileAllowed(['jpg'], 'JPG Only!')])
@@ -51,12 +51,12 @@ class Add_Game(FlaskForm):
 
 
 class Add_Series(FlaskForm):
-    series_name = StringField('series_name', validators=[DataRequired(message='Series name cannot be empty')])
+    series_name = StringField('series_name', validators=[DataRequired(message='Series name cannot be empty'), Length(max=20)])
     series_submit = SubmitField('Add Series')
 
 
 class Add_Genre(FlaskForm):
-    genre_name = StringField('genre_name', validators=[DataRequired(message='Genre name cannot be empty')])
+    genre_name = StringField('genre_name', validators=[DataRequired(message='Genre name cannot be empty'), Length(max=20)])
     genre_submit = SubmitField('Add Genre')
 
 

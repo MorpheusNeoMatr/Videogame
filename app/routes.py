@@ -47,6 +47,11 @@ def home():
     return render_template('home.html', users=users, genres=genres, companies=companies, directors=directors, series=series, games=games)
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @app.route("/api/games", methods=["GET"])
 def filter_games():
     genre_id = request.args.get('Genre')
