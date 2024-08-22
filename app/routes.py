@@ -25,6 +25,7 @@ app.config['USER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_EXPIRE'] = None  # Expire when browser is closed
 app.config['SESSION_PERMANENT'] = False
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 MB
 app.secret_key = 'correcthorsebatterystaple'
 WTF_CSRF_ENABLED = True
 WTF_CSRF_SECRET_KEY = 'sup3r_secr3t_passw3rd'
@@ -145,13 +146,11 @@ def login():
                     if user.permission != 1:
                         flash('Your account has not been approved yet.')
                         return redirect(url_for('login'))
-  
                     if user and check_password_hash(user.password_hash, password):
                         session['user_id'] = user.id
                         session['user_name'] = user.name
                         flash('Logged in successfully.')
                         return redirect(url_for('home'))
-       
                     else:
                         flash('Login failed. Wrong email and/or password.')
                         return redirect(url_for('login'))

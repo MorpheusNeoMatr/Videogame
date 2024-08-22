@@ -471,7 +471,7 @@ a:hover{
 
   /* Style for the series name input */
 .add_stuff_bar {
-    width: 30%; /* Full width of the container */
+    width: 30vw; /* Full width of the container */
     padding: 1%;
     border: 2px solid #ccc; /* Default border color */
     background-color: #333;
@@ -493,6 +493,27 @@ a:hover{
     border-color: red; /* Border color when focused */
     box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
   }
+
+.text-area{
+    padding: 1%;
+    border: 2px solid #ccc; /* Default border color */
+    background-color: #333;
+    color: #f0f0f0;
+    border-radius: 5px;
+    outline: none; /* Remove default focus outline */
+    font-size: 100%; /* Font size */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border color and shadow */
+}
+
+.text-area::placeholder{
+    color: #ccc; /* Placeholder text color */
+}
+
+.text-area:focus{
+    border-color: red; /* Border color when focused */
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
+}
   
 /* Style for the popup button for Series */
 #openPopupSeriesBtn {
@@ -584,3 +605,51 @@ a:hover{
 .error-message{
     color: red;
 }
+
+/* login */
+.login-register-box {
+    width: 30%; /* Adjust the width as needed */
+    margin: 0 auto; /* Centers the box on the page */
+    padding: 20px;
+    border: 1px solid red;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
+    background-color: #333; /* Background color */
+}
+
+.login-register-box form div {
+    margin-bottom: 15px; /* Space between form fields */
+}
+
+.login-register-box a {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: #dc3545;
+    text-decoration: none;
+}
+
+.login-register-box a:hover {
+    color: white;
+}
+
+.profile-image-button {
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    background-color: #555;
+    width: 300px;
+    height: 150px;
+    color: white; /* Text color */
+
+    text-align: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 5px solid white; /* Remove border */
+}
+
+.profile-image-button:hover {
+    border:5px solid red; /* Darken on hover */
+}
+
