@@ -48,12 +48,12 @@ class Videogame(db.Model):
     story = db.Column(db.Text())
     soundtrack = db.Column(db.Text())
     reviews = db.Column(db.Text())
-    picture_1 = db.Column(db.String(), nullable=True)
-    picture_2 = db.Column(db.String(), nullable=True)
-    picture_3 = db.Column(db.String(), nullable=True)
-    picture_4 = db.Column(db.String(), nullable=True)
-    picture_5 = db.Column(db.String(), nullable=True)
-    picture_6 = db.Column(db.String(), nullable=True)
+    picture_1 = db.Column(db.Text(), nullable=True)
+    picture_2 = db.Column(db.Text(), nullable=True)
+    picture_3 = db.Column(db.Text(), nullable=True)
+    picture_4 = db.Column(db.Text(), nullable=True)
+    picture_5 = db.Column(db.Text(), nullable=True)
+    picture_6 = db.Column(db.Text(), nullable=True)
     game_genres = db.relationship("Genre", secondary=genre_game, backref=db.backref
                              ('Videogame', lazy='dynamic'))
     game_companies = db.relationship("Company", secondary=game_company, backref=db.backref

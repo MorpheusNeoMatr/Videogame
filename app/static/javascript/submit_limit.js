@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('registrationForm');
+    const form = document.getElementById('submit_form');
     const submitButton = document.getElementById('submitButton');
 
     form.addEventListener('submit', (event) => {

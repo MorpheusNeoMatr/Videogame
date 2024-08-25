@@ -48,11 +48,6 @@ def home():
     return render_template('home.html', users=users, genres=genres, companies=companies, directors=directors, series=series, games=games)
 
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-
 @app.route("/api/games", methods=["GET"])
 def filter_games():
     genre_id = request.args.get('Genre')
@@ -77,9 +72,9 @@ def filter_games():
     return jsonify({"games": games_list})
 
 
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('404.html'), 404
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -351,10 +346,10 @@ def company_list():
     founders = Founder.query.order_by(Founder.name).all()
     directors = Director.query.order_by(Director.name).all()
     users = Username.query.order_by(Username.name).all()
-    company_list = models.Company.query.all()
+    companies = models.Company.query.all()
     return render_template("company_list.html",
     directors=directors, founders=founders, series=series, games=games,
-    users=users, company_list=company_list)
+    users=users, companies=companies)
 
 
 @app.route("/api/companies", methods=["GET"])
@@ -377,7 +372,7 @@ def filter_companies():
         query = query.filter(models.Company.company_series.any(id=series_id))
     companies = query.all()
     # Return only names
-    companies_list = [{"id": company.id, "name": company.name} for company in companies]
+    companies_list = [{"id": company.id, "name": company.name, "picture_1": company.picture_1} for company in companies]
     return jsonify({"companies": companies_list})
 
 
@@ -447,7 +442,7 @@ def filter_founders():
         query = query.filter(models.Founder.founder_companies.any(id=company_id))
     founders = query.all()
     # Return only names
-    founders_list = [{"id": founder.id, "name": founder.name} for founder in founders]
+    founders_list = [{"id": founder.id, "name": founder.name, "picture_1": founder.picture_1} for founder in founders]
     return jsonify({"founders": founders_list})
 
 
@@ -520,7 +515,7 @@ def filter_directors():
         query = query.filter(models.Director.companies.any(id=company_id))
     directors = query.all()
     # Return only names
-    director_list = [{"id": director.id, "name": director.name} for director in directors]
+    director_list = [{"id": director.id, "name": director.name, "picture_1": director.picture_1} for director in directors]
     return jsonify({"directors": director_list})
 
 
@@ -540,4 +535,38 @@ def user_list():
         return redirect(url_for('home'))
     else:
         users = models.Username.query.all()
-        return render_template("user_list.html", users=users)
+        games = models.Videogame.query.all()
+        directors = models.Director.query.all()
+        companies = models.Company.query.all()
+        founders = models.Founder.query.all()
+        return render_template("user_list.html",games=games, directors=directors,
+                         companies=companies, founders=founders, users=users)
+    
+
+@app.route("/api/users", methods=["GET"])
+def filter_users():
+    # Retrieve filter parameters from the request
+    game_id = request.args.get('Game')
+    company_id = request.args.get('Company')
+    director_id = request.args.get('Director')
+    founder_id = request.args.get('Founder')
+    # Start with the base query for users
+    query = models.Username.query
+    # Apply filters based on the provided parameters
+    if game_id and game_id != 'all':
+        query = query.join(models.Videogame).filter(models.Videogame.id == game_id)
+    if company_id and company_id != 'all':
+        query = query.join(models.Company).filter(models.Company.id == company_id)
+    if director_id and director_id != 'all':
+        query = query.join(models.Director).filter(models.Director.id == director_id)
+    if founder_id and founder_id != 'all':
+        query = query.join(models.Founder).filter(models.Founder.id == founder_id)
+    # Execute the query and serialize the result
+    users = query.all()
+    user_list = [{"id": user.id, "name": user.name, "picture": user.picture} for user in users]
+    return jsonify({"users": user_list})
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404

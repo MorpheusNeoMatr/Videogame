@@ -35,6 +35,73 @@ function updateGameList(games) {
     });
 }
 
+
+// Filter functions
+function filterGames() {
+    var genreId = document.getElementById("genreDropdown").value;
+    var companyId = document.getElementById("companyDropdown").value;
+    var directorId = document.getElementById("directorDropdown").value;
+    var seriesId = document.getElementById("seriesDropdown").value;
+    var usersId = document.getElementById("usersDropdown").value;
+
+    fetch(`/api/games?Genre=${genreId}&Company=${companyId}&Director=${directorId}&Series=${seriesId}&User=${usersId}`)
+        .then(response => response.json())
+        .then(data => updateGameList(data.games))
+        .catch(error => console.error('Error fetching games:', error));
+}
+
+
+// Update the user list (existing function)
+function updateUserList(users) {
+    var userList = document.getElementById("userList");
+    userList.innerHTML = ""; // Clear previous list
+
+    if (users.length === 0) {
+        var noUserMessage = document.createElement("p");
+        noUserMessage.textContent = "No users match the specified filters.";
+        noUserMessage.className = "no-user-message"; // Add a class for styling if needed
+        userList.appendChild(noUserMessage);
+        return;
+    }
+
+    users.forEach(user => {
+        var link = document.createElement("a");
+        link.href = `/dashboard/${user.id}`;
+        link.className = "item-link";
+
+        var div = document.createElement("div");
+        div.className = "item";
+
+        var img = document.createElement("img");
+        img.src = user.picture ? `/static/user_images/${user.picture}` : '/static/games_images/default_image.jpg';
+        img.className = "image";
+
+
+        var p = document.createElement("p");
+        p.textContent = user.name;
+        p.className = "name";
+
+        div.appendChild(img);
+        div.appendChild(p);
+        link.appendChild(div);
+        userList.appendChild(link);
+    });
+}
+
+// Filter functions
+function filterUsers() {
+    var companyId = document.getElementById("companyDropdown").value;
+    var directorId = document.getElementById("directorDropdown").value;
+    var founderId = document.getElementById("founderDropdown").value;
+    var gameId = document.getElementById("gameDropdown").value;
+
+    fetch(`/api/users?Game=${gameId}&Company=${companyId}&Director=${directorId}&Founder=${founderId}`)
+        .then(response => response.json())
+        .then(data => updateUserList(data.users))
+        .catch(error => console.error('Error fetching users:', error));
+}
+
+
 // Update the company list
 function updateCompanyList(companies) {
     var companyList = document.getElementById("companyList");
@@ -71,6 +138,21 @@ function updateCompanyList(companies) {
     });
 }
 
+
+function filterCompanies() {
+    var directorId = document.getElementById("directorDropdown").value;
+    var seriesId = document.getElementById("seriesDropdown").value;
+    var founderId = document.getElementById("founderDropdown").value;
+    var userId = document.getElementById("usersDropdown").value;
+    var gameId = document.getElementById("gameDropdown").value;
+
+    fetch(`/api/companies?Director=${directorId}&Game=${gameId}&Series=${seriesId}&Founder=${founderId}&User=${userId}`)
+        .then(response => response.json())
+        .then(data => updateCompanyList(data.companies))
+        .catch(error => console.error('Error fetching companies:', error));
+}
+
+
 // Update the director list
 function updateDirectorList(directors) {
     var directorList = document.getElementById("directorList");
@@ -105,6 +187,17 @@ function updateDirectorList(directors) {
         link.appendChild(div);
         directorList.appendChild(link);
     });
+}
+
+function filterDirectors() {
+    var companyId = document.getElementById("companyDropdown").value;
+    var gameId = document.getElementById("gameDropdown").value;
+    var userId = document.getElementById("usersDropdown").value;
+
+    fetch(`/api/directors?Company=${companyId}&Game=${gameId}&User=${userId}`)
+        .then(response => response.json())
+        .then(data => updateDirectorList(data.directors))
+        .catch(error => console.error('Error fetching directors:', error));
 }
 
 // Update the founder list
@@ -143,58 +236,6 @@ function updateFounderList(founders) {
     });
 }
 
-// Fetch all lists on page load
-window.addEventListener('load', () => {
-    fetch(`/api/games`).then(response => response.json()).then(data => updateGameList(data.games));
-    fetch(`/api/companies`).then(response => response.json()).then(data => updateCompanyList(data.companies));
-    fetch(`/api/directors`).then(response => response.json()).then(data => updateDirectorList(data.directors));
-    fetch(`/api/founders`).then(response => response.json()).then(data => updateFounderList(data.founders));
-});
-
-// Event listeners for filter buttons
-document.getElementById('filterGamesButton').addEventListener('click', filterGames);
-document.getElementById('filterCompaniesButton').addEventListener('click', filterCompanies);
-document.getElementById('filterDirectorsButton').addEventListener('click', filterDirectors);
-document.getElementById('filterFoundersButton').addEventListener('click', filterFounders);
-
-// Filter functions
-function filterGames() {
-    var genreId = document.getElementById("genreDropdown").value;
-    var companyId = document.getElementById("companyDropdown").value;
-    var directorId = document.getElementById("directorDropdown").value;
-    var seriesId = document.getElementById("seriesDropdown").value;
-    var usersId = document.getElementById("usersDropdown").value;
-
-    fetch(`/api/games?Genre=${genreId}&Company=${companyId}&Director=${directorId}&Series=${seriesId}&User=${usersId}`)
-        .then(response => response.json())
-        .then(data => updateGameList(data.games))
-        .catch(error => console.error('Error fetching games:', error));
-}
-
-function filterCompanies() {
-    var directorId = document.getElementById("directorDropdown").value;
-    var seriesId = document.getElementById("seriesDropdown").value;
-    var founderId = document.getElementById("founderDropdown").value;
-    var userId = document.getElementById("usersDropdown").value;
-    var gameId = document.getElementById("gameDropdown").value;
-
-    fetch(`/api/companies?Director=${directorId}&Game=${gameId}&Series=${seriesId}&Founder=${founderId}&User=${userId}`)
-        .then(response => response.json())
-        .then(data => updateCompanyList(data.companies))
-        .catch(error => console.error('Error fetching companies:', error));
-}
-
-function filterDirectors() {
-    var companyId = document.getElementById("companyDropdown").value;
-    var gameId = document.getElementById("gameDropdown").value;
-    var userId = document.getElementById("usersDropdown").value;
-
-    fetch(`/api/directors?Company=${companyId}&Game=${gameId}&User=${userId}`)
-        .then(response => response.json())
-        .then(data => updateDirectorList(data.directors))
-        .catch(error => console.error('Error fetching directors:', error));
-}
-
 function filterFounders() {
     var companyId = document.getElementById("companyDropdown").value;
     var userId = document.getElementById("usersDropdown").value;
@@ -206,3 +247,19 @@ function filterFounders() {
         .catch(error => console.error('Error fetching founders:', error));
 }
 
+
+// Fetch all lists on page load
+window.addEventListener('load', () => {
+    fetch(`/api/games`).then(response => response.json()).then(data => updateGameList(data.games));
+    fetch(`/api/companies`).then(response => response.json()).then(data => updateCompanyList(data.companies));
+    fetch(`/api/directors`).then(response => response.json()).then(data => updateDirectorList(data.directors));
+    fetch(`/api/founders`).then(response => response.json()).then(data => updateFounderList(data.founders));
+    fetch(`/api/users`).then(response => response.json()).then(data => updateUserList(data.users));
+});
+
+// Event listeners for filter buttons
+document.getElementById('filterGamesButton').addEventListener('click', filterGames);
+document.getElementById('filterCompaniesButton').addEventListener('click', filterCompanies);
+document.getElementById('filterDirectorsButton').addEventListener('click', filterDirectors);
+document.getElementById('filterFoundersButton').addEventListener('click', filterFounders);
+document.getElementById('filterUsersButton').addEventListener('click', filterUsers);

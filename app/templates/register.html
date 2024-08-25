@@ -5,10 +5,10 @@
     <div class="page-name">
         Register
     </div>
-    <form id="registrationForm" method="POST" enctype="multipart/form-data" action="{{ url_for('register') }}">
+    <form id="submit_form" method="POST" enctype="multipart/form-data" action="{{ url_for('register') }}">
         {{ username_form.hidden_tag() }}
         <div>Picture:
-            <input type="file" id="user_picture" class="profile-image-button" class="profile-image-container" class="image-upload" name="user_picture">
+            <input type="file" id="user_picture" class="add_stuff_bar" name="user_picture">
             {% if username_form.user_picture.errors %}
             <span class="error-message">{{ username_form.user_picture.errors[0] }}</span>
             {% endif %}
@@ -41,22 +41,7 @@
 
         <button type="submit" id="submitButton">Register</button>
     </form>
+    <a href="/login">Already have an account? Login</a>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const pictureInput = document.getElementById('user_picture');
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-
-    pictureInput.addEventListener('change', () => {
-        const pictureFile = pictureInput.files[0];
-
-        if (pictureFile && pictureFile.size > MAX_FILE_SIZE) {
-            alert('File size exceeds 5 MB limit.');
-            pictureInput.value = ''; // Clear the input to allow re-selection
-        }
-    });
-});
-</script>
 
 {% endblock %}

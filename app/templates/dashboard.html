@@ -1,15 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
+
+<div>
+    <div class="profile-box">
+        <img src="{{ url_for('static', filename='user_images/' ~ user.picture) }}" alt="Picture" class="profile-image">
+        <p class="user-name">{{ user.name }}</p>
+        <button onclick="showSection('games')">Games added</button>
+        <button onclick="showSection('founders')">Founders added</button>
+        <button onclick="showSection('companies')">Companies added</button>
+        <button onclick="showSection('directors')">Directors added</button>
+    </div>
+</div>
+
 <!-- Buttons to toggle the content -->
 <div>
-    <button onclick="showSection('games')">Games added</button>
-    <button onclick="showSection('founders')">Founders added</button>
-    <button onclick="showSection('companies')">Companies added</button>
-    <button onclick="showSection('directors')">Directors added</button>
+    
 </div>
 
 <!-- Sections that will be shown/hidden -->
-<div id="games" class="section dashboard-container">
+<div id="games" class="section">
     <h3>Games added:</h3>
     <ul>
         {% if user_games %}

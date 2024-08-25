@@ -223,6 +223,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centers text content vertically */
+    font-size: 1.5vw;
 }
 
 
@@ -233,26 +234,27 @@ button:hover {
 
 /* Container for the grid */
 .user-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the minmax value as needed */
-    text-align: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
     gap: 20px; /* Space between grid items */
     padding: 20px; /* Padding around the grid */
-    max-width: 1200px; /* Set a maximum width for the grid */
     margin: 0 auto; /* Center the grid horizontally */
-    
+    max-width: 1200px; /* Set a maximum width for the grid container */
+    justify-content: center; /* Center items horizontally */
 }
 
 /* Individual user card */
 .user-card {
     border: 1px solid white; /* Dark border for the card */
+    display: inline-block;
+    height: 30vw;
+    margin: 1%;
     border-radius: 8px; /* Rounded corners */
     overflow: hidden; /* Hide overflow to keep the rounded corners clean */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
     background-color: #2c2c2c; /* Light black color for the card background */
     padding: 15px; /* Padding inside the card */
     text-align: center; /* Center text inside the card */
-    background-color: #333; /* White text color for contrast */
+    color: white; /* White text color for contrast */
 }
 
 /* Style for images */
@@ -283,9 +285,45 @@ button:hover {
     background-color: #28a745; /* Green color for approve button */
 }
 
+.approve-btn:hover{
+    background-color: darkgreen;
+}
+
 .reject-btn {
     background-color: #dc3545; /* Red color for reject button */
 }
+
+.reject-btn:hover{
+    background-color: darkred;
+}
+
+.profile-box {
+    text-align: center; /* Center text inside the box */
+    display:inline-block;
+    margin-bottom: 20px;
+    background-color: #333; /* White background for the box */
+    border: 1px solid red; /* Light border around the box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
+    padding: 20px; /* Padding inside the box */
+    width: auto; /* Limit the width of the box */
+}
+
+.profile-image {
+    width: 100px; /* Width of the profile image */
+    height: 100px; /* Height of the profile image */
+    border-radius: 50%; /* Make the image circular */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    margin-bottom: 10px; /* Space between the image and the name */
+}
+
+.user-name {
+    font-size: 1.2em; /* Slightly larger font size for the name */
+    font-weight: bold; /* Bold font for the name */
+    color: white; /* Dark color for better readability */
+    margin-bottom: 10px;
+}
+
 
 /* detailed page */
 .image-text-row {
@@ -378,16 +416,6 @@ a:hover{
     margin: 0; /* Remove the default margin */
     padding: 0; /* Remove any padding */
     color: #fff; /* Optional: set text color to white for better contrast */
-}
-
-/* dashboard */
-.dashboard-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 2% auto; /* Center the container and add space around */
-    padding: 1%; /* Optional padding */
-    gap: 2%; /* Space between items */
 }
 
 .fade{
@@ -514,7 +542,17 @@ a:hover{
     border-color: red; /* Border color when focused */
     box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
 }
-  
+
+.add-stuff-images{
+    width: 57%; /* Adjust the width as needed */
+    margin: 0 auto; /* Centers the box on the page */
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
+    background-color: #333; /* Background color */
+}
+
 /* Style for the popup button for Series */
 #openPopupSeriesBtn {
     background-color: #dc3545; /* Red */
@@ -632,24 +670,3 @@ a:hover{
 .login-register-box a:hover {
     color: white;
 }
-
-.profile-image-button {
-    display: flex;  
-    align-items: center;
-    justify-content: center;
-    background-color: #555;
-    width: 300px;
-    height: 150px;
-    color: white; /* Text color */
-
-    text-align: center;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    border: 5px solid white; /* Remove border */
-}
-
-.profile-image-button:hover {
-    border:5px solid red; /* Darken on hover */
-}
-

@@ -1,6 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for user in users %}
-<a href='/dashboard/{{user.id}}'>{{user.name}}</a>
-{% endfor %}
+<div class="styled-dropdown-container">
+    <select id="gameDropdown" class="styled-dropdown">
+        <option value="all">All games</option>
+        {% for game in games %}
+            <option value="{{ game.id }}">{{ game.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="styled-dropdown-container">
+    <select id="companyDropdown" class="styled-dropdown">
+        <option value="all">All companies</option>
+        {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+        {% endfor %}
+    </select> 
+</div>
+
+<div class="styled-dropdown-container">
+    <select id="directorDropdown" class="styled-dropdown">
+        <option value="all">All directors</option>
+        {% for director in directors %}
+            <option value="{{ director.id }}">{{ director.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+<div class="styled-dropdown-container">
+    <select id="founderDropdown" class="styled-dropdown">
+        <option value="all">All founders</option>
+        {% for founder in founders %}
+            <option value="{{ founder.id }}">{{ founder.name }}</option>
+        {% endfor %}
+    </select>    
+</div>
+
+
+<button onclick="filterUsers()">Apply Filters</button>
+
+<ul id="userList">
+    <!-- This will be populated with games after filtering -->
+</ul>
 {% endblock %}
