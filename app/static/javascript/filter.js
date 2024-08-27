@@ -6,7 +6,7 @@ function updateGameList(games) {
     if (games.length === 0) {
         var noGameMessage = document.createElement("p");
         noGameMessage.textContent = "No games match the specified filters.";
-        noGameMessage.className = "no-game-message"; // Add a class for styling if needed
+        noGameMessage.className = "no-filter-message"; // Add a class for styling if needed
         gameList.appendChild(noGameMessage);
         return;
     }
@@ -59,7 +59,7 @@ function updateUserList(users) {
     if (users.length === 0) {
         var noUserMessage = document.createElement("p");
         noUserMessage.textContent = "No users match the specified filters.";
-        noUserMessage.className = "no-user-message"; // Add a class for styling if needed
+        noUserMessage.className = "no-filter-message"; // Add a class for styling if needed
         userList.appendChild(noUserMessage);
         return;
     }
@@ -110,7 +110,7 @@ function updateCompanyList(companies) {
     if (companies.length === 0) {
         var noCompanyMessage = document.createElement("p");
         noCompanyMessage.textContent = "No companies match the specified filters.";
-        noCompanyMessage.className = "no-company-message"; // Add a class for styling if needed
+        noCompanyMessage.className = "no-filter-message"; // Add a class for styling if needed
         companyList.appendChild(noCompanyMessage);
         return;
     }
@@ -161,7 +161,7 @@ function updateDirectorList(directors) {
     if (directors.length === 0) {
         var noDirectorMessage = document.createElement("p");
         noDirectorMessage.textContent = "No directors match the specified filters.";
-        noDirectorMessage.className = "no-director-message"; // Add a class for styling if needed
+        noDirectorMessage.className = "no-filter-message"; // Add a class for styling if needed
         directorList.appendChild(noDirectorMessage);
         return;
     }
@@ -208,7 +208,7 @@ function updateFounderList(founders) {
     if (founders.length === 0) {
         var noFounderMessage = document.createElement("p");
         noFounderMessage.textContent = "No founders match the specified filters.";
-        noFounderMessage.className = "no-founder-message"; // Add a class for styling if needed
+        noFounderMessage.className = "no-filter-message"; // Add a class for styling if needed
         founderList.appendChild(noFounderMessage);
         return;
     }

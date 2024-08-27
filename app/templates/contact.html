@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1 class="page-name">Contact us</h1>
+
+<div class="contact-parent-container">
+    <div class="contact-page" id="submit_form">
+        <p>Give feedback</p>
+        <br>
+            <!-- HTML form for sending an email message to 'pouryaparsaizan@gmail.com' -->
+        <form action="mailto:Izanpourya@gmail.com" method="post" enctype="text/plain">
+            <label for="name">Name:</label>
+            <br><br>
+            <!-- Input field for user's name -->
+            <input type="text" id="name" name="name" class="add_stuff_bar" required maxlength="20" placeholder="maxlength=20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space.">  
+            <label for="email">Email:</label>
+            <br><br>
+            <!-- Input field for user's email address -->
+            <input type="email" id="email" class="add_stuff_bar" name="email" required maxlength="20" placeholder="maxlength=20">   
+            <label for="message">Message:</label>
+            <br><br>
+                <!-- Textarea allowing multi-line input -->
+            <textarea id="message" name="message" class="add_stuff_bar" rows="6" required maxlength="400" placeholder="maxlength=400" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."></textarea>   
+            <button type="submit" id="submitButton">Send Message</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

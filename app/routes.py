@@ -77,6 +77,11 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if 'user_id' in session:
@@ -162,12 +167,19 @@ def dashboard(id):
         flash("Please login in order to access this page")
         return redirect(url_for('home'))
     else:
-        user = Username.query.get_or_404(id)
-        user_games = models.Videogame.query.filter_by(username_id=id).all()
-        user_founders = models.Founder.query.filter_by(username_id=id).all()
-        user_companies = models.Company.query.filter_by(username_id=id).all()
-        user_directors = models.Director.query.filter_by(username_id=id).all()
-        return render_template('dashboard.html', user_directors=user_directors, user_companies=user_companies, user=user, user_games=user_games, user_founders=user_founders)
+        try:
+            user = Username.query.get_or_404(id)
+            user_games = models.Videogame.query.filter_by(username_id=id).all()
+            user_founders = models.Founder.query.filter_by(username_id=id).all()
+            user_companies = models.Company.query.filter_by(username_id=id).all()
+            user_directors = models.Director.query.filter_by(username_id=id).all()
+            return render_template('dashboard.html',
+             user_directors=user_directors,
+             user_companies=user_companies, 
+             user=user, user_games=user_games, 
+             user_founders=user_founders)
+        except OverflowError:
+            abort(404)
 
 
 @app.route('/logout')
@@ -281,13 +293,29 @@ def add_game():
 
 @app.route("/game/<int:game_id>", methods=['GET', 'POST'])
 def game(game_id):
-    game = models.Videogame.query.filter_by(id=game_id).first_or_404()
-    game_companies = game.game_companies
-    game_genres = game.game_genres
-    game_directors = game.game_directors
-    game_series = game.Series
-    game_user = game.Username
-    return render_template("game.html", game_user=game_user, game_series=game_series, game=game, game_companies=game_companies, game_genres=game_genres, game_directors=game_directors)
+    try:
+        # Attempt to retrieve the game by ID
+        game = models.Videogame.query.filter_by(id=game_id).first_or_404()
+        # Retrieve related data
+        game_companies = game.game_companies
+        game_genres = game.game_genres
+        game_directors = game.game_directors
+        game_series = game.Series
+        game_user = game.Username
+        # Render the template with the game details
+        return render_template(
+            "game.html",
+            game=game,
+            game_user=game_user,
+            game_series=game_series,
+            game_companies=game_companies,
+            game_genres=game_genres,
+            game_directors=game_directors
+        )
+    except OverflowError:
+        # Handle the overflow error
+        abort(404)
+        # Redirect to a safe page like the home page
 
 
 @app.route("/add_company", methods=['GET', 'POST'])
@@ -327,7 +355,7 @@ def add_company():
                 db.session.commit()
                 flash('Company added successfully', 'success')
                 return redirect(url_for('company', id=new_company.id))
-        
+
             elif series_in_company_form.validate_on_submit():
                 new_series_in_company = models.Series()
                 new_series_in_company.name = series_in_company_form.series_name.data
@@ -378,14 +406,22 @@ def filter_companies():
 
 @app.route("/company/<int:id>")
 def company(id):
-    company = models.Company.query.filter_by(id=id).first_or_404()
-    company_directors = company.company_directors
-    company_founders = company.company_founders
-    company_games = company.company_games
-    company_series = company.company_series
-    company_username = company.Username
-    return render_template("company.html", company_username=company_username, company_series=company_series, company_games=company_games, company_founders=company_founders, company=company, company_directors=company_directors)
-
+    try:
+        company = models.Company.query.filter_by(id=id).first_or_404()
+        company_directors = company.company_directors
+        company_founders = company.company_founders
+        company_games = company.company_games
+        company_series = company.company_series
+        company_username = company.Username
+        return render_template("company.html",
+        company_username=company_username,
+        company_series=company_series,
+        company_games=company_games,
+        company_founders=company_founders,
+        company=company,
+        company_directors=company_directors)
+    except OverflowError:
+        abort(404)
 
 @app.route('/add_founder', methods=['GET', 'POST'])
 def add_founder():
@@ -448,10 +484,16 @@ def filter_founders():
 
 @app.route("/founder/<int:id>")
 def founder(id):
-    founder = models.Founder.query.filter_by(id=id).first_or_404()
-    founder_company = founder.founder_companies
-    founder_username = founder.Username
-    return render_template("founder.html", founder_username=founder_username, founder_company=founder_company, founder=founder)
+    try:
+        founder = models.Founder.query.filter_by(id=id).first_or_404()
+        founder_company = founder.founder_companies
+        founder_username = founder.Username
+        return render_template("founder.html", 
+        founder_username=founder_username, 
+        founder_company=founder_company, 
+        founder=founder)
+    except OverflowError:
+        abort(404)
 
 
 @app.route("/add_directors", methods=['GET', 'POST'])
@@ -521,12 +563,18 @@ def filter_directors():
 
 @app.route("/director/<int:id>")
 def director(id):
-    director = models.Director.query.filter_by(id=id).first_or_404()
-    director_game = director.Videogame.all()
-    director_company = director.Company.all()
-    director_username = director.Username
-    return render_template("director.html", director_username=director_username, director_company=director_company, director_game=director_game, director=director)
-
+    try:
+        director = models.Director.query.filter_by(id=id).first_or_404()
+        director_game = director.Videogame.all()
+        director_company = director.Company.all()
+        director_username = director.Username
+        return render_template("director.html",
+        director_username=director_username,
+        director_company=director_company,
+        director_game=director_game,
+        director=director)
+    except OverflowError:
+        abort(404)
 
 @app.route("/user_list")
 def user_list():

@@ -1,14 +1,77 @@
 {% extends "layout.html" %}
 {% block content %}
-  <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_directors') }}">
+
+<div class="page-name">
+  <h1>ADD DIRECTOR</h1>
+</div>
+
+  <form method="POST" id="submit_director_form" enctype="multipart/form-data" action="{{ url_for('add_directors') }}">
     {{ director_form.hidden_tag() }}
-    <p>Picture 1: {{ director_form.director_picture_1 }} <span style="color:red">{{ director_form.director_picture_1.errors }}</span></p>
-    <p>Name: {{ director_form.director_name }} <span style="color:red">{{ director_form.director_name.errors }}</span></p>
-    <p>games made: {{ director_form.director_games }} <span style="color:red">{{ director_form.director_games.errors }}</span></p>
-    <p>Companies: {{ director_form.director_companies }} <span style="color:red">{{ director_form.director_companies.errors }}</span></p>
-    <p>Age: {{ director_form.director_age }} <span style="color:red">{{ director_form.director_age.errors }}</span></p>
-    <p>Picture 2: {{ director_form.director_picture_2 }} <span style="color:red">{{ director_form.director_picture_2.errors }}</span></p>
-    <p>Description: {{ director_form.director_description }} <span style="color:red">{{ director_form.director_description.errors }}</span></p>
-    <input type="submit" value="Add this director">
+
+    Name:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="20" name="director_name" placeholder="Add name(maxlength = 20)">
+              {% if director_form.director_name.errors %}
+                <span class="error-message">{{ director_form.director_name.errors[0] }}</span>
+              {% endif %}
+              <br><br>
+
+              <p>
+                <p class="note">*If game is not in the list submit this director and then go to add game page to add the considered game*</p>
+                <br>
+                <button type="button" id="toggleDirectorGames" class="toggle-button">
+                  Select Games <span class="arrow-down" id="arrowDirectorGames">&#9662;</span>
+                </button>
+                <div id="directorgamesList" class="dropdown-list">
+                  {% for game in director_form.director_games.choices|sort(attribute=1) %}
+                    <label>
+                      <input type="checkbox" name="director_games" value="{{ game[0] }}">
+                      {{ game[1] }}
+                    </label><br>
+                  {% endfor %}
+                </div>
+              </p>
+              <br><br>
+
+          <p>
+            <p class="note">*If company is not in the list submit this director and then go to add company page to add the considered company*</p>
+            <br>
+            <button type="button" id="toggleDirectorCompanies" class="toggle-button">
+              Select Companies <span class="arrow-down" id="arrowDirectorCompanies">&#9662;</span>
+            </button>
+            <div id="directorcompaniesList" class="dropdown-list">
+              {% for company in director_form.director_companies.choices|sort(attribute=1) %}
+                <label>
+                  <input type="checkbox" name="director_companies" value="{{ company[0] }}">
+                  {{ company[1] }}
+                </label><br>
+              {% endfor %}
+            </div>
+          </p>
+          <br><br>
+  
+    Age:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="20" name="director_age" placeholder="Add Age(maxlength = 20)">
+              {% if director_form.director_age.errors %}
+                <span class="error-message">{{ director_form.director_age.errors[0] }}</span>
+              {% endif %}
+              <br><br>
+              <p>
+    Description:<br><br>
+          <textarea maxlength="630" class="text-area" name="director_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if director_form.director_description.errors %}
+              <span class="error-message">{{ director_form.director_description.errors[0] }}</span>
+            {% endif %}
+            <br><br>
+
+    Add pictures:
+            <br><br>
+            <div class="add-stuff-images">
+              Picture 1: <input type="file" id="director_picture_size_limit_1" class="add_stuff_bar" name="director_picture_1">
+              <br><br>
+              Picture 2: <input type="file" id="director_picture_size_limit_2" class="add_stuff_bar" name="director_picture_2">
+            </div>
+            <br><br>
+
+    <button type="submit" id="submit-director-Button">Add director</button>
   </form>
 {% endblock %}

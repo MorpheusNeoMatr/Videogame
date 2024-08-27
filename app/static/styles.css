@@ -5,7 +5,9 @@ body{
     font-size: 16px;
     color: white;
     text-align: center;/*this will  position the value at the center horizontally*/
-
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
@@ -80,7 +82,7 @@ nav a:hover, .dropbtn:hover {
 }
 
 .sticker img {
-  width: 60px; /* Adjust size as needed */
+  width: 4.5vw; /* Adjust size as needed */
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -110,6 +112,70 @@ nav a:hover, .dropbtn:hover {
 .dropdown-content a:hover {
     background-color: #dc3545; /* Slightly lighter black on hover */
 }
+
+.contact-parent-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-bottom: 2rem;
+
+}
+
+.contact-page {
+    width: 30%; /* Adjust the width as needed */
+    margin: 0 auto; /* Centers the box on the page */
+    padding: 2vw; /* Padding inside the border */
+    border: 1px solid red;
+    border-radius: 1vw; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
+    background-color: #333; /* Background color */
+    display: flex;
+    flex-direction: column; /* Arrange child elements in a column */
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+    overflow: hidden; /* Hide overflow if any child element exceeds the container */
+}
+
+.contact-page label {
+    margin-bottom: 1vw; /* Space between the label and input field */
+    color: white; /* Text color */
+}
+
+.contact-page input,
+.contact-page textarea {
+    width: 100%; /* Full width for input and textarea */
+    padding: 1vw; /* Padding inside input and textarea */
+    box-sizing: border-box; /* Ensure padding is included in width */
+    margin-bottom: 1.5vw; /* Space below input and textarea */
+    border: 1px solid #ddd; /* Border for input and textarea */
+    border-radius: 0.5vw; /* Rounded corners for input and textarea */
+    background-color: #444; /* Background color for input and textarea */
+    color: white; /* Text color */
+}
+
+.contact-page textarea {
+    resize: none; /* Prevent resizing */
+}
+
+.contact-page input::placeholder,
+.contact-page textarea::placeholder {
+    color: #aaa; /* Placeholder text color */
+}
+
+
+.about-page {
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 50vw;
+    height: 20vw;
+    padding: 20px; /* Add padding inside the border */
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    margin: auto; /* Center the box within its parent container */
+}
+
 
 /* show the list when the cursor is hovered on the link*/
 .dropdown:hover .dropdown-content {
@@ -158,6 +224,11 @@ nav a:hover, .dropbtn:hover {
     font-size: inherit;
     color: #333; /* Arrow color */
     pointer-events: none; /* Prevent interaction with the arrow */
+}
+
+.no-filter-message{
+    color: #dc3545;
+    margin-top: 1rem;
 }
 
 
@@ -497,12 +568,26 @@ a:hover{
     text-decoration: none;
   }
 
+  
+/* popup button */
+.open-popup-btn {
+    background-color: #dc3545; /* Blue */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+  
+.open-popup-btn:hover {
+    background-color: darkred; /* Darker blue */
+}
+
   /* Style for the series name input */
 .add_stuff_bar {
     width: 30vw; /* Full width of the container */
     padding: 1%;
     border: 2px solid #ccc; /* Default border color */
-    background-color: #333;
+    background-color: #444;
     color: #f0f0f0;
     border-radius: 5px;
     outline: none; /* Remove default focus outline */
@@ -525,7 +610,7 @@ a:hover{
 .text-area{
     padding: 1%;
     border: 2px solid #ccc; /* Default border color */
-    background-color: #333;
+    background-color: #444;
     color: #f0f0f0;
     border-radius: 5px;
     outline: none; /* Remove default focus outline */
@@ -552,32 +637,6 @@ a:hover{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
     background-color: #333; /* Background color */
 }
-
-/* Style for the popup button for Series */
-#openPopupSeriesBtn {
-    background-color: #dc3545; /* Red */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  #openPopupSeriesBtn:hover {
-    background-color: darkred; /* Darker red */
-  }
-  
-  /* Style for the popup button for Genre */
-  #openPopupGenreBtn {
-    background-color: #dc3545; /* Blue */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  #openPopupGenreBtn:hover {
-    background-color: darkred; /* Darker blue */
-  }
   
 
 /* Button styling */
@@ -608,9 +667,7 @@ a:hover{
 }
 
 /* Checkbox styling */
-.checkbox-genre,
-.checkbox-company,
-.checkbox-director {
+.game-director-checkbox{
     margin-right: 10px; /* Space between checkbox and label */
 }
 
@@ -633,11 +690,6 @@ a:hover{
     background-color: darkred;
     color: white; /* Optionally, change the text color for better contrast */
     padding: 5%;
-}
-
-/* Show dropdown list when active */
-.toggle-button.active + .dropdown-list {
-    display: block;
 }
 
 .error-message{
@@ -669,4 +721,18 @@ a:hover{
 
 .login-register-box a:hover {
     color: white;
+}
+
+/* class for note */
+.note{
+    color: #dc3545;
+}
+
+.error-page{
+    background-image: url(/static/games_images/404.gif);
+    background-size: cover;
+}
+
+footer{
+    margin-top: auto;
 }

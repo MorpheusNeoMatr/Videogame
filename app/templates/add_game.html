@@ -1,165 +1,182 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="page-name">
-  <h1>ADD GAME</h1>
-</div>
-
-<div id="popup-series" class="popup">
-  <div class="popup-content">
-      <span id="closePopupSeriesBtn" class="close">&times;</span>
-      <form method="POST" action="{{ url_for('add_game') }}">
-        {{ series_form.hidden_tag() }}
-        <input type="text" maxlength="20" class="add_stuff_bar" name="series_name" placeholder="maxlength = 20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
-        <button type="submit">Add Series</button>
-      </form>
+  {% extends "layout.html" %}
+  {% block content %}
+  <div class="page-name">
+    <h1>ADD GAME</h1>
   </div>
-</div>
 
-<br>
-
-<div id="popup-genre" class="popup">
-  <div class="popup-content">
-      <span id="closePopupGenreBtn" class="close">&times;</span>
-      <form method="POST" action="{{ url_for('add_game') }}">
-        {{ genre_form.hidden_tag() }}
-        <input type="text" maxlength="20" class="add_stuff_bar" name="genre_name" placeholder="maxlength = 20" required pattern="\S.+" title="Add Series(maxlength = 40)" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
-        <button type="submit">Add genre</button>
-      </form>
+  <div id="popup-games-series" class="popup">
+    <div class="popup-content">
+      <p class="note">*Add your considered series if it is not in the series list*</p>
+      <br>
+        <span id="closePopupGamesSeriesBtn" class="close">&times;</span>
+        <form method="POST" id="submit_games_series_form" action="{{ url_for('add_game') }}">
+          {{ series_form.hidden_tag() }}
+          <input type="text" maxlength="20" class="add_stuff_bar" name="series_name" placeholder="maxlength = 20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
+          <button type="submit" id="submit-games-series-Button">Add Series</button>
+        </form>
+    </div>
   </div>
-</div>
 
-<div id="submit_form">
-  <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
-    {{ game_form.csrf_token }} 
-    <input type="text" class="add_stuff_bar" maxlength="20" name="game_name" placeholder="Game name(maxlength = 20)">
-        {% if game_form.game_name.errors %}
-          <span class="error-message">{{ game_form.game_name.errors[0] }}</span>
-        {% endif %}
-        <br><br>
-      
-        <input type="text" class="add_stuff_bar" maxlength="10" name="game_dev_score" placeholder="Your score(?/10) maxlegth=10">
-        {% if game_form.game_dev_score.errors %}
-          <span class="error-message">{{ game_form.game_dev_score.errors[0] }}</span>
-        {% endif %}
-        <br><br>
-      
-        <input type="text" class="add_stuff_bar" maxlength="20" name="game_date" placeholder="Realease date(maxlength = 20)">
-        {% if game_form.game_date.errors %}
-          <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
-        {% endif %}
-        <br><br>
-      
-        <button type="button" id="toggleDirectors" class="toggle-button">
-          Select Directors <span class="arrow-down" id="arrowDirectors">&#9662;</span>
-        </button>
-        <div id="directorsList" class="dropdown-list">
-          {% for director in game_form.game_directors.choices|sort(attribute=1) %}
-            <label>
-              <input type="checkbox" class="checkbox-director" name="game_directors" value="{{ director[0] }}">
-              {{ director[1] }}
-            </label><br>
-          {% endfor %}
-        </div>
-        <br><br>
-      
-        <p>
-          <select name="game_series">
-            <option>Choose series</option>
-            {% for series in game_form.game_series.choices|sort(attribute=1) if series[1] != 'Choose series'%}
-              <option value="{{ series[0] }}">{{ series[1] }}</option>
-            {% endfor %}
-          </select>
-          {% if game_form.game_series.errors %}
-          <span class="error-message">{{ game_form.game_series.errors[0] }}</span>
+  <br>
+
+  <div id="popup-games-genre" class="popup">
+    <div class="popup-content"> 
+      <p class="note">*Add your considered genre if it is not in the genre list*</p>
+      <br>
+        <span id="closePopupGamesGenreBtn" class="close">&times;</span>
+        <form method="POST"  id="submit_games_genre_form" action="{{ url_for('add_game') }}">
+          {{ genre_form.hidden_tag() }}
+          <input type="text" maxlength="20" class="add_stuff_bar" name="genre_name" placeholder="maxlength = 20" title="Add Series(maxlength = 40)" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
+          <button type="submit" id="submit-games-genre-Button">Add genre</button>
+        </form>
+    </div>
+  </div>
+
+  <div id="submit_game_form">
+    <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
+      {{ game_form.csrf_token }} 
+      Name:<br><br>
+      <input type="text" class="add_stuff_bar" maxlength="20" name="game_name" placeholder="Game name(maxlength = 20)">
+          {% if game_form.game_name.errors %}
+            <span class="error-message">{{ game_form.game_name.errors[0] }}</span>
           {% endif %}
-          <button type="button" id="openPopupSeriesBtn">Add Series</button>
-        </p>
-        <br><br>
-      
-        <p>
-          <button type="button" id="toggleCompanies" class="toggle-button">
-            Select Companies <span class="arrow-down" id="arrowCompanies">&#9662;</span>
+          <br><br>
+
+          Your score:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="10" name="game_dev_score" placeholder="Your score(?/10) maxlegth=10">
+          {% if game_form.game_dev_score.errors %}
+            <span class="error-message">{{ game_form.game_dev_score.errors[0] }}</span>
+          {% endif %}
+          <br><br>
+
+          Release date:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="20" name="game_date" placeholder="Realease date(maxlength = 20)">
+          {% if game_form.game_date.errors %}
+            <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
+          {% endif %}
+          <br><br>
+          <p class="note">*If director is not in the list submit this game and then go to add director page to add the considered director*</p>
+          <br>
+          <button type="button" id="toggleGamesDirectors" class="toggle-button">
+            Select Directors <span class="arrow-down" id="arrowGamesDirectors">&#9662;</span>
           </button>
-          <div id="companiesList" class="dropdown-list">
-            {% for company in game_form.game_companies.choices|sort(attribute=1) %}
+          <div id="gamesdirectorsList" class="dropdown-list">
+            {% for director in game_form.game_directors.choices|sort(attribute=1) %}
               <label>
-                <input type="checkbox" class="checkbox-company" name="game_companies" value="{{ company[0] }}">
-                {{ company[1] }}
+                <input type="checkbox" name="game_directors" value="{{ director[0] }}">
+                {{ director[1] }}
               </label><br>
             {% endfor %}
           </div>
-        </p>
-        <br><br>
-      
-        <p>
-          <button type="button" id="toggleGenres" class="toggle-button">
-            Select Genres <span class="arrow-down" id="arrowGenres">&#9662;</span>
-          </button>
-          <button type="button" id="openPopupGenreBtn">Add Genre</button>
-          {% if game_form.game_genres.errors %}
-          <span class="error-message">{{ game_form.game_genres.errors[0] }}</span>
-          {% endif %}
-          <div id="genresList" class="dropdown-list">
-            {% for genre in game_form.game_genres.choices|sort(attribute=1) %}
-              <label>
-                <input type="checkbox" class="checkbox-genre" name="game_genres" value="{{ genre[0] }}">
-                {{ genre[1] }}
-              </label><br>
-            {% endfor %}
-          </div>
-        </p>
-        <br><br>
-  
-        <textarea maxlength="630" class="text-area" name="game_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
-          {% if game_form.game_description.errors %}
-            <span class="error-message">{{ game_form.game_description.errors[0] }}</span>
-          {% endif %}
           <br><br>
-  
-  
-          <textarea class="text-area" maxlength="630" name="game_gameplay" placeholder="Add gameplay(maxlength = 630)" rows="13" cols="80"></textarea>
-          {% if game_form.game_gameplay.errors %}
-            <span class="error-message">{{ game_form.game_gameplay.errors[0] }}</span>
-          {% endif %}
+        
+          <p>
+            <select name="game_series" class="toggle-button">
+              <option>Choose series</option>
+              <div>
+                {% for series in game_form.game_series.choices|sort(attribute=1) if series[1] != 'Choose series'%}
+                <option value="{{ series[0] }}">{{ series[1] }}</option>
+                {% endfor %}
+              </div>
+            </select>
+            <button type="button" id="openPopupGamesSeriesBtn" class="open-popup-btn">Add Series</button>
+            {% if game_form.game_series.errors %}
+            <span class="error-message">{{ game_form.game_series.errors[0] }}</span>
+            {% endif %}
+          </p>
           <br><br>
-  
-  
-          <textarea class="text-area" maxlength="630" name="game_story" placeholder="Add story(maxlength = 630)" rows="13" cols="80"></textarea>
-          {% if game_form.game_story.errors %}
-            <span class="error-message">{{ game_form.game_story.errors[0] }}</span>
-          {% endif %}
+        
+          <p>
+            <p class="note">*If company is not in the list submit this game and then go to add company page to add the considered company*</p>
+            <br>
+            <button type="button" id="toggleGamesCompanies" class="toggle-button">
+              Select Companies <span class="arrow-down" id="arrowGamesCompanies">&#9662;</span>
+            </button>
+            <div id="gamescompaniesList" class="dropdown-list">
+              {% for company in game_form.game_companies.choices|sort(attribute=1) %}
+                <label>
+                  <input type="checkbox" name="game_companies" value="{{ company[0] }}">
+                  {{ company[1] }}
+                </label><br>
+              {% endfor %}
+            </div>
+          </p>
           <br><br>
-  
-          <textarea class="text-area" maxlength="630" name="game_soundtrack" placeholder="Add soundtrack(maxlength = 630)" rows="13" cols="80"></textarea>
-          {% if game_form.game_soundtrack.errors %}
-            <span class="error-message">{{ game_form.game_soundtrack.errors[0] }}</span>
-          {% endif %}
-          <br><br>  
+        
+          <p>
+            <button type="button" id="toggleGamesGenres" class="toggle-button">
+              Select Genres <span class="arrow-down" id="arrowGamesGenres">&#9662;</span>
+            </button>
+            <button type="button" id="openPopupGamesGenreBtn" class="open-popup-btn">Add Genre</button>
+            {% if game_form.game_genres.errors %}
+            <span class="error-message">{{ game_form.game_genres.errors[0] }}</span>
+            {% endif %}
+            <div id="gamesgenresList" class="dropdown-list">
+              {% for genre in game_form.game_genres.choices|sort(attribute=1) %}
+                <label>
+                  <input type="checkbox" name="game_genres" value="{{ genre[0] }}">
+                  {{ genre[1] }}
+                </label><br>
+              {% endfor %}
+            </div>
+          </p>
+          <br><br>
           
-          <textarea class="text-area" maxlength="630" name="game_reviews" placeholder="Add reviews(maxlength = 630)" rows="13" cols="80"></textarea>
-          {% if game_form.game_reviews.errors %}
-            <span class="error-message">{{ game_form.game_reviews.errors[0] }}</span>
-          {% endif %}
-          <br><br>
-  
-          <div class="add-stuff-images">Add pictures:<br><br>
-            Picture 1: <input type="file" class="add_stuff_bar" name="game_picture_1">
+          Description:<br><br>
+          <textarea maxlength="630" class="text-area" name="game_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if game_form.game_description.errors %}
+              <span class="error-message">{{ game_form.game_description.errors[0] }}</span>
+            {% endif %}
             <br><br>
-            Picture 2: <input type="file" class="add_stuff_bar" name="game_picture_2">
+    
+            Gameplay:<br><br> 
+            <textarea class="text-area" maxlength="630" name="game_gameplay" placeholder="Add gameplay(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if game_form.game_gameplay.errors %}
+              <span class="error-message">{{ game_form.game_gameplay.errors[0] }}</span>
+            {% endif %}
             <br><br>
-            Picture 3: <input type="file" class="add_stuff_bar" name="game_picture_3">
+    
+            Story:<br><br>
+            <textarea class="text-area" maxlength="630" name="game_story" placeholder="Add story(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if game_form.game_story.errors %}
+              <span class="error-message">{{ game_form.game_story.errors[0] }}</span>
+            {% endif %}
             <br><br>
-            Picture 4: <input type="file" class="add_stuff_bar" name="game_picture_4">
+
+            Soundtrack:<br><br>
+            <textarea class="text-area" maxlength="630" name="game_soundtrack" placeholder="Add soundtrack(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if game_form.game_soundtrack.errors %}
+              <span class="error-message">{{ game_form.game_soundtrack.errors[0] }}</span>
+            {% endif %}
+            <br><br>  
+            
+            Reviews:<br><br>
+            <textarea class="text-area" maxlength="630" name="game_reviews" placeholder="Add reviews(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if game_form.game_reviews.errors %}
+              <span class="error-message">{{ game_form.game_reviews.errors[0] }}</span>
+            {% endif %}
             <br><br>
-            Picture 5: <input type="file" class="add_stuff_bar" name="game_picture_5">
+
+            Add pictures:
             <br><br>
-            Picture 6: <input type="file" class="add_stuff_bar" name="game_picture_6">
-          </div>
-          <br><br>
-  
-    <button type="submit" id="submitButton">Add this game</button>
-  </form>
-</div>
+            <div class="add-stuff-images">
+              Picture 1: <input type="file" id="game_picture_size_limit_1" class="add_stuff_bar" name="game_picture_1">
+              <br><br>
+              Picture 2: <input type="file" id="game_picture_size_limit_2" class="add_stuff_bar" name="game_picture_2">
+              <br><br>
+              Picture 3: <input type="file" id="game_picture_size_limit_3" class="add_stuff_bar" name="game_picture_3">
+              <br><br>
+              Picture 4: <input type="file" id="game_picture_size_limit_4" class="add_stuff_bar" name="game_picture_4">
+              <br><br>
+              Picture 5: <input type="file" id="game_picture_size_limit_5" class="add_stuff_bar" name="game_picture_5">
+              <br><br>
+              Picture 6: <input type="file" id="game_picture_size_limit_6" class="add_stuff_bar" name="game_picture_6">
+            </div>
+            <br><br>
+    
+      <button type="submit" id="submit-game-Button">Add this game</button>
+    </form>
+  </div>
 
 
-{% endblock %}
+  {% endblock %}

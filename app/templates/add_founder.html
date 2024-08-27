@@ -1,13 +1,61 @@
 {% extends "layout.html" %}
 {% block content %}
-  <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_founder') }}">
+
+<div class="page-name">
+  <h1>ADD FOUNDER</h1>
+</div>
+
+  <form method="POST" id="submit_founder_form" enctype="multipart/form-data" action="{{ url_for('add_founder') }}">
     {{ founder_form.hidden_tag() }}
-    <p>Picture 1: {{ founder_form.founder_picture_1 }} <span style="color:red">{{ founder_form.founder_picture_1.errors }}</span></p>
-    <p>Name: {{ founder_form.founder_name }} <span style="color:red">{{ founder_form.founder_name.errors }}</span></p>
-    <p>Companies founded: {{ founder_form.founder_companies }} <span style="color:red">{{ founder_form.founder_companies.errors }}</span></p>
-    <p>Age: {{ founder_form.founder_date_of_birth }} <span style="color:red">{{ founder_form.founder_date_of_birth.errors }}</span></p>
-    <p>Picture 2: {{ founder_form.founder_picture_2 }} <span style="color:red">{{ founder_form.founder_picture_2.errors }}</span></p>
-    <p>Description: {{ founder_form.founder_description }} <span style="color:red">{{ founder_form.founder_description.errors }}</span></p>
-    <input type="submit" value="Add this founder">
+
+    Name:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="20" name="founder_name" placeholder="Add name(maxlength = 20)">
+              {% if founder_form.founder_name.errors %}
+                <span class="error-message">{{ founder_form.founder_name.errors[0] }}</span>
+              {% endif %}
+              <br><br>
+
+    <p>
+      <p class="note">*If company is not in the list submit this founder and then go to add company page to add the considered company*</p>
+      <br>
+      <button type="button" id="toggleFounderCompanies" class="toggle-button">
+        Select Companies <span class="arrow-down" id="arrowFounderCompanies">&#9662;</span>
+      </button>
+      <div id="foundercompaniesList" class="dropdown-list">
+        {% for company in founder_form.founder_companies.choices|sort(attribute=1) %}
+          <label>
+            <input type="checkbox" name="founder_companies" value="{{ company[0] }}">
+            {{ company[1] }}
+          </label><br>
+        {% endfor %}
+      </div>
+    </p>
+    <br><br>
+
+    Age:<br><br>
+    <input type="text" class="add_stuff_bar" maxlength="20" name="founder_date_of_birth" placeholder="Add Age(maxlength = 20)">
+        {% if founder_form.founder_date_of_birth.errors %}
+          <span class="error-message">{{ founder_form.founder_date_of_birth.errors[0] }}</span>
+        {% endif %}
+        <br><br>
+        <p>
+
+    Description:<br><br>
+          <textarea maxlength="630" class="text-area" name="founder_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if founder_form.founder_description.errors %}
+              <span class="error-message">{{ founder_form.founder_description.errors[0] }}</span>
+            {% endif %}
+            <br><br>
+
+    Add pictures:
+            <br><br>
+            <div class="add-stuff-images">
+              Picture 1: <input type="file" id="founder_picture_size_limit_1" class="add_stuff_bar" name="founder_picture_1">
+              <br><br>
+              Picture 2: <input type="file" id="founder_picture_size_limit_2" class="add_stuff_bar" name="founder_picture_2">
+            </div>
+            <br><br>
+
+    <button type="submit" id="submit-founder-Button">Add founder</button>
   </form>
 {% endblock %}

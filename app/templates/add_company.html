@@ -1,26 +1,136 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="page-name">
+    <h1>ADD COMPANY</h1>
+</div>
 
-<form method="POST" action="{{ url_for('add_company') }}">
-    {{ series_in_company_form.hidden_tag() }}
-    <label for="series_name">Series Name:</label>
-    {{ series_in_company_form.series_name() }}<br>
-    <button type="submit">Add Series</button>
-</form>
-<form method="POST" enctype="multipart/form-data" action="{{ url_for('add_company') }}">
-    {{ company_form.hidden_tag() }}
-    <p>Picture 1: {{ company_form.company_picture_1 }} <span style="color:red">{{ company_form.company_picture_1.errors }}</span></p>
-    <p>Name: {{ company_form.company_name }} <span style="color:red">{{ company_form.company_name.errors }}</span></p>
-    <p>Videogames made: {{ company_form.company_games }} <span style="color:red">{{ company_form.company_games.errors }}</span></p>
-    <p>Directors: {{ company_form.company_directors }} <span style="color:red">{{ company_form.company_directors.errors }}</span></p>
-    <p>Founders: {{ company_form.company_founders }} <span style="color:red">{{ company_form.company_founders.errors }}</span></p>
-    <p>series made: {{ company_form.company_series }} <span style="color:red">{{ company_form.company_series.errors }}</span></p>
-    <p>Founded in: {{ company_form.company_time_founded }} <span style="color:red">{{ company_form.company_time_founded.errors }}</span></p>
-    <p>headquarters in: {{ company_form.company_headquarters }} <span style="color:red">{{ company_form.company_headquarters.errors }}</span></p>
-    <p>Picture 2: {{ company_form.company_picture_2 }} <span style="color:red">{{ company_form.company_picture_2.errors }}</span></p>
-    <p>Description: {{ company_form.company_description }} <span style="color:red">{{ company_form.company_description.errors }}</span></p>
-    <input type="submit" value="Add this company">
-</form>
+<div id="popup-company-series" class="popup">
+    <div class="popup-content">
+      <p class="note">*Add your considered series if it is not in the series list*</p>
+      <br>
+        <span id="closePopupCompanySeriesBtn" class="close">&times;</span>
+        <form method="POST" id="submit_company_series_form" action="{{ url_for('add_company') }}">
+          {{ series_in_company_form.hidden_tag() }}
+          <input type="text" maxlength="20" class="add_stuff_bar" name="series_name" placeholder="maxlength = 20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
+          <button type="submit" id="submit-company-series-Button">Add Series</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <form method="POST"  id="submit_company_form" enctype="multipart/form-data" action="{{ url_for('add_company') }}">
+        {{ company_form.hidden_tag() }}
+        Name:<br><br>
+          <input type="text" class="add_stuff_bar" maxlength="20" name="company_name" placeholder="Company name(maxlength = 20)">
+              {% if company_form.company_name.errors %}
+                <span class="error-message">{{ company_form.company_name.errors[0] }}</span>
+              {% endif %}
+              <br><br>
+    
+              <p>
+                <p class="note">*If game is not in the list submit this company and then go to add game page to add the considered game*</p>
+                <br>
+                <button type="button" id="toggleCompanyGames" class="toggle-button">
+                  Select Games <span class="arrow-down" id="arrowCompanyGames">&#9662;</span>
+                </button>
+                <div id="companygamesList" class="dropdown-list">
+                  {% for game in company_form.company_games.choices|sort(attribute=1) %}
+                    <label>
+                      <input type="checkbox" name="company_games" value="{{ game[0] }}">
+                      {{ game[1] }}
+                    </label><br>
+                  {% endfor %}
+                </div>
+              </p>
+              <br><br>
+              
+              <p>
+                <p class="note">*If director is not in the list submit this company and then go to add director page to add the considered director*</p>
+                <br>
+                <button type="button" id="toggleCompanyDirectors" class="toggle-button">
+                  Select directors <span class="arrow-down" id="arrowCompanyDirectors">&#9662;</span>
+                </button>
+                <div id="companydirectorsList" class="dropdown-list">
+                  {% for director in company_form.company_directors.choices|sort(attribute=1) %}
+                    <label>
+                      <input type="checkbox" name="company_directors" value="{{ director[0] }}">
+                      {{ director[1] }}
+                    </label><br>
+                  {% endfor %}
+                </div>
+              </p>
+              <br><br>
+              
+              <p>
+                <p class="note">*If founder is not in the list submit this company and then go to add founder page to add the considered founder*</p>
+                <br>
+                <button type="button" id="toggleCompanyFounders" class="toggle-button">
+                  Select founders <span class="arrow-down" id="arrowCompanyFounders">&#9662;</span>
+                </button>
+                <div id="companyfoundersList" class="dropdown-list">
+                  {% for founder in company_form.company_founders.choices|sort(attribute=1) %}
+                    <label>
+                      <input type="checkbox" name="company_founders" value="{{ founder[0] }}">
+                      {{ founder[1] }}
+                    </label><br>
+                  {% endfor %}
+                </div>
+              </p>
+              <br><br>
+
+              <p>
+                <button type="button" id="toggleCompanySeries" class="toggle-button">
+                  Select Series <span class="arrow-down" id="arrowCompanySeries">&#9662;</span>
+                </button>
+                <button type="button" id="openPopupCompanySeriesBtn" class="open-popup-btn">Add Series</button>
+                {% if company_form.company_series.errors %}
+                <span class="error-message">{{ company_form.company_series.errors[0] }}</span>
+                {% endif %}
+                <div id="companyseriesList" class="dropdown-list">
+                  {% for series in company_form.company_series.choices|sort(attribute=1) %}
+                    <label>
+                      <input type="checkbox" name="company_series" value="{{ series[0] }}">
+                      {{ series[1] }}
+                    </label><br>
+                  {% endfor %}
+                </div>
+              </p>
+              <br><br>
+
+        Founded date:<br><br>
+        <input type="text" class="add_stuff_bar" maxlength="20" name="company_time_founded" placeholder="founded time(maxlength = 20)">
+          {% if company_form.company_time_founded.errors %}
+            <span class="error-message">{{ company_form.company_time_founded.errors[0] }}</span>
+          {% endif %}
+          <br><br>
+
+        Headquarters location:<br><br>
+        <input type="text" class="add_stuff_bar" maxlength="20" name="company_headquarters" placeholder="Headquarters(maxlength = 20)">
+          {% if company_form.company_headquarters.errors %}
+            <span class="error-message">{{ company_form.company_headquarters.errors[0] }}</span>
+          {% endif %}
+          <br><br>
+
+        Description:<br><br>
+          <textarea maxlength="630" class="text-area" name="company_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
+            {% if company_form.company_description.errors %}
+              <span class="error-message">{{ company_form.company_description.errors[0] }}</span>
+            {% endif %}
+            <br><br>
+
+            Add pictures:
+            <br><br>
+            <div class="add-stuff-images">
+              Picture 1: <input type="file" id="company_picture_size_limit_1" class="add_stuff_bar" name="company_picture_1">
+              <br><br>
+              Picture 2: <input type="file" id="company_picture_size_limit_2" class="add_stuff_bar" name="company_picture_2">
+            </div>
+            <br><br>
+            
+        <button type="submit" id="submit-company-Button">Add company</button>
+    </form>
+</div>
+
 
 
 {% endblock %}
