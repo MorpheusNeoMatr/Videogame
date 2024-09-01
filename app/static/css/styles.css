@@ -163,17 +163,47 @@ nav a:hover, .dropbtn:hover {
 
 
 .about-page {
-    border: 1px solid red;
-    border-radius: 5px;
+    border: 0.2vw solid red; /* Adjusted to relative unit */
+    border-radius: 0.5vw; /* Adjusted to relative unit */
     width: 50vw;
-    height: 20vw;
-    padding: 20px; /* Add padding inside the border */
-    box-sizing: border-box; /* Ensure padding is included in width and height */
+    height: 25vw;
+    padding: 2vw; /* Adjusted to relative unit */
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center content horizontally */
-    justify-content: center; /* Center content vertically */
-    margin: auto; /* Center the box within its parent container */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    overflow-y: auto; /* Adds a vertical scroll if content exceeds container */
+    word-wrap: break-word;
+    font-size: 1.5vw; /* Adjust text size to relative unit */
+}
+
+/* Common styles for all flashes */
+.flashes {
+    list-style: none;  /* Remove default list styling */
+    padding: 0;        /* Remove padding */
+    margin: 0 auto 2px; /* Center the flash container and add space below */
+    max-width: 400px;  /* Set a maximum width for the flash messages */
+}
+
+/* Center the flash messages and adjust their width */
+.flashes li {
+    padding: 10px;         /* Padding inside each flash message */
+    margin-bottom: 10px;   /* Space below each flash message */
+    border-radius: 5px;    /* Rounded corners */
+    color: white;          /* White text color */
+    text-align: center;    /* Center text inside flash messages */
+}
+
+/* Styles for success messages */
+.flash.success {
+    background-color: #28a745; /* Green for success */
+}
+
+/* Styles for error messages */
+.flash.error {
+    background-color: #dc3545; /* Red for errors */
 }
 
 
@@ -309,14 +339,14 @@ button:hover {
     gap: 20px; /* Space between grid items */
     padding: 20px; /* Padding around the grid */
     margin: 0 auto; /* Center the grid horizontally */
-    max-width: 1200px; /* Set a maximum width for the grid container */
     justify-content: center; /* Center items horizontally */
+    display: grid;
 }
+
 
 /* Individual user card */
 .user-card {
     border: 1px solid white; /* Dark border for the card */
-    display: inline-block;
     height: 30vw;
     margin: 1%;
     border-radius: 8px; /* Rounded corners */
@@ -729,10 +759,13 @@ a:hover{
 }
 
 .error-page{
-    background-image: url(/static/games_images/404.gif);
+    background-image: url('/static/games_images/404.jpg'); /* Ensure this path is correct */
     background-size: cover;
+    height: 100vh; /* Full viewport height to see the background */
+    margin: 0; /* Remove any default margin */
 }
 
 footer{
     margin-top: auto;
+    border-top: 2px solid white;
 }

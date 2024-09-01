@@ -3,7 +3,7 @@
     <head>
         <title>videogames boah</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/static/javascript/filter.js"></script>
         <script src="/static/javascript/dashboard.js"></script>
@@ -20,20 +20,20 @@
 
         <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class="flashes">
-                        {% for category, message in messages %}
-                            <li class="flash-{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         {% endwith %}
-            {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
         </main>
         
         <footer>
-            <p>&copy; 2023 Top Ten Movies | All rights reserved</p>
-    <p> By Pourya That's it Boah</p>
+            <p>&copy; 2024 Videogames website | All rights reserved</p>
+    <p> By Pourya That's it boah</p>
         </footer>
     </body>
 </html>

@@ -64,8 +64,8 @@
                     {% endif %}
                 </p>
                 <p>Series:
-                    {% for founder in company_founders[:3] %}
-                        <a href="/founder/{{ founder.id }}">{{ founder.name }}</a>
+                    {% for series in company_series[:3] %}
+                        {{ series.name }}
                         {% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </p>

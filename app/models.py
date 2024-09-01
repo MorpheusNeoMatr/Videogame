@@ -1,33 +1,37 @@
 from app.routes import db
 
 
+# Model representing a user
 class Username(db.Model):
     __tablename__ = "Username"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Text(), unique=True)
-    name = db.Column(db.Text(), unique=True)
+    name = db.Column(db.Text())
     permission = db.Column(db.Integer, default=0)
     password_hash = db.Column(db.Text())
     picture = db.Column(db.Text())
 
 
+# Model representing a genre
 class Genre(db.Model):
     __tablename__ = "Genre"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text())
 
 
+# Association table for the many-to-many relationship between Videogame and Genre
 genre_game = db.Table('Genre_game',
-db.Column('videogame_id', db.Integer, db.ForeignKey('Videogame.id'), primary_key=True),
-db.Column('genre_id', db.Integer, db.ForeignKey('Genre.id'), primary_key=True)
+db.Column('videogame_id', db.Integer, db.ForeignKey('Videogame.id'), primary_key=True),  # Foreign key to Videogame
+db.Column('genre_id', db.Integer, db.ForeignKey('Genre.id'), primary_key=True) # Foreign key to Genre
 )
 
-
+# Association table for the many-to-many relationship between Videogame and Company
 game_company = db.Table('Game_company',
-    db.Column('videogame_id', db.Integer, db.ForeignKey('Videogame.id'), primary_key=True),
-    db.Column('company_id', db.Integer, db.ForeignKey('Company.id'), primary_key=True))
+    db.Column('videogame_id', db.Integer, db.ForeignKey('Videogame.id'), primary_key=True),  # Foreign key to Videogame
+    db.Column('company_id', db.Integer, db.ForeignKey('Company.id'), primary_key=True))  # Foreign key to Company
 
 
+# Association table for the many-to-many relationship between Videogame and Director
 game_director = db.Table('Game_director',
     db.Column('videogame_id', db.Integer, db.ForeignKey('Videogame.id'), primary_key=True),
     db.Column('director_id', db.Integer, db.ForeignKey('Director.id'), primary_key=True))
