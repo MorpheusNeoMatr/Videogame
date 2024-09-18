@@ -3,7 +3,6 @@ from flask import render_template, abort, redirect, url_for, flash, session
 import os
 from flask import request
 from werkzeug.utils import secure_filename
-from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -104,21 +103,20 @@ def register():
             return render_template(
                 'register.html', username_form=username_form)
         else:
-            try:
-                if username_form.validate_on_submit():
-                    # If form is valid, create a new user instance
-                    new_username = models.Username()
-                    new_username.email = username_form.user_email.data
-                    new_username.name = username_form.user_name.data
-                    filenames = []
-                    # Save uploaded profile picture
-                    for user_picture in [username_form.user_picture]:
-                        if user_picture.data:
-                            filename = secure_filename(user_picture.data.filename)
-                            user_picture.data.save(os.path.join(app.config['USER_UPLOAD_FOLDER'], filename))
-                            filenames.append(filename)
-                        else:
-                            filenames.append(None)
+            if username_form.validate_on_submit():
+                # If form is valid, create a new user instance
+                new_username = models.Username()
+                new_username.email = username_form.user_email.data
+                new_username.name = username_form.user_name.data
+                filenames = []
+                # Save uploaded profile picture
+                for user_picture in [username_form.user_picture]:
+                    if user_picture.data:
+                        filename = secure_filename(user_picture.data.filename)
+                        user_picture.data.save(os.path.join(app.config['USER_UPLOAD_FOLDER'], filename))
+                        filenames.append(filename)
+                    else:
+                        filenames.append(None)
                     new_username.picture = filenames[0]
                     # Hash the user's password for security
                     new_username.password_hash = generate_password_hash(
@@ -129,15 +127,10 @@ def register():
                     return redirect(url_for('register'))
                 else:
                     # Render the register page with errors if form is not valid
-                    return render_template(
-                    'register.html', username_form=username_form)
-
-            except IntegrityError:
-                # Handle cases where the email already exists in the database
-                db.session.rollback()  # Rollback the session to avoid partial commits
-                models.Username.query.filter_by(email=username_form.user_email.data).first()
-                flash('Email already exists.', 'error')
-                return render_template('register.html',
+                    db.session.rollback()  # Rollback the session to avoid partial commits
+                    models.Username.query.filter_by(email=username_form.user_email.data).first()
+                    flash('Email already exists.', 'error')
+                    return render_template('register.html',
                                      username_form=username_form)
 
 
@@ -168,9 +161,13 @@ def login():
                         session['user_name'] = user.name  # Store user name in session
                         flash('Logged in successfully.', 'success')
                         return redirect(url_for('home'))
+     
+                    else:
+                        flash('Wrong email/password.', 'error')
+                        return redirect(url_for('login'))
                 else:
                     # Flash an error message if the email or password is wrong
-                    flash('Wrong email/password.', 'error')
+                    flash('Email does not exists', 'error')
                     return redirect(url_for('login'))
             else:
                 # Render the login page with errors if form is not valid
@@ -192,10 +189,10 @@ def dashboard(id):
             user_companies = models.Company.query.filter_by(username_id=id).all()
             user_directors = models.Director.query.filter_by(username_id=id).all()
             return render_template('dashboard.html',
-             user_directors=user_directors,
-             user_companies=user_companies,
-             user=user, user_games=user_games,
-             user_founders=user_founders)
+                                   user_directors=user_directors,
+                                   user_companies=user_companies,
+                                   user=user, user_games=user_games,
+                                   user_founders=user_founders)
 
         except OverflowError:
             # Handle cases where an invalid ID is entered (overflow error)
@@ -243,7 +240,7 @@ def approve_user(id):
         pending_user.permission = 1
         db.session.add(pending_user)
         db.session.commit()
-        flash('User has been approved.', 'error')
+        flash('User has been approved.', 'success')
         return redirect(url_for('admin'))
 
 
