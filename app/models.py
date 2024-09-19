@@ -8,6 +8,7 @@ class Username(db.Model):
     email = db.Column(db.Text(), unique=True)
     name = db.Column(db.Text())
     permission = db.Column(db.Integer, default=0)
+    admin = db.Column(db.Integer, default=0)
     password_hash = db.Column(db.Text())
     picture = db.Column(db.Text())
 

@@ -132,6 +132,8 @@ def register():
                     flash('Email already exists.', 'error')
                     return render_template('register.html',
                                      username_form=username_form)
+            else:
+                return render_template('register.html', username_form=username_form)
 
 
 # Login page route with GET and POST methods
@@ -159,6 +161,7 @@ def login():
                     if user and check_password_hash(user.password_hash, password):
                         session['user_id'] = user.id  # Store user ID in session
                         session['user_name'] = user.name  # Store user name in session
+                        session['user_admin'] = user.admin
                         flash('Logged in successfully.', 'success')
                         return redirect(url_for('home'))
      
@@ -217,7 +220,7 @@ def logout():
 # Admin dashboard route
 @app.route("/admin")
 def admin():
-    if 'user_id' not in session or session.get('user_id') != 17:
+    if 'user_id' not in session or session.get('user_admin') != 1:
         # If user is not logged in, redirect to home page with an error message
         flash("Admin access only", 'error')
         return redirect(url_for('home'))
@@ -230,7 +233,7 @@ def admin():
 @app.route("/admin/approve_user/<int:id>")
 def approve_user(id):
     # Check if the user is logged in and if they are the admin (user_id == 17)
-    if 'user_id' not in session or session.get('user_id') != 17:
+    if 'user_id' not in session or session.get('user_admin') != 1:
         flash("Admin access only", 'error')
         return redirect(url_for('home'))
     else:
@@ -240,7 +243,7 @@ def approve_user(id):
         pending_user.permission = 1
         db.session.add(pending_user)
         db.session.commit()
-        flash('User has been approved.', 'success')
+        flash('User has been approved.', 'error')
         return redirect(url_for('admin'))
 
 
@@ -248,7 +251,7 @@ def approve_user(id):
 @app.route("/admin/reject_user/<int:id>")
 def reject_user(id):
     # Check if the user is logged in and if they are the admin (user_id == 17)
-    if 'user_id' not in session or session.get('user_id') != 17:
+    if 'user_id' not in session or session.get('user_admin') != 1:
         flash("Admin access only", 'error')
         return redirect(url_for('home'))
     else:
