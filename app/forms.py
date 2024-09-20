@@ -21,7 +21,7 @@ def file_size_limit(form, field):
 class Register(FlaskForm):
     user_email = StringField('user_email', validators=[DataRequired(), Email()])
     user_name = StringField('user_name', validators=[DataRequired()])
-    user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match'), Length(min=6, max=100)])
+    user_password = PasswordField('user_password', validators=[DataRequired(), EqualTo('confirm', message='Password must match'), Length(min=6, max=20)])
     confirm = PasswordField('confirm', validators=[DataRequired()])
     user_submit = SubmitField('Register')
     admin_permission = SubmitField('admin_permission')

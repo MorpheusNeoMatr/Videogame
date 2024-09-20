@@ -347,7 +347,6 @@ button:hover {
 /* Individual user card */
 .user-card {
     border: 1px solid white; /* Dark border for the card */
-    height: 30vw;
     margin: 1%;
     border-radius: 8px; /* Rounded corners */
     overflow: hidden; /* Hide overflow to keep the rounded corners clean */

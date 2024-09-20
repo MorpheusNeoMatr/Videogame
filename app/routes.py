@@ -104,34 +104,32 @@ def register():
                 'register.html', username_form=username_form)
         else:
             if username_form.validate_on_submit():
-                # If form is valid, create a new user instance
-                new_username = models.Username()
-                new_username.email = username_form.user_email.data
-                new_username.name = username_form.user_name.data
-                filenames = []
-                # Save uploaded profile picture
-                for user_picture in [username_form.user_picture]:
-                    if user_picture.data:
-                        filename = secure_filename(user_picture.data.filename)
-                        user_picture.data.save(os.path.join(app.config['USER_UPLOAD_FOLDER'], filename))
-                        filenames.append(filename)
-                    else:
-                        filenames.append(None)
-                    new_username.picture = filenames[0]
-                    # Hash the user's password for security
-                    new_username.password_hash = generate_password_hash(
-                    username_form.user_password.data)
-                    db.session.add(new_username)
-                    db.session.commit()
-                    flash('Username pending, wait for approval', 'success')
-                    return redirect(url_for('register'))
-                else:
-                    # Render the register page with errors if form is not valid
-                    db.session.rollback()  # Rollback the session to avoid partial commits
-                    models.Username.query.filter_by(email=username_form.user_email.data).first()
+                existing_user = models.Username.query.filter_by(email=username_form.user_email.data).first()
+                if existing_user:
                     flash('Email already exists.', 'error')
-                    return render_template('register.html',
-                                     username_form=username_form)
+                    return render_template('register.html', username_form=username_form)
+                else:
+                    # If form is valid, create a new user instance
+                    new_username = models.Username()
+                    new_username.email = username_form.user_email.data
+                    new_username.name = username_form.user_name.data
+                    filenames = []
+                    # Save uploaded profile picture
+                    for user_picture in [username_form.user_picture]:
+                        if user_picture.data:
+                            filename = secure_filename(user_picture.data.filename)
+                            user_picture.data.save(os.path.join(app.config['USER_UPLOAD_FOLDER'], filename))
+                            filenames.append(filename)
+                        else:
+                            filenames.append(None)
+                        new_username.picture = filenames[0]
+                        # Hash the user's password for security
+                        new_username.password_hash = generate_password_hash(
+                        username_form.user_password.data)
+                        db.session.add(new_username)
+                        db.session.commit()
+                        flash('Username pending, wait for approval', 'success')
+                        return redirect(url_for('register'))
             else:
                 return render_template('register.html', username_form=username_form)
 
@@ -164,9 +162,9 @@ def login():
                         session['user_admin'] = user.admin
                         flash('Logged in successfully.', 'success')
                         return redirect(url_for('home'))
-     
+
                     else:
-                        flash('Wrong email/password.', 'error')
+                        flash('Wrong password.', 'error')
                         return redirect(url_for('login'))
                 else:
                     # Flash an error message if the email or password is wrong
@@ -243,7 +241,7 @@ def approve_user(id):
         pending_user.permission = 1
         db.session.add(pending_user)
         db.session.commit()
-        flash('User has been approved.', 'error')
+        flash('User has been approved.', 'success')
         return redirect(url_for('admin'))
 
 
