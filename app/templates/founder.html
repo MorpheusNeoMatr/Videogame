@@ -31,7 +31,7 @@
                             <a href="/company/{{ company.id }}">{{ company.name }}</a>
                             {% if not loop.last %}, {% endif %}
                         {% endfor %}
-                        {% if director_company|length < 3 %}
+                        {% if founder_company|length < 3 %}
                             , <a href="/add_company">add company</a>
                         {% endif %}
                     {% else %}

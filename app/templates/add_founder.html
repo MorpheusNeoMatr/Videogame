@@ -47,12 +47,18 @@
             {% endif %}
             <br><br>
 
-    Add pictures:
+    Add pictures(JPG ONLY!):
             <br><br>
             <div class="add-stuff-images">
               Picture 1: <input type="file" id="founder_picture_size_limit_1" class="add_stuff_bar" name="founder_picture_1">
+              {% if founder_form.founder_picture_1.errors %}
+              <span class="error-message">{{ founder_form.founder_picture_1.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 2: <input type="file" id="founder_picture_size_limit_2" class="add_stuff_bar" name="founder_picture_2">
+              {% if founder_form.founder_picture_2.errors %}
+              <span class="error-message">{{ founder_form.founder_picture_2.errors[0] }}</span>
+              {% endif %}
             </div>
             <br><br>
 

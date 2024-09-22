@@ -235,14 +235,18 @@ def approve_user(id):
         flash("Admin access only", 'error')
         return redirect(url_for('home'))
     else:
-        # Fetch the user by id or return a 404 error if not found
-        pending_user = models.Username.query.get_or_404(id)
-        # approve the user and set the permission from 0 to 1.
-        pending_user.permission = 1
-        db.session.add(pending_user)
-        db.session.commit()
-        flash('User has been approved.', 'success')
-        return redirect(url_for('admin'))
+        try:
+            # Fetch the user by id or return a 404 error if not found
+            pending_user = models.Username.query.get_or_404(id)
+            # approve the user and set the permission from 0 to 1.
+            pending_user.permission = 1
+            db.session.add(pending_user)
+            db.session.commit()
+            flash('User has been approved.', 'success')
+            return redirect(url_for('admin'))
+        except OverflowError:
+            # Handle the overflow error
+            abort(404)
 
 
 # Reject user route/Reject user button.
@@ -253,14 +257,17 @@ def reject_user(id):
         flash("Admin access only", 'error')
         return redirect(url_for('home'))
     else:
-        # Fetch the user by id or return a 404 error if not found
-        pending_user = models.Username.query.get_or_404(id)
-        # Reject and remove the user from the database
-        db.session.delete(pending_user)
-        db.session.commit()
-        flash('User has been rejected.', 'error')
-        return redirect(url_for('admin'))
-
+        try:
+            # Fetch the user by id or return a 404 error if not found
+            pending_user = models.Username.query.get_or_404(id)
+            # Reject and remove the user from the database
+            db.session.delete(pending_user)
+            db.session.commit()
+            flash('User has been rejected.', 'error')
+            return redirect(url_for('admin'))
+        except OverflowError:
+            # Handle the overflow error
+            abort(404)
 
 # Add game route
 @app.route('/add_game', methods=['GET', 'POST'])

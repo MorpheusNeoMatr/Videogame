@@ -26,7 +26,7 @@
         <span id="closePopupGamesGenreBtn" class="close">&times;</span>
         <form method="POST"  id="submit_games_genre_form" action="{{ url_for('add_game') }}">
           {{ genre_form.hidden_tag() }}
-          <input type="text" maxlength="20" class="add_stuff_bar" name="genre_name" placeholder="maxlength = 20" title="Add Series(maxlength = 40)" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
+          <input type="text" maxlength="20" class="add_stuff_bar" name="genre_name" placeholder="maxlength = 20" required pattern="\S.+" title="Has to be more than one letter/cannot leave empty space."><br><br>
           <button type="submit" id="submit-games-genre-Button">Add genre</button>
         </form>
     </div>
@@ -157,20 +157,38 @@
             {% endif %}
             <br><br>
 
-            Add pictures:
+            Add pictures(JPG ONLY!):
             <br><br>
             <div class="add-stuff-images">
               Picture 1: <input type="file" id="game_picture_size_limit_1" class="add_stuff_bar" name="game_picture_1">
+              {% if game_form.game_picture_1.errors %}
+              <span class="error-message">{{ game_form.game_picture_1.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 2: <input type="file" id="game_picture_size_limit_2" class="add_stuff_bar" name="game_picture_2">
+              {% if game_form.game_picture_2.errors %}
+              <span class="error-message">{{ game_form.game_picture_2.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 3: <input type="file" id="game_picture_size_limit_3" class="add_stuff_bar" name="game_picture_3">
+              {% if game_form.game_picture_3.errors %}
+              <span class="error-message">{{ game_form.game_picture_3.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 4: <input type="file" id="game_picture_size_limit_4" class="add_stuff_bar" name="game_picture_4">
+              {% if game_form.game_picture_4.errors %}
+              <span class="error-message">{{ game_form.game_picture_4.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 5: <input type="file" id="game_picture_size_limit_5" class="add_stuff_bar" name="game_picture_5">
+              {% if game_form.game_picture_5.errors %}
+              <span class="error-message">{{ game_form.game_picture_5.errors[0] }}</span>
+              {% endif %}
               <br><br>
               Picture 6: <input type="file" id="game_picture_size_limit_6" class="add_stuff_bar" name="game_picture_6">
+              {% if game_form.game_picture_6.errors %}
+              <span class="error-message">{{ game_form.game_picture_6.errors[0] }}</span>
+              {% endif %}
             </div>
             <br><br>
     
