@@ -35,21 +35,21 @@
   <div id="submit_game_form">
     <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
       {{ game_form.csrf_token }} 
-      Name:<br><br>
+      Name(required):<br><br>
       <input type="text" class="add_stuff_bar" maxlength="20" name="game_name" placeholder="Game name(maxlength = 20)">
           {% if game_form.game_name.errors %}
             <span class="error-message">{{ game_form.game_name.errors[0] }}</span>
           {% endif %}
           <br><br>
 
-          Your score:<br><br>
+          Your score(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="10" name="game_dev_score" placeholder="Your score(?/10) maxlegth=10">
           {% if game_form.game_dev_score.errors %}
             <span class="error-message">{{ game_form.game_dev_score.errors[0] }}</span>
           {% endif %}
           <br><br>
 
-          Release date:<br><br>
+          Release date(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="game_date" placeholder="Realease date(maxlength = 20)">
           {% if game_form.game_date.errors %}
             <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
@@ -72,7 +72,7 @@
         
           <p>
             <select name="game_series" class="toggle-button">
-              <option>Choose series</option>
+              <option>Choose series(required)</option>
               <div>
                 {% for series in game_form.game_series.choices|sort(attribute=1) if series[1] != 'Choose series'%}
                 <option value="{{ series[0] }}">{{ series[1] }}</option>
@@ -105,7 +105,7 @@
         
           <p>
             <button type="button" id="toggleGamesGenres" class="toggle-button">
-              Select Genres <span class="arrow-down" id="arrowGamesGenres">&#9662;</span>
+              Select Genres(required) <span class="arrow-down" id="arrowGamesGenres">&#9662;</span>
             </button>
             <button type="button" id="openPopupGamesGenreBtn" class="open-popup-btn">Add Genre</button>
             {% if game_form.game_genres.errors %}
@@ -122,35 +122,35 @@
           </p>
           <br><br>
           
-          Description:<br><br>
+          Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="game_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_description.errors %}
               <span class="error-message">{{ game_form.game_description.errors[0] }}</span>
             {% endif %}
             <br><br>
     
-            Gameplay:<br><br> 
+            Gameplay(required):<br><br> 
             <textarea class="text-area" maxlength="630" name="game_gameplay" placeholder="Add gameplay(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_gameplay.errors %}
               <span class="error-message">{{ game_form.game_gameplay.errors[0] }}</span>
             {% endif %}
             <br><br>
     
-            Story:<br><br>
+            Story(required):<br><br>
             <textarea class="text-area" maxlength="630" name="game_story" placeholder="Add story(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_story.errors %}
               <span class="error-message">{{ game_form.game_story.errors[0] }}</span>
             {% endif %}
             <br><br>
 
-            Soundtrack:<br><br>
+            Soundtrack(required):<br><br>
             <textarea class="text-area" maxlength="630" name="game_soundtrack" placeholder="Add soundtrack(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_soundtrack.errors %}
               <span class="error-message">{{ game_form.game_soundtrack.errors[0] }}</span>
             {% endif %}
             <br><br>  
             
-            Reviews:<br><br>
+            Reviews(required):<br><br>
             <textarea class="text-area" maxlength="630" name="game_reviews" placeholder="Add reviews(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_reviews.errors %}
               <span class="error-message">{{ game_form.game_reviews.errors[0] }}</span>

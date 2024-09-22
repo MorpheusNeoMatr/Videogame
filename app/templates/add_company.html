@@ -20,7 +20,7 @@
 <div>
     <form method="POST"  id="submit_company_form" enctype="multipart/form-data" action="{{ url_for('add_company') }}">
         {{ company_form.hidden_tag() }}
-        Name:<br><br>
+        Name(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="company_name" placeholder="Company name(maxlength = 20)">
               {% if company_form.company_name.errors %}
                 <span class="error-message">{{ company_form.company_name.errors[0] }}</span>
@@ -80,7 +80,7 @@
 
               <p>
                 <button type="button" id="toggleCompanySeries" class="toggle-button">
-                  Select Series <span class="arrow-down" id="arrowCompanySeries">&#9662;</span>
+                  Select Series(required) <span class="arrow-down" id="arrowCompanySeries">&#9662;</span>
                 </button>
                 <button type="button" id="openPopupCompanySeriesBtn" class="open-popup-btn">Add Series</button>
                 {% if company_form.company_series.errors %}
@@ -97,21 +97,21 @@
               </p>
               <br><br>
 
-        Founded date:<br><br>
+        Founded date(required):<br><br>
         <input type="text" class="add_stuff_bar" maxlength="20" name="company_time_founded" placeholder="founded time(maxlength = 20)">
           {% if company_form.company_time_founded.errors %}
             <span class="error-message">{{ company_form.company_time_founded.errors[0] }}</span>
           {% endif %}
           <br><br>
 
-        Headquarters location:<br><br>
+        Headquarters location(required):<br><br>
         <input type="text" class="add_stuff_bar" maxlength="20" name="company_headquarters" placeholder="Headquarters(maxlength = 20)">
           {% if company_form.company_headquarters.errors %}
             <span class="error-message">{{ company_form.company_headquarters.errors[0] }}</span>
           {% endif %}
           <br><br>
 
-        Description:<br><br>
+        Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="company_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if company_form.company_description.errors %}
               <span class="error-message">{{ company_form.company_description.errors[0] }}</span>

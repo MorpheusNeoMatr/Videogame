@@ -8,7 +8,7 @@
   <form method="POST" id="submit_director_form" enctype="multipart/form-data" action="{{ url_for('add_directors') }}">
     {{ director_form.hidden_tag() }}
 
-    Name:<br><br>
+    Name(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="director_name" placeholder="Add name(maxlength = 20)">
               {% if director_form.director_name.errors %}
                 <span class="error-message">{{ director_form.director_name.errors[0] }}</span>
@@ -49,14 +49,14 @@
           </p>
           <br><br>
   
-    Age:<br><br>
+    Age(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="director_age" placeholder="Add Age(maxlength = 20)">
               {% if director_form.director_age.errors %}
                 <span class="error-message">{{ director_form.director_age.errors[0] }}</span>
               {% endif %}
               <br><br>
               <p>
-    Description:<br><br>
+    Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="director_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if director_form.director_description.errors %}
               <span class="error-message">{{ director_form.director_description.errors[0] }}</span>

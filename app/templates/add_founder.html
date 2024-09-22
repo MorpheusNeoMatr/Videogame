@@ -8,7 +8,7 @@
   <form method="POST" id="submit_founder_form" enctype="multipart/form-data" action="{{ url_for('add_founder') }}">
     {{ founder_form.hidden_tag() }}
 
-    Name:<br><br>
+    Name(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="founder_name" placeholder="Add name(maxlength = 20)">
               {% if founder_form.founder_name.errors %}
                 <span class="error-message">{{ founder_form.founder_name.errors[0] }}</span>
@@ -32,7 +32,7 @@
     </p>
     <br><br>
 
-    Age:<br><br>
+    Age(required):<br><br>
     <input type="text" class="add_stuff_bar" maxlength="20" name="founder_date_of_birth" placeholder="Add Age(maxlength = 20)">
         {% if founder_form.founder_date_of_birth.errors %}
           <span class="error-message">{{ founder_form.founder_date_of_birth.errors[0] }}</span>
@@ -40,7 +40,7 @@
         <br><br>
         <p>
 
-    Description:<br><br>
+    Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="founder_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if founder_form.founder_description.errors %}
               <span class="error-message">{{ founder_form.founder_description.errors[0] }}</span>
