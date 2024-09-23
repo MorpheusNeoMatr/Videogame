@@ -181,7 +181,7 @@ def dashboard(id):
     if 'user_id' not in session:
         # If user is not logged in, redirect to home page with an error message
         flash("Please login in order to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         try:
             user = models.Username.query.get_or_404(id)  # Get the user or return 404 if not found
@@ -269,13 +269,14 @@ def reject_user(id):
             # Handle the overflow error
             abort(404)
 
+
 # Add game route
 @app.route('/add_game', methods=['GET', 'POST'])
 def add_game():
     # Check if the user is logged in
     if 'user_id' not in session:
         flash("Please login in order to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # Initialize forms for game, series, and genre
         game_form = Add_Game()
@@ -381,7 +382,7 @@ def add_company():
     # Check if the user is logged in
     if 'user_id' not in session:
         flash("Please login in order to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # Initialize forms for company and series in company
         company_form = Add_Company()
@@ -510,7 +511,7 @@ def add_founder():
     # Check if the user is logged in
     if 'user_id' not in session:
         flash("Please login in order to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # Initialize the form for adding a founder
         founder_form = Add_Founders()
@@ -604,7 +605,7 @@ def add_directors():
     # Check if the user is logged in
     if 'user_id' not in session:
         flash("Please login in order to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # Initialize the form for adding a director
         director_form = Add_Directors()
@@ -706,7 +707,7 @@ def user_list():
     if 'user_id' not in session:
         # If the user is not logged in, flash an error message and redirect to home
         flash("Please log in to access this page", 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # Query all users, games, directors, companies, and founders
         games = models.Videogame.query.all()
