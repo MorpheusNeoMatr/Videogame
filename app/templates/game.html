@@ -26,10 +26,10 @@
                             {% if not loop.last %}, {% endif %}
                         {% endfor %}
                         {% if game_directors|length < 3 %}
-                            , <a href="/add_directors">add director</a>
+                            , <a href="/add_directors">Add director</a>
                         {% endif %}
                     {% else %}
-                        No directors yet, <a href="/add_directors">add director</a>
+                        No directors yet, <a href="/add_directors">Add director</a>
                     {% endif %}
                 </p>
                 <p>My score: {{game.dev_score}}</p>

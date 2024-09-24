@@ -7,32 +7,32 @@
     </div>
     <form method="POST" id="submit_register_form" enctype="multipart/form-data" action="{{ url_for('register') }}">
         {{ username_form.hidden_tag() }}
-        <div><p>Profile Picture(JPG ONLY!)</p><br>
+        <div><p>Profile Picture(Required ,JPG ONLY!)</p><br>
             <input type="file" id="register_picture_size_limit" class="add_stuff_bar" name="user_picture">
             {% if username_form.user_picture.errors %}
             <span class="error-message">{{ username_form.user_picture.errors[0] }}</span>
             {% endif %}
         </div>
         
-        <div><p>Email</p><br>
+        <div><p>Email(Required)</p><br>
             <input type="text" class="add_stuff_bar" maxlength="20" name="user_email" placeholder="Email (maxlength=20)">
             {% if username_form.user_email.errors %}
             <span class="error-message">{{ username_form.user_email.errors[0] }}</span>
             {% endif %}
         </div>
-        <div><p>Name</p><br>
+        <div><p>Name(Required)</p><br>
             <input type="text" class="add_stuff_bar" maxlength="20" name="user_name" placeholder="Name (maxlength=20)">
             {% if username_form.user_name.errors %}
             <span class="error-message">{{ username_form.user_name.errors[0] }}</span>
             {% endif %}
         </div>
-        <div><p>Password(minimum length = 6)</p><br>
+        <div><p>Password(Required ,minimum length = 6)</p><br>
             <input type="password" class="add_stuff_bar" maxlength="20" name="user_password" placeholder="Password (maxlength=20)">
             {% if username_form.user_password.errors %}
             <span class="error-message">{{ username_form.user_password.errors[0] }}</span>
             {% endif %}
         </div>
-        <div><p>Confirm password</p><br>
+        <div><p>Confirm password(Required)</p><br>
             <input type="password" class="add_stuff_bar" maxlength="20" name="confirm" placeholder="Confirm Password (maxlength=20)">
             {% if username_form.confirm.errors %}
             <span class="error-message">{{ username_form.confirm.errors[0] }}</span>

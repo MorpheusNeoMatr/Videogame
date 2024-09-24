@@ -22,7 +22,7 @@ app.config['COMPANY_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
 app.config['FOUNDER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
                                                    'founders_images')
 app.config['USER_UPLOAD_FOLDER'] = os.path.join(basedir, 'static',
-                                                   'user_images')
+                                                'user_images')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_EXPIRE'] = None  # Expire when browser is closed
 app.config['SESSION_PERMANENT'] = False
@@ -645,7 +645,7 @@ def add_directors():
 
 
 # Route for showing all directors.
-@app.route("/director_list")    
+@app.route("/director_list")
 def director_list():
     # Query all games, companies, and users, ordering them by name
     games = models.Videogame.query.order_by(models.Videogame.name).all()

@@ -506,6 +506,7 @@ a:hover{
 .page-name {
     background-color: #333;
     font-size: 1.5vw;
+    border-radius: 20px;
     margin: 1vw;
     border: 0.5vw solid #dc3545;
     padding: 1vw; /* Adjust the padding as needed */
@@ -752,10 +753,6 @@ a:hover{
     color: white;
 }
 
-/* class for note */
-.note{
-    color: #dc3545;
-}
 
 .error-page{
     background-image: url('/static/games_images/404.jpg'); /* Ensure this path is correct */

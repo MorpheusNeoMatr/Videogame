@@ -6,7 +6,7 @@
 
   <div id="popup-games-series" class="popup">
     <div class="popup-content">
-      <p class="note">*Add your considered series if it is not in the series list*</p>
+      <p>&#10024Add your considered series if it is not in the series list&#10024</p>
       <br>
         <span id="closePopupGamesSeriesBtn" class="close">&times;</span>
         <form method="POST" id="submit_games_series_form" action="{{ url_for('add_game') }}">
@@ -21,7 +21,7 @@
 
   <div id="popup-games-genre" class="popup">
     <div class="popup-content"> 
-      <p class="note">*Add your considered genre if it is not in the genre list*</p>
+      <p>&#10024Add your considered genre if it is not in the genre list&#10024</p>
       <br>
         <span id="closePopupGamesGenreBtn" class="close">&times;</span>
         <form method="POST"  id="submit_games_genre_form" action="{{ url_for('add_game') }}">
@@ -55,7 +55,7 @@
             <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
           {% endif %}
           <br><br>
-          <p class="note">*If director is not in the list submit this game and then go to add director page to add the considered director*</p>
+          <p>&#10024If director is not in the list, submit this game, then go to Add Director page to add the corresponding director&#10024</p>
           <br>
           <button type="button" id="toggleGamesDirectors" class="toggle-button">
             Select Directors <span class="arrow-down" id="arrowGamesDirectors">&#9662;</span>
@@ -87,7 +87,7 @@
           <br><br>
         
           <p>
-            <p class="note">*If company is not in the list submit this game and then go to add company page to add the considered company*</p>
+            <p>&#10024If company is not in the list, submit this game, then go to Add Company page to add the corresponding company&#10024</p>
             <br>
             <button type="button" id="toggleGamesCompanies" class="toggle-button">
               Select Companies <span class="arrow-down" id="arrowGamesCompanies">&#9662;</span>
