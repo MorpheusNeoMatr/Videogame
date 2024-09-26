@@ -1,9 +1,12 @@
+// Wait for the DOM to be fully loaded before executing the script
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to set up dropdown toggle functionality
     function setupDropdownToggle(buttonId, listId, arrowId) {
       const button = document.getElementById(buttonId);
       const list = document.getElementById(listId); 
       const arrow = document.getElementById(arrowId);
 
+      // Add a click event listener to the button
       button.addEventListener('click', function() {
         const isVisible = list.style.display === 'block';
         list.style.display = isVisible ? 'none' : 'block';
@@ -12,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // Set up dropdown toggles for various sections
     setupDropdownToggle('toggleGamesDirectors', 'gamesdirectorsList', 'arrowGamesDirectors');
     setupDropdownToggle('toggleGamesCompanies', 'gamescompaniesList', 'arrowGamesCompanies');
     setupDropdownToggle('toggleGamesGenres', 'gamesgenresList', 'arrowGamesGenres');
@@ -55,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // Set maximum file size to 5 MB
 
     // Function to check file size
     function checkFileSize(inputId) {

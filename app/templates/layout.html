@@ -2,8 +2,10 @@
 <html>
     <head>
         <title>videogames boah</title>
+        <!-- Include jQuery library -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/styles.css">
+        <!-- Link to JavaScript files for various functionalities -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/static/javascript/filter.js"></script>
         <script src="/static/javascript/dashboard.js"></script>
@@ -16,10 +18,10 @@
     </head>
     <body  class="fade">
 
-        {% include 'nav.html' %}
+        {% include 'nav.html' %}  <!-- Include navigation bar -->
 
         <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true) %}  <!-- Retrieve flash messages -->
             {% if messages %}
                 <ul class="flashes">
                     {% for category, message in messages %}
@@ -32,7 +34,7 @@
         </main>
         
         <footer>
-            <p>&copy; 2024 Videogames website | All rights reserved</p>
+            <p>&copy; 2024 Videogames website | All rights reserved</p><!-- Footer copyright notice -->
     <p> By Pourya That's it boah</p>
         </footer>
     </body>

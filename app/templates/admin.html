@@ -2,14 +2,17 @@
 {% block content %}
 <h1 class="page-name">Pending Users</h1>
 
+<!-- User Grid Section -->
 <div class="user-grid">
     {% if pending_users %}
+    <!-- Loop through each pending user and display their information -->
         {% for user in pending_users %}
             <div class="user-card">
                 <img src="{{ url_for('static', filename='user_images/' ~ user.picture) }}" alt="Picture">
                 <div class="user-info">
                     <p><strong>Username:</strong> {{ user.name }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
+                    <!-- Approve and Reject Buttons -->
                     <a href="{{ url_for('approve_user', id=user.id) }}" class="approve-btn">Approve</a>
                     <a href="{{ url_for('reject_user', id=user.id) }}" class="reject-btn">Reject</a>
                 </div>

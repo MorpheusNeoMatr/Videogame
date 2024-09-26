@@ -28,7 +28,7 @@
             <a href="/add_founder">Add Founder</a>
         </div>
     </div>
-    
+    <!--login/username section in navbar-->
     {% if session.get('user_id') %}
         <div class="dropdown">
             <button class="dropbtn">{{session['user_name']}} <span class="arrow-down">&#9662;</span></button>
@@ -43,15 +43,15 @@
             <a href="/login">Login</a>
         </div>
     {% endif %}  
-
+    <!--about us button-->
     <div class="login-admin">
         <a href="/about">About us</a>
     </div>
-
+    <!--contact us buttno-->
     <div class="login-admin">
         <a href="/contact">Contact us</a>
     </div>
-
+    <!--sticker at corner-->
     <div class="sticker">
         <img src="/static/games_images/sticker.jpg">
     </div>

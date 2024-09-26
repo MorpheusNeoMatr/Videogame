@@ -4,30 +4,33 @@
     <h1>DIRECTOR LIST</h1>
 </div><br><br>
 
-
+<!-- Game Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="gameDropdown" class="styled-dropdown">
         <option value="all">All games</option>
+        <!-- Loop through all games and create options for each game -->
         {% for game in games %}
             <option value="{{ game.id }}">{{ game.name }}</option>
         {% endfor %}
     </select>
 </div>
 
-
+<!-- companies Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="companyDropdown" class="styled-dropdown">
         <option value="all">All companies</option>
+        <!-- Loop through all companies and create options for each company -->
         {% for company in companies %}
             <option value="{{ company.id }}">{{ company.name }}</option>
         {% endfor %}
     </select>
 </div>
 
-
+<!-- uesrs Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="usersDropdown" class="styled-dropdown">
         <option value="all">All users</option>
+        <!-- Loop through all users and create options for each user -->
         {% for user in users %}
             <option value="{{ user.id }}">{{ user.name }}</option>
         {% endfor %}

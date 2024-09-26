@@ -5,9 +5,11 @@
   <h1>ADD FOUNDER</h1>
 </div>
 
+  <!-- Form for adding a new founder -->
   <form method="POST" id="submit_founder_form" enctype="multipart/form-data" action="{{ url_for('add_founder') }}">
     {{ founder_form.hidden_tag() }}
 
+    <!-- Founder name input field -->
     Name(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="founder_name" placeholder="Add name(maxlength = 20)">
               {% if founder_form.founder_name.errors %}
@@ -15,6 +17,7 @@
               {% endif %}
               <br><br>
 
+    <!-- Section for selecting companies associated with the founder -->
     <p>
       <p>&#10024If company is not in the list, submit this founder and then go to add company page to add the corresponding company&#10024</p>
       <br>
@@ -32,6 +35,7 @@
     </p>
     <br><br>
 
+    <!-- Founder age input field -->
     Age(required):<br><br>
     <input type="text" class="add_stuff_bar" maxlength="20" name="founder_date_of_birth" placeholder="Add Age(maxlength = 20)">
         {% if founder_form.founder_date_of_birth.errors %}
@@ -39,14 +43,16 @@
         {% endif %}
         <br><br>
         <p>
-
+    
+    <!-- Founder description input field -->
     Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="founder_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if founder_form.founder_description.errors %}
               <span class="error-message">{{ founder_form.founder_description.errors[0] }}</span>
             {% endif %}
             <br><br>
-
+    
+    <!-- Section for uploading images -->
     Add pictures(JPG ONLY!):
             <br><br>
             <div class="add-stuff-images">
@@ -62,6 +68,7 @@
             </div>
             <br><br>
 
+    <!-- Submit button to add founder -->
     <button type="submit" id="submit-founder-Button">Add founder</button>
   </form>
 {% endblock %}

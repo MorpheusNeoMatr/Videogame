@@ -12,19 +12,20 @@
     <li>
         <div class="image-text-row">
             {% if founder.picture_1 %}
+            <!-- shows picture 1 -->
             <img src="{{ url_for('static', filename='founders_images/' ~ founder.picture_1) }}" alt="Founder Picture 1" class="images-size">
             {% else %}
             <img src="{{ url_for('static', filename='games_images/default_image.jpg') }}" alt="Default Game Picture" class="images-size">
             {% endif %}
             <hr class="red-line">
             <div class="text-content">
-                <p>
+                <p><!--added by section -->
                     {% if founder.Username.name %}
                     Added by: <a href='/dashboard/{{founder.Username.id}}'>{{ founder.Username.name }}</a>
                     {% else %}
                     Added by dev
                     {% endif %}
-                </p>
+                </p><!--company section-->
                 <p>Company(s):
                     {% if founder_company %}
                         {% for company in founder_company[:3] %}
@@ -37,12 +38,12 @@
                     {% else %}
                         No companies yet, <a href="/add_company">add company</a>
                     {% endif %}
-                </p>
+                </p><!--Age section-->
                 <p>Age: {{founder.date_of_birth}}</p>
             </div>
         </div>
         <hr class="red-h-line">
-    </li>
+    </li><!--description section-->
     <li class="title">Description</li>
     <!-- Picture 2, Red Line, and Text Row -->
     <li>
@@ -50,7 +51,7 @@
             <div class="text-content">
                 <p>{{founder.description}}</p>
             </div>
-            <hr class="red-line">
+            <hr class="red-line"><!--picture 2-->
             {% if founder.picture_2 %}
             <img src="{{ url_for('static', filename='founders_images/' ~ founder.picture_2) }}" alt="Founder Picture 2" class="images-size">
             {% else %}

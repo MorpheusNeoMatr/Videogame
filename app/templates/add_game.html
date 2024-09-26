@@ -4,6 +4,7 @@
     <h1>ADD GAME</h1>
   </div>
 
+  <!-- Popup for adding a new series if not in list -->
   <div id="popup-games-series" class="popup">
     <div class="popup-content">
       <p>&#10024Add your considered series if it is not in the series list&#10024</p>
@@ -19,6 +20,7 @@
 
   <br>
 
+  <!-- Popup for adding a new genre if not in list -->
   <div id="popup-games-genre" class="popup">
     <div class="popup-content"> 
       <p>&#10024Add your considered genre if it is not in the genre list&#10024</p>
@@ -32,9 +34,11 @@
     </div>
   </div>
 
+  <!-- form to add a game -->
   <div id="submit_game_form">
     <form method="POST" action="{{ url_for('add_game') }}" enctype="multipart/form-data">
       {{ game_form.csrf_token }} 
+      <!-- Game Name Input -->
       Name(required):<br><br>
       <input type="text" class="add_stuff_bar" maxlength="20" name="game_name" placeholder="Game name(maxlength = 20)">
           {% if game_form.game_name.errors %}
@@ -42,6 +46,7 @@
           {% endif %}
           <br><br>
 
+          <!-- Score Input -->
           Your score(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="10" name="game_dev_score" placeholder="Your score(?/10) maxlegth=10">
           {% if game_form.game_dev_score.errors %}
@@ -49,12 +54,14 @@
           {% endif %}
           <br><br>
 
+          <!-- Release Date Input -->
           Release date(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="game_date" placeholder="Realease date(maxlength = 20)">
           {% if game_form.game_date.errors %}
             <span class="error-message">{{ game_form.game_date.errors[0] }}</span>
           {% endif %}
           <br><br>
+          <!-- Directors Selection (with note for adding later) -->
           <p>&#10024If director is not in the list, submit this game, then go to Add Director page to add the corresponding director&#10024</p>
           <br>
           <button type="button" id="toggleGamesDirectors" class="toggle-button">
@@ -69,7 +76,8 @@
             {% endfor %}
           </div>
           <br><br>
-        
+          
+          <!-- Series Selection -->
           <p>
             <select name="game_series" class="toggle-button">
               <option>Choose series(required)</option>
@@ -86,7 +94,7 @@
           </p>
           <br><br>
         
-          <p>
+          <p><!-- Companies Selection with a note -->
             <p>&#10024If company is not in the list, submit this game, then go to Add Company page to add the corresponding company&#10024</p>
             <br>
             <button type="button" id="toggleGamesCompanies" class="toggle-button">
@@ -103,7 +111,7 @@
           </p>
           <br><br>
         
-          <p>
+          <p><!-- select genres dropdownlist -->
             <button type="button" id="toggleGamesGenres" class="toggle-button">
               Select Genres(required) <span class="arrow-down" id="arrowGamesGenres">&#9662;</span>
             </button>
@@ -122,6 +130,7 @@
           </p>
           <br><br>
           
+          <!-- Descriptive fields: Description, Gameplay, Story, Soundtrack, Reviews -->
           Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="game_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if game_form.game_description.errors %}
@@ -157,6 +166,7 @@
             {% endif %}
             <br><br>
 
+            <!-- Fields for uploading pictures -->
             Add pictures(JPG ONLY!):
             <br><br>
             <div class="add-stuff-images">
@@ -191,7 +201,8 @@
               {% endif %}
             </div>
             <br><br>
-    
+
+      <!-- Submit button -->
       <button type="submit" id="submit-game-Button">Add this game</button>
     </form>
   </div>

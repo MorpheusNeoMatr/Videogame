@@ -4,9 +4,11 @@
     <h1>FOUNDER LIST</h1>
 </div><br><br>
 
+<!-- Company Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="companyDropdown" class="styled-dropdown">
         <option value="all">All companies</option>
+        <!-- Loop through all companies and create options for each company -->
         {% for company in companies %}
             <option value="{{ company.id }}">{{ company.name }}</option>
         {% endfor %}
@@ -14,9 +16,11 @@
 </div>
 
 
+<!-- Users Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="usersDropdown" class="styled-dropdown">
         <option value="all">All users</option>
+        <!-- Loop through all users and create options for each user -->
         {% for user in users %}
             <option value="{{ user.id }}">{{ user.name }}</option>
         {% endfor %}

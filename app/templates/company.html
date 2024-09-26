@@ -11,19 +11,23 @@
     <!-- Picture 1, Red Line, and Text Row -->
     <li>
         <div class="image-text-row">
+            <!-- Display Picture 1 if available, otherwise show a default image -->
             {% if company.picture_1 %}
             <img src="{{ url_for('static', filename='companies_images/' ~ company.picture_1) }}" alt="Company Picture 1" class="images-size">
             {% else %}
             <img src="{{ url_for('static', filename='games_images/default_image.jpg') }}" alt="Default Game Picture" class="images-size">
             {% endif %}
+            <!-- Red Line Separator -->
             <hr class="red-line">
             <div class="text-content">
+                <!-- added by user -->
                 <p>{% if company.Username.name %}
                     Added by: <a href='/dashboard/{{company.Username.id}}'>{{ company.Username.name }}</a>
                     {% else %}
                     Added by dev
                     {% endif %}
                 </p>
+                <!--show companies games -->
                 <p>Game(s):
                     {% if company_games %}
                         {% for game in company_games[:3] %}
@@ -37,6 +41,7 @@
                         No games yet, <a href="/add_game">add game</a>
                     {% endif %}
                 </p>
+                <!--show directors in the companies-->
                 <p>Director(s):
                     {% if company_directors %}
                         {% for director in company_directors[:3] %}
@@ -44,12 +49,13 @@
                             {% if not loop.last %}, {% endif %}
                         {% endfor %}
                         {% if company_directors|length < 3 %}
-                            , <a href="/add_director">add director</a>
+                            , <a href="/add_directors">add director</a>
                         {% endif %}
                     {% else %}
-                        No directors yet, <a href="/add_director">add director</a>
+                        No directors yet, <a href="/add_directors">add director</a>
                     {% endif %}
                 </p>
+                <!--founders who founded the company-->
                 <p>Founder(s):
                     {% if company_founders %}
                         {% for founder in company_founders[:3] %}
@@ -63,6 +69,7 @@
                         No founders yet, <a href="/add_founder">add founder</a>
                     {% endif %}
                 </p>
+                <!-- series from the company -->
                 <p>Series:
                     {% for series in company_series[:3] %}
                         {{ series.name }}

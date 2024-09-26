@@ -4,47 +4,55 @@
     <h1>GAME LIST</h1>
 </div><br><br>
 
+<!-- genres Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="genreDropdown" class="styled-dropdown">
         <option value="all">All genres</option>
+        <!-- Loop through all genres and create options for each genre -->
         {% for genre in genres %}
             <option value="{{ genre.id }}">{{ genre.name }}</option>
         {% endfor %}
     </select>
 </div>
 
+<!-- companies Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="companyDropdown" class="styled-dropdown">
         <option value="all">All companies</option>
+        <!-- Loop through all companies and create options for each company -->
         {% for company in companies %}
             <option value="{{ company.id }}">{{ company.name }}</option>
         {% endfor %}
     </select> 
 </div>
 
+<!-- directors Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="directorDropdown" class="styled-dropdown">
         <option value="all">All directors</option>
+        <!-- Loop through all directors and create options for each director -->
         {% for director in directors %}
             <option value="{{ director.id }}">{{ director.name }}</option>
         {% endfor %}
     </select>
 </div>
 
-
+<!--Series dropdown list filter-->
 <div class="styled-dropdown-container">
     <select id="seriesDropdown" class="styled-dropdown">
         <option value="all">All series</option>
+        <!-- Loop through all series and create options for each series -->
         {% for series in series %}
             <option value="{{ series.id }}">{{ series.name }}</option>
         {% endfor %}
     </select>    
 </div>
 
-
+<!--users dropdown list filter-->
 <div class="styled-dropdown-container">
     <select id="usersDropdown" class="styled-dropdown">
         <option value="all">All users</option>
+        <!-- Loop through all users and create options for each user -->
         {% for user in users %}
             <option value="{{ user.id }}">{{ user.name }}</option>
         {% endfor %}

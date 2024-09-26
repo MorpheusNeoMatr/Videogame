@@ -11,7 +11,7 @@ body{
 }
 
 
-/*/*This class is for the header at the top"Top 10 movies for five genres*/
+/*This class is for the header*/
 header h1{
     border: 1px solid black;
     font-size: xx-large;
@@ -19,7 +19,7 @@ header h1{
     background-color:honeydew;
 }
 
-/*The name below the navbar that has the name of that specific page(i.e name of the movie or actor)*/
+/*The name below the navbar that has the name of that specific page */
 header h2 {
     border: 1px solid black;
     padding: 20px;
@@ -31,8 +31,8 @@ header h2 {
 
 /* Navbar */
 nav {
-    background-color: #333; /* Light black background */
-    border-bottom: 2px solid #dc3545; /* Red line at the bottom */
+    background-color: #333;
+    border-bottom: 2px solid #dc3545;
     padding: 1%;
     display: flex; /* Use flexbox to align items */
     flex-wrap: wrap;
@@ -52,7 +52,7 @@ nav {
 
 /* Navbar links */
 .login-admin a {
-    color: white; /* White text */
+    color: white;
     padding: 10px 20px; 
     text-decoration: none;
     border-radius: 10%;
@@ -86,6 +86,7 @@ nav a:hover, .dropbtn:hover {
   height: auto; /* Maintain aspect ratio */
 }
 
+/* dropdown list in the navbar */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -113,6 +114,7 @@ nav a:hover, .dropbtn:hover {
     background-color: #dc3545; /* Slightly lighter black on hover */
 }
 
+
 .contact-parent-container {
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -128,7 +130,7 @@ nav a:hover, .dropbtn:hover {
     border: 1px solid red;
     border-radius: 1vw; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
-    background-color: #333; /* Background color */
+    background-color: #333;
     display: flex;
     flex-direction: column; /* Arrange child elements in a column */
     box-sizing: border-box; /* Ensure padding is included in width and height */
@@ -148,12 +150,12 @@ nav a:hover, .dropbtn:hover {
     margin-bottom: 1.5vw; /* Space below input and textarea */
     border: 1px solid #ddd; /* Border for input and textarea */
     border-radius: 0.5vw; /* Rounded corners for input and textarea */
-    background-color: #444; /* Background color for input and textarea */
-    color: white; /* Text color */
+    background-color: #444;
+    color: white;
 }
 
 .contact-page textarea {
-    resize: none; /* Prevent resizing */
+    resize: none;
 }
 
 .contact-page input::placeholder,
@@ -192,18 +194,18 @@ nav a:hover, .dropbtn:hover {
     padding: 10px;         /* Padding inside each flash message */
     margin-bottom: 10px;   /* Space below each flash message */
     border-radius: 5px;    /* Rounded corners */
-    color: white;          /* White text color */
+    color: white;         
     text-align: center;    /* Center text inside flash messages */
 }
 
 /* Styles for success messages */
 .flash.success {
-    background-color: #28a745; /* Green for success */
+    background-color: #28a745;
 }
 
 /* Styles for error messages */
 .flash.error {
-    background-color: #dc3545; /* Red for errors */
+    background-color: #dc3545;
 }
 
 
@@ -223,14 +225,14 @@ nav a:hover, .dropbtn:hover {
     border-right: 1px solid #555; /* Light color line */
 }
 
-/* Style for the dropdowns with the class "styled-dropdown" */
+/* Style for the dropdowns with the class for the filters */
 .styled-dropdown {
-    background-color: #f0f0f0; /* Background color of the dropdown */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 10%; /* Rounded corners */
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10%;
     padding: 10px; /* Padding inside the dropdown */
-    font-size: inherit; /* Font size */
-    color: #333; /* Font color */
+    font-size: inherit;
+    color: #333;
     appearance: none; /* Remove default dropdown arrow */
     -webkit-appearance: none; /* For Safari */
     font-family: inherit;
@@ -268,12 +270,12 @@ nav a:hover, .dropbtn:hover {
 }
 
 button {
-    background-color: #dc3545; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 20px; /* Padding inside the button */
-    font-size: inherit; /* Font size */
+    background-color: #dc3545; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: inherit;
     cursor: pointer; /* Pointer cursor on hover */
 }
 
@@ -288,6 +290,7 @@ button:hover {
     color: inherit; /* Inherit text color from parent */
 }
 
+/* boxes layout in lists pages */
 .item {
     display: inline-block;
     text-align: center;
@@ -311,6 +314,7 @@ button:hover {
     background-color: #dc3545;
 }
 
+/* image in the box */
 .image {
     width: 100%;
     height: 70%; /* Adjust height percentage to fit within item */
@@ -327,19 +331,19 @@ button:hover {
     font-size: 1.5vw;
 }
 
-
+/* name in the box layout */
 .name {
-    font-size: 2vw; /* Sets the font size */
-    color: white; /* Sets the text color */
+    font-size: 2vw;
+    color: white;
 }
 
-/* Container for the grid */
+/* Container for the grid in the admin page*/
 .user-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
-    gap: 20px; /* Space between grid items */
-    padding: 20px; /* Padding around the grid */
-    margin: 0 auto; /* Center the grid horizontally */
-    justify-content: center; /* Center items horizontally */
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    justify-content: center;
     display: grid;
 }
 
@@ -348,21 +352,21 @@ button:hover {
 .user-card {
     border: 1px solid white; /* Dark border for the card */
     margin: 1%;
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px;
     overflow: hidden; /* Hide overflow to keep the rounded corners clean */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
-    background-color: #2c2c2c; /* Light black color for the card background */
-    padding: 15px; /* Padding inside the card */
-    text-align: center; /* Center text inside the card */
-    color: white; /* White text color for contrast */
+    background-color: #2c2c2c;
+    padding: 15px;
+    text-align: center;
+    color: white;
 }
 
-/* Style for images */
+/* Style for images in the user card */
 .user-card img {
     width: 100%; /* Make the image fill the card width */
     height: auto; /* Maintain aspect ratio */
     border-radius: 50%; /* Make image circular (optional) */
-    margin-bottom: 10px; /* Space below the image */
+    margin-bottom: 10px;
 }
 
 /* Style for user information */
@@ -397,15 +401,16 @@ button:hover {
     background-color: darkred;
 }
 
+/* profile box layout */
 .profile-box {
-    text-align: center; /* Center text inside the box */
+    text-align: center;
     display:inline-block;
     margin-bottom: 20px;
-    background-color: #333; /* White background for the box */
+    background-color: #333;
     border: 1px solid red; /* Light border around the box */
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
-    padding: 20px; /* Padding inside the box */
+    padding: 20px;
     width: auto; /* Limit the width of the box */
 }
 
@@ -489,6 +494,7 @@ a:hover{
     color: white;
 }
 
+/* title of the page layout */
 .title{
     flex-direction: column;
     justify-content: center; /* Center text vertically */
@@ -557,7 +563,7 @@ a:hover{
     to   { opacity: 1; }
 }
 
-/* Popup container */
+/* Popup container in the add_stuff pages */
 .popup {
     display: none; /* Hidden by default */
     position: fixed;
@@ -570,7 +576,7 @@ a:hover{
     background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
   }
   
-  /* Popup content */
+  /* Popup content inside a popup */
   .popup-content {
     background-color: #333;
     margin: 15% auto; /* Centered horizontally and 15% from the top */
@@ -637,6 +643,7 @@ a:hover{
     box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
   }
 
+  /* text box in add_stuff pages layout */
 .text-area{
     padding: 1%;
     border: 2px solid #ccc; /* Default border color */
@@ -658,6 +665,7 @@ a:hover{
     box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* Red glow effect */
 }
 
+/* add stuff pages images layout */
 .add-stuff-images{
     width: 57%; /* Adjust the width as needed */
     margin: 0 auto; /* Centers the box on the page */
@@ -665,11 +673,11 @@ a:hover{
     border: 1px solid white;
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
-    background-color: #333; /* Background color */
+    background-color: #333;
 }
   
 
-/* Button styling */
+/* select dropdown list button layout in the add_stuff pages*/
 .toggle-button {
     background-color: #333;
     color: white;
@@ -722,6 +730,7 @@ a:hover{
     padding: 5%;
 }
 
+/* error message for form */
 .error-message{
     color: red;
 }

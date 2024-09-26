@@ -1,4 +1,6 @@
+// Wait for the DOM to be fully loaded before running the script
 document.addEventListener('DOMContentLoaded', () => {
+    // Define an array of form and button pairs
     const forms = [
         {formId: 'submit_series_form', buttonId: 'submit-series-Button'},
         {formId: 'submit_genre_form', buttonId: 'submit-genre-Button'},

@@ -4,37 +4,44 @@
     <h1>USER LIST</h1>
 </div><br><br>
 
+<!-- games Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="gameDropdown" class="styled-dropdown">
         <option value="all">All games</option>
         {% for game in games %}
+        <!-- Loop through all games and create options for each game -->
             <option value="{{ game.id }}">{{ game.name }}</option>
         {% endfor %}
     </select>
 </div>
 
+<!-- companies Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="companyDropdown" class="styled-dropdown">
         <option value="all">All companies</option>
+        <!-- Loop through all companies and create options for each company -->
         {% for company in companies %}
             <option value="{{ company.id }}">{{ company.name }}</option>
         {% endfor %}
     </select> 
 </div>
 
+<!-- Director Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="directorDropdown" class="styled-dropdown">
         <option value="all">All directors</option>
+        <!-- Loop through all directors and create options for each director -->
         {% for director in directors %}
             <option value="{{ director.id }}">{{ director.name }}</option>
         {% endfor %}
     </select>
 </div>
 
-
+<!-- Founder Dropdown Filter -->
 <div class="styled-dropdown-container">
     <select id="founderDropdown" class="styled-dropdown">
         <option value="all">All founders</option>
+        <!-- Loop through all founders and create options for each founder -->
         {% for founder in founders %}
             <option value="{{ founder.id }}">{{ founder.name }}</option>
         {% endfor %}

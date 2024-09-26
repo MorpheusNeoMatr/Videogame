@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to set up dropdown toggle for buttons
     function setupDropdownToggle(buttonId, listId, arrowId) {
       const button = document.getElementById(buttonId);
       const list = document.getElementById(listId); 
       const arrow = document.getElementById(arrowId);
 
+      // Add click event listener to the button
       button.addEventListener('click', function() {
         const isVisible = list.style.display === 'block';
         list.style.display = isVisible ? 'none' : 'block';
@@ -12,10 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // Setup dropdown toggle for the founder companies section
     setupDropdownToggle('toggleFounderCompanies', 'foundercompaniesList', 'arrowFounderCompanies');
 
 
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // Set maximum file size limit to 5 MB
 
     // Function to check file size
     function checkFileSize(inputId) {

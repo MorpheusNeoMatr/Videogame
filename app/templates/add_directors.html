@@ -5,9 +5,11 @@
   <h1>ADD DIRECTOR</h1>
 </div>
 
+  <!-- Form for adding a new director -->
   <form method="POST" id="submit_director_form" enctype="multipart/form-data" action="{{ url_for('add_directors') }}">
     {{ director_form.hidden_tag() }}
 
+    <!-- Director Name Input -->
     Name(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="director_name" placeholder="Add name(maxlength = 20)">
               {% if director_form.director_name.errors %}
@@ -15,9 +17,11 @@
               {% endif %}
               <br><br>
 
+              <!-- Game selection section with a note -->
               <p>
                 <p class="note">&#10024If game is not in the list, submit this director and then go to add game page to add the corresponding game&#10024</p>
                 <br>
+                <!-- Button to toggle game dropdown list -->
                 <button type="button" id="toggleDirectorGames" class="toggle-button">
                   Select Games <span class="arrow-down" id="arrowDirectorGames">&#9662;</span>
                 </button>
@@ -31,10 +35,11 @@
                 </div>
               </p>
               <br><br>
-
-          <p>
+          
+          <p><!-- Company selection section with a note -->
             <p class="note">&#10024If company is not in the list, submit this director and then go to add company page to add the corresponding company&#10024</p>
             <br>
+            <!-- Button to toggle company dropdown list -->
             <button type="button" id="toggleDirectorCompanies" class="toggle-button">
               Select Companies <span class="arrow-down" id="arrowDirectorCompanies">&#9662;</span>
             </button>
@@ -48,21 +53,23 @@
             </div>
           </p>
           <br><br>
-  
+    <!-- Age Input -->      
     Age(required):<br><br>
           <input type="text" class="add_stuff_bar" maxlength="20" name="director_age" placeholder="Add Age(maxlength = 20)">
               {% if director_form.director_age.errors %}
                 <span class="error-message">{{ director_form.director_age.errors[0] }}</span>
               {% endif %}
               <br><br>
+              <!-- Director Description Input -->
               <p>
-    Description(required):<br><br>
+              Description(required):<br><br>
           <textarea maxlength="630" class="text-area" name="director_description" placeholder="Add description(maxlength = 630)" rows="13" cols="80"></textarea>
             {% if director_form.director_description.errors %}
               <span class="error-message">{{ director_form.director_description.errors[0] }}</span>
             {% endif %}
             <br><br>
-
+            
+    <!-- Section to upload director images -->
     Add pictures(JPG ONLY!):
             <br><br>
             <div class="add-stuff-images">
@@ -78,6 +85,7 @@
             </div>
             <br><br>
 
+    <!-- Submit button for the form -->        
     <button type="submit" id="submit-director-Button">Add director</button>
   </form>
 {% endblock %}

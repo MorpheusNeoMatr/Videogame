@@ -4,7 +4,7 @@
 <div class="login-register-box">
     <div class="page-name">
         Register
-    </div>
+    </div><!--register form-->
     <form method="POST" id="submit_register_form" enctype="multipart/form-data" action="{{ url_for('register') }}">
         {{ username_form.hidden_tag() }}
         <div><p>Profile Picture(Required ,JPG ONLY!)</p><br>
@@ -39,9 +39,9 @@
             {% endif %}        
         </div>
 
-        <button type="submit" id="submit-register-Button">Register</button>
+        <button type="submit" id="submit-register-Button">Register</button><!--register submit button-->
     </form>
-    <a href="/login">Already have an account? Login</a>
+    <a href="/login">Already have an account? Login</a><!--login link-->
 </div>
 
 {% endblock %}

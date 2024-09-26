@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to set up dropdown toggle for buttons
     function setupDropdownToggle(buttonId, listId, arrowId) {
       const button = document.getElementById(buttonId);
       const list = document.getElementById(listId); 
       const arrow = document.getElementById(arrowId);
-
+      
+      // Add click event listener to the button
       button.addEventListener('click', function() {
         const isVisible = list.style.display === 'block';
         list.style.display = isVisible ? 'none' : 'block';
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-
+    // Setup dropdown toggles for different sections
     setupDropdownToggle('toggleCompanyGames', 'companygamesList', 'arrowCompanyGames');
     setupDropdownToggle('toggleCompanyDirectors', 'companydirectorsList', 'arrowCompanyDirectors');
     setupDropdownToggle('toggleCompanyFounders', 'companyfoundersList', 'arrowCompanyFounders');
@@ -23,14 +25,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var openPopupCompanySeriesBtn = document.getElementById("openPopupCompanySeriesBtn");
     var closePopupCompanySeriesBtn = document.getElementById("closePopupCompanySeriesBtn");
 
+    // Function to open the popup
     openPopupCompanySeriesBtn.onclick = function() {
         popupCompanySeries.style.display = "block";
     };
 
+    // Function to close the popup
     closePopupCompanySeriesBtn.onclick = function() {
         popupCompanySeries.style.display = "none";
     };
 
+    // Click event to close the popup if the user clicks outside of it
     window.onclick = function(event) {
         if (event.target == popupCompanySeries) {
             popupCompanySeries.style.display = "none";
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB limit for file uploads
 
     // Function to check file size
     function checkFileSize(inputId) {
